@@ -1,0 +1,427 @@
+<!-- authentication-page.component.html -->
+<article class="doc-page">
+  <header class="doc-header">
+    <h1>Autenticación</h1>
+    <p class="doc-lead">
+      Aprende cómo autenticar tus peticiones a la API de TuPay utilizando API Keys 
+      de forma segura y eficiente.
+    </p>
+  </header>
+
+  <section class="doc-section">
+    <h2>Métodos de Autenticación</h2>
+    <p>
+      TuPay API utiliza <strong>API Keys</strong> para autenticar todas las peticiones. 
+      Tu API Key identifica tu cuenta y te da acceso a los recursos de la API.
+    </p>
+
+    <div class="info-box info-box--warning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <div>
+        <h4>¡Mantén tu API Key segura!</h4>
+        <p>
+          Tu API Key tiene acceso completo a tu cuenta. Nunca la compartas públicamente 
+          en repositorios, código del lado del cliente, o cualquier lugar donde pueda 
+          ser expuesta.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Obtener tu API Key</h2>
+
+    <div class="dashboard-links">
+      <h3>Dashboards por País</h3>
+      <div class="dashboard-cards">
+        <a href="https://guatemala.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
+          <div class="dashboard-card__flag">🇬🇹</div>
+          <div class="dashboard-card__info">
+            <h4>Guatemala</h4>
+            <code>guatemala.tupay.finance</code>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+        <a href="https://rd.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
+          <div class="dashboard-card__flag">🇩🇴</div>
+          <div class="dashboard-card__info">
+            <h4>República Dominicana</h4>
+            <code>rd.tupay.finance</code>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="steps-vertical">
+      <div class="step-vertical">
+        <div class="step-vertical__number">1</div>
+        <div class="step-vertical__content">
+          <h3>Accede al Dashboard</h3>
+          <p>
+            Inicia sesión en el dashboard correspondiente a tu país de operación.
+          </p>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">2</div>
+        <div class="step-vertical__content">
+          <h3>Ve a tu Perfil</h3>
+          <p>
+            Haz clic en tu avatar en la esquina superior derecha para abrir el menú de usuario.
+          </p>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">3</div>
+        <div class="step-vertical__content">
+          <h3>Copia tu API Key</h3>
+          <p>
+            En el menú verás tu <strong>API Key</strong>. Usa los botones para ver, copiar
+            o regenerar tu clave de acceso.
+          </p>
+          <div class="api-key-screenshot">
+            <img
+              src="assets/images/api-key-location.png"
+              alt="Ubicación de la API Key en el perfil de usuario"
+              loading="lazy">
+            <p class="screenshot-caption">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              Tu API Key se encuentra en el menú desplegable de tu perfil
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Formato de API Key</h2>
+    <p>Las API Keys de TuPay siguen este formato:</p>
+    
+    <div class="key-format">
+      <div class="key-format__part">
+        <span class="key-format__label">Prefijo</span>
+        <code>sk_</code>
+        <p>Identifica que es una Secret Key</p>
+      </div>
+      <div class="key-format__separator">_</div>
+      <div class="key-format__part">
+        <span class="key-format__label">Entorno</span>
+        <code>live</code>
+        <p>Producción (live) o Pruebas (test)</p>
+      </div>
+      <div class="key-format__separator">_</div>
+      <div class="key-format__part">
+        <span class="key-format__label">Identificador</span>
+        <code>abc123...</code>
+        <p>Identificador único de 32 caracteres</p>
+      </div>
+    </div>
+
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Prefijo</th>
+          <th>Uso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Producción</td>
+          <td><code></code></td>
+          <td>Transacciones reales con dinero real</td>
+        </tr>
+        <tr>
+          <td>Pruebas</td>
+          <td><code>sk_test_</code></td>
+          <td>Pruebas sin cargo real</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="doc-section">
+    <h2>Usar tu API Key</h2>
+    <p>
+      Incluye tu API Key en el header <code>x-api-key</code> de cada petición HTTP:
+    </p>
+
+    <app-code-block
+      [code]="exampleHeader"
+      language="curl"
+      title="Ejemplo con cURL">
+    </app-code-block>
+
+    <h3>Ejemplos por Lenguaje</h3>
+
+    <div class="language-examples">
+      <div class="language-example">
+        <h4>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          Node.js / JavaScript
+        </h4>
+        <app-code-block
+          [code]="nodeExample"
+          language="javascript">
+        </app-code-block>
+      </div>
+
+      <div class="language-example">
+        <h4>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Python
+        </h4>
+        <app-code-block
+          [code]="pythonExample"
+          language="python">
+        </app-code-block>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Mejores Prácticas de Seguridad</h2>
+    
+    <div class="best-practices">
+      <div class="practice-card practice-card--do">
+        <div class="practice-card__header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <h4>Hacer ✓</h4>
+        </div>
+        <ul>
+          <li>Usa variables de entorno para almacenar tu API Key</li>
+          <li>Rota tus API Keys periódicamente</li>
+          <li>Usa diferentes keys para desarrollo y producción</li>
+          <li>Implementa rate limiting en tu aplicación</li>
+          <li>Monitorea el uso de tu API Key en el dashboard</li>
+        </ul>
+      </div>
+
+      <div class="practice-card practice-card--dont">
+        <div class="practice-card__header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <h4>No Hacer ✗</h4>
+        </div>
+        <ul>
+          <li>Nunca hagas commit de API Keys en Git</li>
+          <li>No incluyas API Keys en código del frontend</li>
+          <li>No compartas tu API Key por email o chat</li>
+          <li>No uses la misma key en múltiples proyectos</li>
+          <li>No dejes API Keys en archivos de log</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Variables de Entorno</h2>
+    <p>La forma más segura de manejar API Keys es usando variables de entorno:</p>
+
+    <div class="env-examples">
+      <div class="env-example">
+        <h4>.env (Node.js)</h4>
+        <app-code-block
+          code="TUPAY_API_KEY=abc123xyz456def789ghi012jkl345
+TUPAY_BASE_URL=https://api-guatemala.tupay.finance"
+          language="bash">
+        </app-code-block>
+      </div>
+
+      <div class="env-example">
+        <h4>Usar en código</h4>
+        <app-code-block
+          code="const apiKey = process.env.TUPAY_API_KEY;
+const baseUrl = process.env.TUPAY_BASE_URL;"
+          language="javascript">
+        </app-code-block>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Errores de Autenticación</h2>
+    <p>
+      Si tu API Key es inválida o falta, recibirás un error <code>401 Unauthorized</code>:
+    </p>
+
+    <app-code-block
+      [code]="errorExample"
+      language="javascript"
+      title="Error 401 - No autorizado">
+    </app-code-block>
+
+    <h3>Causas Comunes</h3>
+    <ul>
+      <li>API Key incorrecta o mal copiada</li>
+      <li>Header <code>x-api-key</code> faltante</li>
+      <li>API Key deshabilitada o revocada</li>
+      <li>Usando key de pruebas en producción (o viceversa)</li>
+    </ul>
+  </section>
+
+  <section class="doc-section">
+    <h2>Renovar o Revocar API Keys</h2>
+    <p>
+      Si sospechas que tu API Key fue comprometida, puedes revocarla inmediatamente 
+      desde el dashboard:
+    </p>
+
+    <div class="info-box info-box--error">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <div>
+        <h4>API Key Comprometida</h4>
+        <p>
+          Si tu API Key fue expuesta públicamente, revócala inmediatamente desde 
+          el dashboard y genera una nueva. Las peticiones con la key antigua 
+          serán rechazadas al instante.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Configuración de Webhooks</h2>
+    <p>
+      Los webhooks te permiten recibir notificaciones en tiempo real cuando ocurren eventos
+      en tus transacciones. Configúralos directamente desde el dashboard.
+    </p>
+
+    <div class="webhook-setup">
+      <div class="steps-vertical">
+        <div class="step-vertical">
+          <div class="step-vertical__number">1</div>
+          <div class="step-vertical__content">
+            <h3>Accede a Integraciones</h3>
+            <p>
+              En el dashboard, haz clic en <strong>"Integraciones"</strong> en el menú de tu perfil.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-vertical">
+          <div class="step-vertical__number">2</div>
+          <div class="step-vertical__content">
+            <h3>Configura tus URLs</h3>
+            <p>
+              Encontrarás dos campos para configurar webhooks:
+            </p>
+            <div class="webhook-fields">
+              <div class="webhook-field">
+                <div class="webhook-field__header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="8 12 12 16 16 12"></polyline>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                  </svg>
+                  <h4>URL de Webhook para PayIn</h4>
+                </div>
+                <p>Recibe notificaciones de pagos entrantes (depósitos)</p>
+                <code>https://tu-servidor.com/webhooks/payin</code>
+              </div>
+              <div class="webhook-field">
+                <div class="webhook-field__header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="16 12 12 8 8 12"></polyline>
+                    <line x1="12" y1="16" x2="12" y2="8"></line>
+                  </svg>
+                  <h4>URL de Webhook para PayOut</h4>
+                </div>
+                <p>Recibe notificaciones de pagos salientes (retiros)</p>
+                <code>https://tu-servidor.com/webhooks/payout</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-vertical">
+          <div class="step-vertical__number">3</div>
+          <div class="step-vertical__content">
+            <h3>Guarda la configuración</h3>
+            <p>
+              Haz clic en guardar y tu servidor comenzará a recibir notificaciones
+              automáticamente cuando cambien los estados de tus transacciones.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Requisitos del Webhook</h4>
+        <p>
+          Tu endpoint debe responder con un código HTTP <code>200</code> para confirmar
+          la recepción. Si falla, TuPay reintentará el envío varias veces.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Próximos Pasos</h2>
+    <div class="next-steps">
+      <a routerLink="/gtm/api" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <div>
+          <h4>Explorar Endpoints</h4>
+          <p>Ve la referencia completa de la API</p>
+        </div>
+      </a>
+
+      <a routerLink="/docs/errors" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <div>
+          <h4>Manejo de Errores</h4>
+          <p>Aprende a manejar errores de la API</p>
+        </div>
+      </a>
+    </div>
+  </section>
+</article>
