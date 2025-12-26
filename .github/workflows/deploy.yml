@@ -33,7 +33,7 @@ jobs:
 
       - name: Build Angular app
         run: |
-          npm run build -- --configuration production --base-href=/DOC-TUPAY/
+          npm run build -- --configuration production --base-href=/
 
       - name: Rename index for routing
         run: mv dist/tupay-api-docs/index.html dist/tupay-api-docs/404.html
