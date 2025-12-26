@@ -91,7 +91,7 @@ export class EndpointService {
   private getCollectionPath(country: CountryCode, type: 'payin' | 'payout'): string {
     const countryName = country === 'GTM' ? 'Guatemala' : 'Republica_Dominicana';
     const typeName = type === 'payin' ? 'Payin' : 'PayOut';
-    return `/assets/data/endpoints/${countryName}_-_${typeName}_postman_collection.json`;
+    return `assets/data/endpoints/${countryName}_-_${typeName}_postman_collection.json`;
   }
 
   /**
