@@ -20,7 +20,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'docs',
+    path: 'gateway',
     component: DocsLayoutComponent,
     children: [
       {
@@ -48,7 +48,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/docs/introduction',
+        redirectTo: '/gateway/introduction',
         pathMatch: 'full'
       },
       {

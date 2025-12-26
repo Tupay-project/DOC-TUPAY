@@ -74,10 +74,10 @@ src/
 | Ruta | Descripcion |
 |------|-------------|
 | `/` | Pagina de inicio |
-| `/docs` | Redirige a introduccion |
-| `/docs/introduction` | Introduccion a la API |
-| `/docs/authentication` | Guia de autenticacion |
-| `/docs/errors` | Manejo de errores |
+| `/gateway` | Redirige a introduccion |
+| `/gateway/introduction` | Introduccion a la API |
+| `/gateway/authentication` | Guia de autenticacion |
+| `/gateway/errors` | Manejo de errores |
 | `/gtm/api/:category/:id` | Endpoints Guatemala |
 | `/dom/api/:category/:id` | Endpoints Rep. Dominicana |
 

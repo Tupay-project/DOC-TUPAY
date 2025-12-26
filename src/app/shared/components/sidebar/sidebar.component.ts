@@ -20,9 +20,9 @@ export class SidebarComponent implements OnInit {
   expandedGroups: Set<string> = new Set(['PayIn', 'PayOut']); // Por defecto expandidos
 
   navigationItems = [
-    { label: 'Introducción', icon: 'book', path: '/docs/introduction' },
-    { label: 'Autenticación', icon: 'key', path: '/docs/authentication' },
-    { label: 'Errores', icon: 'alert-circle', path: '/docs/errors' }
+    { label: 'Introducción', icon: 'book', path: '/gateway/introduction' },
+    { label: 'Autenticación', icon: 'key', path: '/gateway/authentication' },
+    { label: 'Errores', icon: 'alert-circle', path: '/gateway/errors' }
   ];
 
   constructor(

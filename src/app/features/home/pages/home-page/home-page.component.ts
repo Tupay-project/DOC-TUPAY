@@ -82,6 +82,6 @@ console.log(data);`;
   }
 
   navigateToDocs(): void {
-    this.router.navigate(['/docs']);
+    this.router.navigate(['/gateway']);
   }
 }
