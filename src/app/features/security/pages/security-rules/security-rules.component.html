@@ -1,0 +1,216 @@
+<article class="doc-page" role="main" aria-labelledby="rules-title">
+  <header class="doc-header">
+    <div class="doc-header__badge">
+      <span class="version-badge">150+ reglas</span>
+      <span class="status-badge status-badge--stable">15 categorias</span>
+    </div>
+    <h1 id="rules-title">Motor de Reglas</h1>
+    <p class="doc-lead">
+      El sistema analiza transacciones en 15 categorias de riesgo con mas de 150 reglas
+      configurables. Cada regla contribuye al score final de la transaccion.
+    </p>
+  </header>
+
+  <!-- Resumen de Categorias -->
+  <section class="doc-section" aria-labelledby="summary">
+    <h2 id="summary">Resumen por Categoria</h2>
+    <div class="category-summary">
+      <div class="category-summary__item" *ngFor="let cat of categories">
+        <span class="category-summary__icon">{{ cat.icon }}</span>
+        <span class="category-summary__name">{{ cat.name }}</span>
+        <span class="category-summary__count">{{ cat.rulesCount }} reglas</span>
+        <span class="priority-badge" [ngClass]="getPriorityClass(cat.priority)">
+          {{ cat.priority === 'critical' ? 'Critica' :
+             cat.priority === 'high' ? 'Alta' :
+             cat.priority === 'medium' ? 'Media' : 'Baja' }}
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalogo de Reglas -->
+  <section class="doc-section" aria-labelledby="catalog">
+    <h2 id="catalog">Catalogo de Reglas</h2>
+    <p>Haz clic en cada categoria para ver el detalle de sus reglas:</p>
+
+    <div class="rules-accordion">
+      <div class="accordion-item" *ngFor="let category of categories"
+           [class.accordion-item--expanded]="expandedCategory === category.id">
+        <button class="accordion-header" (click)="toggleCategory(category.id)"
+                [attr.aria-expanded]="expandedCategory === category.id">
+          <div class="accordion-header__left">
+            <span class="accordion-header__icon">{{ category.icon }}</span>
+            <div class="accordion-header__info">
+              <span class="accordion-header__number">{{ category.id }}</span>
+              <span class="accordion-header__name">{{ category.name }}</span>
+            </div>
+          </div>
+          <div class="accordion-header__right">
+            <span class="accordion-header__count">{{ category.rulesCount }} reglas</span>
+            <span class="priority-badge" [ngClass]="getPriorityClass(category.priority)">
+              {{ category.priority === 'critical' ? 'Critica' :
+                 category.priority === 'high' ? 'Alta' :
+                 category.priority === 'medium' ? 'Media' : 'Baja' }}
+            </span>
+            <svg class="accordion-header__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </button>
+
+        <div class="accordion-content" *ngIf="expandedCategory === category.id">
+          <table class="rules-table" role="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Regla</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rule of category.rules">
+                <td><code>{{ rule.id }}</code></td>
+                <td><strong>{{ rule.name }}</strong></td>
+                <td>{{ rule.description }}</td>
+                <td>
+                  <span class="score-badge" [ngClass]="getScoreClass(rule.score)">
+                    +{{ rule.score }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Senales Compuestas -->
+  <section class="doc-section" aria-labelledby="composite">
+    <h2 id="composite">Senales Compuestas</h2>
+    <p>
+      Las senales compuestas combinan multiples indicadores para detectar patrones de fraude
+      sofisticados que no serian evidentes con reglas individuales:
+    </p>
+
+    <div class="composite-grid">
+      <div class="composite-card" *ngFor="let signal of compositeSignals">
+        <div class="composite-card__header">
+          <code class="composite-card__id">{{ signal.id }}</code>
+          <span class="score-badge" [ngClass]="getScoreClass(signal.score)">
+            +{{ signal.score }}
+          </span>
+        </div>
+        <h3 class="composite-card__name">{{ signal.name }}</h3>
+        <p class="composite-card__combination">{{ signal.combination }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prioridades -->
+  <section class="doc-section" aria-labelledby="priorities">
+    <h2 id="priorities">Niveles de Prioridad</h2>
+    <table class="doc-table" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Prioridad</th>
+          <th scope="col">Peso</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Categorias</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="priority-badge priority-badge--critical">Critica</span></td>
+          <td>1.5x</td>
+          <td>Indicadores de fraude directo o ataques tecnicos</td>
+          <td>Pitufeo, Abuso API, Manipulacion Pagos, Botnets, Anomalias</td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge priority-badge--high">Alta</span></td>
+          <td>1.2x</td>
+          <td>Senales fuertes de riesgo que requieren atencion</td>
+          <td>IP/Red, Dispositivos, Beneficiarios, Fraude Interno, KYC</td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge priority-badge--medium">Media</span></td>
+          <td>1.0x</td>
+          <td>Indicadores de contexto y comportamiento</td>
+          <td>Promocional, Geografico, Operativos, Reputacional</td>
+        </tr>
+        <tr>
+          <td><span class="priority-badge priority-badge--low">Baja</span></td>
+          <td>0.8x</td>
+          <td>Senales tecnicas y de observabilidad</td>
+          <td>Observabilidad</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Personalizacion -->
+  <section class="doc-section" aria-labelledby="customization">
+    <h2 id="customization">Personalizacion de Reglas</h2>
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Configuracion por Comercio</h4>
+        <p>
+          Cada comercio puede personalizar los thresholds y pesos de las reglas desde la
+          Consola Administrativa. Contacta a tu ejecutivo de cuenta para habilitar reglas
+          personalizadas segun tu modelo de negocio.
+        </p>
+        <ul>
+          <li>Ajustar scores individuales por regla</li>
+          <li>Habilitar/deshabilitar categorias completas</li>
+          <li>Crear reglas custom basadas en tu historico</li>
+          <li>Definir whitelists para usuarios confiables</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proximos Pasos -->
+  <section class="doc-section" aria-labelledby="next-steps">
+    <h2 id="next-steps">Proximos Pasos</h2>
+    <nav class="next-steps" aria-label="Navegacion a proximas secciones">
+      <a routerLink="/security" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <div>
+          <h4>Shield Antifraude</h4>
+          <p>Volver al resumen general del sistema</p>
+        </div>
+      </a>
+
+      <a routerLink="/security/scoring" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+          <path d="M2 17l10 5 10-5"></path>
+          <path d="M2 12l10 5 10-5"></path>
+        </svg>
+        <div>
+          <h4>Sistema de Scoring</h4>
+          <p>Formula de calculo y matriz de decisiones</p>
+        </div>
+      </a>
+
+      <a routerLink="/security/api" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <div>
+          <h4>Referencia de API</h4>
+          <p>Endpoints y codigos de respuesta</p>
+        </div>
+      </a>
+    </nav>
+  </section>
+</article>

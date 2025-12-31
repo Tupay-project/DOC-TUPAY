@@ -31,6 +31,13 @@ import { IntroductionPageComponent } from './features/documentation/pages/introd
 import { AuthenticationPageComponent } from './features/documentation/pages/authentication-page/authentication-page.component';
 import { ErrorsPageComponent } from './features/documentation/pages/errors-page/errors-page.component';
 
+// Pages - Security (Shield Antifraude)
+import { SecurityOverviewComponent } from './features/security/pages/security-overview/security-overview.component';
+import { SecurityRulesComponent } from './features/security/pages/security-rules/security-rules.component';
+import { SecurityScoringComponent } from './features/security/pages/security-scoring/security-scoring.component';
+import { SecurityApiComponent } from './features/security/pages/security-api/security-api.component';
+import { SecurityIntegrationComponent } from './features/security/pages/security-integration/security-integration.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +56,13 @@ import { ErrorsPageComponent } from './features/documentation/pages/errors-page/
     EndpointDetailPageComponent,
     IntroductionPageComponent,
     AuthenticationPageComponent,
-    ErrorsPageComponent
+    ErrorsPageComponent,
+    // Security Pages
+    SecurityOverviewComponent,
+    SecurityRulesComponent,
+    SecurityScoringComponent,
+    SecurityApiComponent,
+    SecurityIntegrationComponent
   ],
   imports: [
     BrowserModule,

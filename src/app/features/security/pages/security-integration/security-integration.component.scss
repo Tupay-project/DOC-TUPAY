@@ -1,0 +1,227 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+@import '../../../documentation/pages/doc-page';
+
+// Flow Diagram
+.integration-flow {
+  margin-top: $spacing-4;
+}
+
+.flow-diagram {
+  background: $background-gray;
+  border-radius: $radius-lg;
+  overflow-x: auto;
+
+  .dark & {
+    background: $dark-surface;
+  }
+
+  pre {
+    margin: 0;
+    padding: $spacing-6;
+    font-family: $font-mono;
+    font-size: $text-sm;
+    line-height: 1.4;
+    color: #000000;
+    white-space: pre;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+}
+
+// Checklist
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  margin-top: $spacing-4;
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-3;
+    padding: $spacing-3 $spacing-4;
+    background: $background-gray;
+    border-radius: $radius-md;
+    transition: background $transition-base;
+
+    .dark & {
+      background: $dark-surface;
+    }
+
+    &:hover {
+      background: $border-gray;
+
+      .dark & {
+        background: $dark-surface-hover;
+      }
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: $text-secondary;
+      stroke-width: 2;
+
+      .dark & {
+        color: $dark-text-secondary;
+      }
+    }
+
+    span {
+      font-size: $text-sm;
+      color: #000000;
+
+      .dark & {
+        color: $dark-text-primary;
+      }
+    }
+  }
+}
+
+// FAQ List
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.faq-item {
+  @include card;
+  padding: $spacing-4;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  h3 {
+    margin: 0 0 $spacing-2 0 !important;
+    font-size: $text-base !important;
+    color: $primary-blue;
+
+    .dark & {
+      color: $primary-blue-light;
+    }
+  }
+
+  p {
+    margin: 0;
+    font-size: $text-sm;
+    line-height: $leading-relaxed;
+  }
+}
+
+// Support Grid
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.support-item {
+  @include card;
+  text-align: center;
+  padding: $spacing-6;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  &__icon {
+    @include flex-center;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto $spacing-3;
+    background: $primary-blue-lighter;
+    border-radius: $radius-full;
+
+    .dark & {
+      background: rgba($primary-blue, 0.15);
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      color: $primary-blue;
+      stroke-width: 2;
+
+      .dark & {
+        color: $primary-blue-light;
+      }
+    }
+  }
+
+  h4 {
+    margin: 0 0 $spacing-1 0 !important;
+    font-size: $text-base !important;
+  }
+
+  p {
+    margin: 0;
+    font-size: $text-sm;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+// Header badges
+.doc-header__badge {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.version-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  background: $primary-blue-lighter;
+  color: $primary-blue;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-sm;
+
+  .dark & {
+    background: rgba($primary-blue, 0.2);
+    color: $primary-blue-light;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-sm;
+
+  &--stable {
+    background: rgba($accent-green, 0.15);
+    color: $accent-green-dark;
+
+    .dark & {
+      color: $accent-green-light;
+    }
+  }
+}
+
+// Info box success variant
+.info-box--success {
+  background: $success-light;
+  border-left-color: $success;
+  color: $success-dark;
+
+  .dark & {
+    background: rgba($success, 0.15);
+    color: $success-light;
+  }
+
+  svg {
+    color: $success;
+  }
+}

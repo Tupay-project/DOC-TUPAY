@@ -1,0 +1,376 @@
+<article class="doc-page" role="main" aria-labelledby="scoring-title">
+  <header class="doc-header">
+    <div class="doc-header__badge">
+      <span class="version-badge">v2.5</span>
+      <span class="status-badge status-badge--stable">ML Enhanced</span>
+    </div>
+    <h1 id="scoring-title">Sistema de Scoring</h1>
+    <p class="doc-lead">
+      El sistema de scoring combina reglas deterministas con modelos de Machine Learning
+      para calcular un puntaje de riesgo entre 0 y 100 para cada transaccion.
+    </p>
+  </header>
+
+  <!-- Escala de Riesgo -->
+  <section class="doc-section" aria-labelledby="scale">
+    <h2 id="scale">Escala de Riesgo</h2>
+    <div class="risk-scale">
+      <div class="risk-scale__bar">
+        <div class="risk-scale__segment risk-scale__segment--allow">
+          <span class="risk-scale__label">ALLOW</span>
+          <span class="risk-scale__range">0-20</span>
+        </div>
+        <div class="risk-scale__segment risk-scale__segment--stepup">
+          <span class="risk-scale__label">STEP-UP</span>
+          <span class="risk-scale__range">21-50</span>
+        </div>
+        <div class="risk-scale__segment risk-scale__segment--hold">
+          <span class="risk-scale__label">HOLD</span>
+          <span class="risk-scale__range">51-80</span>
+        </div>
+        <div class="risk-scale__segment risk-scale__segment--block">
+          <span class="risk-scale__label">BLOCK</span>
+          <span class="risk-scale__range">81-100</span>
+        </div>
+      </div>
+      <div class="risk-scale__legend">
+        <span>Bajo riesgo</span>
+        <span>Riesgo critico</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formula de Calculo -->
+  <section class="doc-section" aria-labelledby="formula">
+    <h2 id="formula">Formula de Calculo</h2>
+    <div class="formula-box">
+      <code class="formula">Score = min(100, Σ (score_regla × peso_categoria) + bonus_ML)</code>
+    </div>
+
+    <h3>Componentes de la Formula</h3>
+    <table class="doc-table" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Componente</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Rango</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>score_regla</code></td>
+          <td>Puntaje base de cada regla activada</td>
+          <td>10 - 70</td>
+        </tr>
+        <tr>
+          <td><code>peso_categoria</code></td>
+          <td>Multiplicador segun prioridad de la categoria</td>
+          <td>0.8x - 1.5x</td>
+        </tr>
+        <tr>
+          <td><code>bonus_ML</code></td>
+          <td>Ajuste del modelo de Machine Learning basado en historico</td>
+          <td>-20 a +20</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Pesos por Categoria -->
+  <section class="doc-section" aria-labelledby="weights">
+    <h2 id="weights">Pesos por Categoria</h2>
+    <div class="weights-grid">
+      <div class="weight-card weight-card--critical">
+        <div class="weight-card__multiplier">1.5x</div>
+        <div class="weight-card__info">
+          <h4>Critica</h4>
+          <p>Pitufeo, Abuso API, Manipulacion Pagos, Botnets</p>
+        </div>
+      </div>
+      <div class="weight-card weight-card--high">
+        <div class="weight-card__multiplier">1.2x</div>
+        <div class="weight-card__info">
+          <h4>Alta</h4>
+          <p>Anomalias, IP/Red, Dispositivos, KYC</p>
+        </div>
+      </div>
+      <div class="weight-card weight-card--medium">
+        <div class="weight-card__multiplier">1.0x</div>
+        <div class="weight-card__info">
+          <h4>Media</h4>
+          <p>Geografico, Promocional, Reputacional</p>
+        </div>
+      </div>
+      <div class="weight-card weight-card--low">
+        <div class="weight-card__multiplier">0.8x</div>
+        <div class="weight-card__info">
+          <h4>Baja</h4>
+          <p>Observabilidad, Operativos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ejemplo de Calculo -->
+  <section class="doc-section" aria-labelledby="example">
+    <h2 id="example">Ejemplo de Calculo</h2>
+    <p>Veamos como se calcula el score para una transaccion real:</p>
+
+    <div class="calculation-example">
+      <pre>{{ calculationExample }}</pre>
+    </div>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Bonus ML Negativo</h4>
+        <p>
+          El modelo de ML puede reducir el score cuando detecta que el usuario tiene un
+          historico positivo. En este ejemplo, el usuario tiene 6 meses de transacciones
+          exitosas sin disputas, lo que reduce el score en 15 puntos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Matriz de Decision -->
+  <section class="doc-section" aria-labelledby="matrix">
+    <h2 id="matrix">Matriz de Decision</h2>
+    <table class="doc-table decision-matrix" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Score</th>
+          <th scope="col">Nivel</th>
+          <th scope="col">Accion</th>
+          <th scope="col">Descripcion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="score-range score-range--allow">0-20</span></td>
+          <td>Bajo</td>
+          <td><strong class="action action--allow">ALLOW</strong></td>
+          <td>Transaccion permitida sin friccion adicional</td>
+        </tr>
+        <tr>
+          <td><span class="score-range score-range--stepup">21-50</span></td>
+          <td>Medio</td>
+          <td><strong class="action action--stepup">STEP-UP</strong></td>
+          <td>Requiere verificacion adicional (OTP, biometrico)</td>
+        </tr>
+        <tr>
+          <td><span class="score-range score-range--hold">51-80</span></td>
+          <td>Alto</td>
+          <td><strong class="action action--hold">HOLD</strong></td>
+          <td>Retenida para revision manual (SLA: 4h)</td>
+        </tr>
+        <tr>
+          <td><span class="score-range score-range--block">81-100</span></td>
+          <td>Critico</td>
+          <td><strong class="action action--block">BLOCK</strong></td>
+          <td>Rechazada automaticamente por alto riesgo</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Metodos de Step-Up -->
+  <section class="doc-section" aria-labelledby="stepup">
+    <h2 id="stepup">Metodos de Step-Up</h2>
+    <p>Cuando el score cae en el rango STEP-UP (21-50), se solicita verificacion adicional:</p>
+
+    <div class="stepup-methods">
+      <div class="stepup-method">
+        <div class="stepup-method__icon">📱</div>
+        <div class="stepup-method__content">
+          <h4>OTP SMS</h4>
+          <p>Codigo de 6 digitos enviado por SMS</p>
+          <span class="stepup-method__range">Score: 21-35</span>
+        </div>
+      </div>
+      <div class="stepup-method">
+        <div class="stepup-method__icon">📧</div>
+        <div class="stepup-method__content">
+          <h4>OTP Email</h4>
+          <p>Codigo de 6 digitos enviado por correo</p>
+          <span class="stepup-method__range">Score: 21-35 (sin movil)</span>
+        </div>
+      </div>
+      <div class="stepup-method">
+        <div class="stepup-method__icon">👆</div>
+        <div class="stepup-method__content">
+          <h4>Biometrico</h4>
+          <p>Face ID / Touch ID en dispositivo movil</p>
+          <span class="stepup-method__range">Score: 36-50</span>
+        </div>
+      </div>
+      <div class="stepup-method">
+        <div class="stepup-method__icon">❓</div>
+        <div class="stepup-method__content">
+          <h4>Preguntas de Seguridad</h4>
+          <p>Validacion de datos personales</p>
+          <span class="stepup-method__range">Score: 36-50 (fallback)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modelo ML -->
+  <section class="doc-section" aria-labelledby="ml">
+    <h2 id="ml">Modelo de Machine Learning</h2>
+    <p>
+      El componente ML del scoring aprende continuamente del comportamiento de los usuarios
+      para mejorar la precision de las decisiones:
+    </p>
+
+    <div class="ml-features">
+      <div class="ml-feature">
+        <h4>Caracteristicas del Usuario</h4>
+        <ul>
+          <li>Antiguedad de la cuenta</li>
+          <li>Volumen historico de transacciones</li>
+          <li>Ratio de transacciones exitosas</li>
+          <li>Frecuencia de uso habitual</li>
+          <li>Montos tipicos de operacion</li>
+        </ul>
+      </div>
+      <div class="ml-feature">
+        <h4>Caracteristicas de la Transaccion</h4>
+        <ul>
+          <li>Hora del dia y dia de la semana</li>
+          <li>Similitud con transacciones previas</li>
+          <li>Consistencia geografica</li>
+          <li>Patron de dispositivos</li>
+          <li>Historial del beneficiario</li>
+        </ul>
+      </div>
+      <div class="ml-feature">
+        <h4>Senales de Red</h4>
+        <ul>
+          <li>Comportamiento de usuarios similares</li>
+          <li>Tendencias de fraude actuales</li>
+          <li>Patrones emergentes</li>
+          <li>Correlacion con otros comercios</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box info-box--warning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <div>
+        <h4>Mejora Continua</h4>
+        <p>
+          Para que el modelo ML mejore su precision, es importante notificar el resultado
+          final de cada transaccion mediante el endpoint <code>POST /notify</code>,
+          especialmente los casos de fraude confirmado y chargebacks.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Thresholds Personalizados -->
+  <section class="doc-section" aria-labelledby="thresholds">
+    <h2 id="thresholds">Thresholds Personalizados</h2>
+    <p>
+      Los rangos de score pueden personalizarse por comercio segun su apetito de riesgo:
+    </p>
+
+    <table class="doc-table" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Perfil</th>
+          <th scope="col">ALLOW</th>
+          <th scope="col">STEP-UP</th>
+          <th scope="col">HOLD</th>
+          <th scope="col">BLOCK</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Conservador</strong></td>
+          <td>0-15</td>
+          <td>16-40</td>
+          <td>41-70</td>
+          <td>71-100</td>
+        </tr>
+        <tr>
+          <td><strong>Estandar</strong></td>
+          <td>0-20</td>
+          <td>21-50</td>
+          <td>51-80</td>
+          <td>81-100</td>
+        </tr>
+        <tr>
+          <td><strong>Agresivo</strong></td>
+          <td>0-30</td>
+          <td>31-60</td>
+          <td>61-85</td>
+          <td>86-100</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Configuracion por Categoria</h4>
+        <p>
+          Ademas de los thresholds globales, puedes configurar excepciones por categoria
+          de producto (bienes digitales vs fisicos), monto de transaccion, o canal
+          (web vs app). Contacta a tu ejecutivo de cuenta para ajustar tu perfil.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proximos Pasos -->
+  <section class="doc-section" aria-labelledby="next-steps">
+    <h2 id="next-steps">Proximos Pasos</h2>
+    <nav class="next-steps" aria-label="Navegacion a proximas secciones">
+      <a routerLink="/security/rules" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+        </svg>
+        <div>
+          <h4>Motor de Reglas</h4>
+          <p>Catalogo completo de 150+ reglas</p>
+        </div>
+      </a>
+
+      <a routerLink="/security/api" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <div>
+          <h4>Referencia de API</h4>
+          <p>Endpoints y codigos de respuesta</p>
+        </div>
+      </a>
+
+      <a routerLink="/security/integration" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        <div>
+          <h4>Guia de Integracion</h4>
+          <p>Implementacion paso a paso</p>
+        </div>
+      </a>
+    </nav>
+  </section>
+</article>

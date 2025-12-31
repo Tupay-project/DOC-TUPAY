@@ -1,0 +1,360 @@
+<article class="doc-page" role="main" aria-labelledby="security-title">
+  <header class="doc-header">
+    <div class="doc-header__badge">
+      <span class="version-badge">v2.5</span>
+      <span class="status-badge status-badge--stable">Estable</span>
+    </div>
+    <h1 id="security-title">Shield Antifraude</h1>
+    <p class="doc-lead">
+      Sistema de analisis de fraude en tiempo real que combina Scoring basado en IA,
+      motor de reglas de decision y conexion a terceros para proteger las transacciones
+      contra ciberdelincuentes.
+    </p>
+  </header>
+
+  <!-- Metricas Clave -->
+  <section class="doc-section" aria-labelledby="metrics">
+    <h2 id="metrics">Metricas Clave</h2>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-card__value">&lt; 50ms</div>
+        <div class="metric-card__label">Tiempo de respuesta</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__value">150+</div>
+        <div class="metric-card__label">Reglas configurables</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__value">15</div>
+        <div class="metric-card__label">Categorias de riesgo</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card__value">99.9%</div>
+        <div class="metric-card__label">Disponibilidad</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capacidades -->
+  <section class="doc-section" aria-labelledby="capabilities">
+    <h2 id="capabilities">Capacidades del Sistema</h2>
+    <div class="feature-grid" role="list">
+      <div class="feature-item" role="listitem">
+        <div class="feature-icon feature-icon--blue" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <h3>Analisis en tiempo real</h3>
+        <p>Evaluacion de transacciones en menos de 50ms con respuesta instantanea.</p>
+      </div>
+
+      <div class="feature-item" role="listitem">
+        <div class="feature-icon feature-icon--cyan" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+          </svg>
+        </div>
+        <h3>Motor de reglas configurable</h3>
+        <p>Mas de 150 reglas predefinidas en 15 categorias, personalizables por comercio.</p>
+      </div>
+
+      <div class="feature-item" role="listitem">
+        <div class="feature-icon feature-icon--purple" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <h3>Scoring inteligente</h3>
+        <p>Sistema de puntuacion basado en Machine Learning que aprende de cada transaccion.</p>
+      </div>
+
+      <div class="feature-item" role="listitem">
+        <div class="feature-icon feature-icon--green" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <h3>Cumplimiento regulatorio</h3>
+        <p>Alineado con normativas AML/CFT de Guatemala y Republica Dominicana.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Arquitectura -->
+  <section class="doc-section" aria-labelledby="architecture">
+    <h2 id="architecture">Arquitectura del Sistema</h2>
+    <div class="architecture-diagram">
+      <pre class="diagram-ascii">
+┌─────────────┐    ┌─────────────┐    ┌─────────────────────────────────────┐
+│  Comercio   │───▶│   Gateway   │───▶│           SHIELD API                │
+└─────────────┘    └─────────────┘    │  ┌─────────────────────────────────┐│
+                                      │  │        Motor de Analisis        ││
+                                      │  │ ┌───────────┬─────────┬───────┐ ││
+                                      │  │ │Enrichment │ Rules   │Scoring│ ││
+                                      │  │ │  Engine   │ Engine  │Engine │ ││
+                                      │  │ └───────────┴─────────┴───────┘ ││
+                                      │  └─────────────────────────────────┘│
+                                      └─────────────────────────────────────┘
+                                                        │
+                          ┌─────────────────────────────┼─────────────────────────────┐
+                          ▼                             ▼                             ▼
+                   ┌─────────────┐              ┌─────────────┐              ┌─────────────┐
+                   │  Historico  │              │   Listas    │              │  Terceros   │
+                   │  (Profiles) │              │ Black/White │              │   (APIs)    │
+                   └─────────────┘              └─────────────┘              └─────────────┘</pre>
+    </div>
+
+    <h3>Componentes Principales</h3>
+    <table class="doc-table" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Componente</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Tiempo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>API Gateway</strong></td>
+          <td>Autenticacion, rate limiting, validacion de esquemas</td>
+          <td>~5ms</td>
+        </tr>
+        <tr>
+          <td><strong>Context Builder</strong></td>
+          <td>Enriquecimiento con perfil de usuario e IP intelligence</td>
+          <td>~10ms</td>
+        </tr>
+        <tr>
+          <td><strong>Motor de Reglas</strong></td>
+          <td>Evaluacion de reglas simples y senales compuestas</td>
+          <td>~15ms</td>
+        </tr>
+        <tr>
+          <td><strong>Scoring Engine</strong></td>
+          <td>Calculo de score final y determinacion de accion</td>
+          <td>~10ms</td>
+        </tr>
+        <tr>
+          <td><strong>Response Handler</strong></td>
+          <td>Formateo de respuesta y registro de auditoria</td>
+          <td>~5ms</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Flujos de Validacion -->
+  <section class="doc-section" aria-labelledby="flows">
+    <h2 id="flows">Flujos de Validacion</h2>
+    <p>Shield soporta cuatro flujos de validacion dependiendo del resultado del analisis de riesgo:</p>
+
+    <div class="flow-cards">
+      <div class="flow-card flow-card--allow">
+        <div class="flow-card__header">
+          <span class="flow-card__icon">✅</span>
+          <h3>ALLOW</h3>
+          <span class="flow-card__score">Score: 0-20</span>
+        </div>
+        <div class="flow-card__body">
+          <p><strong>Sin Friccion</strong></p>
+          <p>Transaccion aprobada automaticamente. No requiere intervencion del usuario.</p>
+          <p class="flow-card__time">Tiempo agregado: &lt; 50ms</p>
+        </div>
+      </div>
+
+      <div class="flow-card flow-card--stepup">
+        <div class="flow-card__header">
+          <span class="flow-card__icon">🔐</span>
+          <h3>STEP-UP</h3>
+          <span class="flow-card__score">Score: 21-50</span>
+        </div>
+        <div class="flow-card__body">
+          <p><strong>Verificacion Adicional</strong></p>
+          <p>Requiere OTP por SMS, verificacion por email o validacion biometrica.</p>
+          <p class="flow-card__time">Timeout: 5 minutos</p>
+        </div>
+      </div>
+
+      <div class="flow-card flow-card--hold">
+        <div class="flow-card__header">
+          <span class="flow-card__icon">⏸️</span>
+          <h3>HOLD</h3>
+          <span class="flow-card__score">Score: 51-80</span>
+        </div>
+        <div class="flow-card__body">
+          <p><strong>Revision Manual</strong></p>
+          <p>Transaccion retenida para revision por analista de fraude.</p>
+          <p class="flow-card__time">SLA: 4 horas</p>
+        </div>
+      </div>
+
+      <div class="flow-card flow-card--block">
+        <div class="flow-card__header">
+          <span class="flow-card__icon">🚫</span>
+          <h3>BLOCK</h3>
+          <span class="flow-card__score">Score: 81-100</span>
+        </div>
+        <div class="flow-card__body">
+          <p><strong>Rechazo Inmediato</strong></p>
+          <p>Transaccion bloqueada automaticamente por alto riesgo.</p>
+          <p class="flow-card__time">Registro en lista gris</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integraciones Externas -->
+  <section class="doc-section" aria-labelledby="integrations">
+    <h2 id="integrations">Integraciones Externas</h2>
+    <table class="doc-table" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Servicio</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Proposito</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>MaxMind GeoIP2</td>
+          <td>IP Intelligence</td>
+          <td>Geolocalizacion y deteccion de proxies/VPN</td>
+        </tr>
+        <tr>
+          <td>Device Fingerprint</td>
+          <td>Device Intelligence</td>
+          <td>Identificacion de dispositivos y emuladores</td>
+        </tr>
+        <tr>
+          <td>Email Reputation</td>
+          <td>Identity Verification</td>
+          <td>Validacion de emails y deteccion de temporales</td>
+        </tr>
+        <tr>
+          <td>Bureaus de Credito</td>
+          <td>Risk Assessment</td>
+          <td>Validacion contra centrales de riesgo</td>
+        </tr>
+        <tr>
+          <td>Listas OFAC/ONU</td>
+          <td>Compliance</td>
+          <td>Verificacion contra listas de sanciones</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="doc-section" aria-labelledby="quickstart">
+    <h2 id="quickstart">Quick Start</h2>
+    <p>Valida tu primera transaccion con Shield Antifraude:</p>
+
+    <div class="steps-vertical">
+      <div class="step-vertical">
+        <div class="step-vertical__number">1</div>
+        <div class="step-vertical__content">
+          <h3>Envia la peticion de validacion</h3>
+          <app-code-block
+            [code]="validateRequestExample"
+            language="curl"
+            title="POST /validate">
+          </app-code-block>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">2</div>
+        <div class="step-vertical__content">
+          <h3>Procesa la respuesta</h3>
+          <app-code-block
+            [code]="validateResponseExample"
+            language="json"
+            title="Respuesta exitosa">
+          </app-code-block>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">3</div>
+        <div class="step-vertical__content">
+          <h3>Actua segun la decision</h3>
+          <ul>
+            <li><strong>ALLOW:</strong> Continua con el procesamiento del pago</li>
+            <li><strong>STEP_UP:</strong> Solicita verificacion adicional al usuario</li>
+            <li><strong>HOLD:</strong> Muestra mensaje de "En revision"</li>
+            <li><strong>BLOCK:</strong> Muestra mensaje de "Rechazado"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mercados Soportados -->
+  <section class="doc-section" aria-labelledby="markets">
+    <h2 id="markets">Mercados Soportados</h2>
+    <table class="doc-table" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Pais</th>
+          <th scope="col">Regulacion</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Guatemala</td>
+          <td>SIB / IVE</td>
+          <td><span class="status-pill status-pill--active">Activo</span></td>
+        </tr>
+        <tr>
+          <td>Republica Dominicana</td>
+          <td>SB / UAF</td>
+          <td><span class="status-pill status-pill--active">Activo</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Proximos Pasos -->
+  <section class="doc-section" aria-labelledby="next-steps">
+    <h2 id="next-steps">Proximos Pasos</h2>
+    <nav class="next-steps" aria-label="Navegacion a proximas secciones">
+      <a routerLink="/security/rules" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+        </svg>
+        <div>
+          <h4>Motor de Reglas</h4>
+          <p>Catalogo completo de 150+ reglas en 15 categorias</p>
+        </div>
+      </a>
+
+      <a routerLink="/security/scoring" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+          <path d="M2 17l10 5 10-5"></path>
+          <path d="M2 12l10 5 10-5"></path>
+        </svg>
+        <div>
+          <h4>Sistema de Scoring</h4>
+          <p>Formula de calculo y matriz de decisiones</p>
+        </div>
+      </a>
+
+      <a routerLink="/security/api" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <div>
+          <h4>Referencia de API</h4>
+          <p>Endpoints, autenticacion y codigos de error</p>
+        </div>
+      </a>
+    </nav>
+  </section>
+</article>

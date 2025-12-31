@@ -1,0 +1,282 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+@import '../../../documentation/pages/doc-page';
+
+// Metrics Grid
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.metric-card {
+  @include card;
+  text-align: center;
+  padding: $spacing-6;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  &__value {
+    font-size: $text-3xl;
+    font-weight: $font-bold;
+    color: $primary-blue;
+    margin-bottom: $spacing-2;
+
+    .dark & {
+      color: $primary-blue-light;
+    }
+  }
+
+  &__label {
+    font-size: $text-sm;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+// Architecture Diagram
+.architecture-diagram {
+  margin-top: $spacing-4;
+  overflow-x: auto;
+}
+
+.diagram-ascii {
+  background: $background-gray;
+  padding: $spacing-6;
+  border-radius: $radius-lg;
+  font-family: $font-mono;
+  font-size: $text-sm;
+  line-height: 1.4;
+  color: #000000;
+  overflow-x: auto;
+  white-space: pre;
+
+  .dark & {
+    background: $dark-surface;
+    color: $dark-text-primary;
+  }
+}
+
+// Flow Cards
+.flow-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: $spacing-4;
+  margin-top: $spacing-6;
+}
+
+.flow-card {
+  @include card;
+  overflow: hidden;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-4;
+    border-bottom: 1px solid $border-gray;
+
+    .dark & {
+      border-bottom-color: $dark-border;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: $text-lg;
+      font-weight: $font-bold;
+      flex: 1;
+    }
+  }
+
+  &__icon {
+    font-size: $text-2xl;
+  }
+
+  &__score {
+    font-size: $text-xs;
+    padding: $spacing-1 $spacing-2;
+    border-radius: $radius-full;
+    background: $background-gray;
+    color: $text-secondary;
+
+    .dark & {
+      background: $dark-surface-elevated;
+      color: $dark-text-secondary;
+    }
+  }
+
+  &__body {
+    padding: $spacing-4;
+
+    p {
+      margin: 0 0 $spacing-2 0;
+      font-size: $text-sm;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__time {
+    font-size: $text-xs !important;
+    color: $text-secondary !important;
+
+    .dark & {
+      color: $dark-text-secondary !important;
+    }
+  }
+
+  // Flow card variants
+  &--allow {
+    border-left: 4px solid $accent-green;
+
+    .flow-card__header h3 {
+      color: $accent-green-dark;
+
+      .dark & {
+        color: $accent-green-light;
+      }
+    }
+  }
+
+  &--stepup {
+    border-left: 4px solid $warning;
+
+    .flow-card__header h3 {
+      color: $warning-dark;
+
+      .dark & {
+        color: $warning-light;
+      }
+    }
+  }
+
+  &--hold {
+    border-left: 4px solid $info;
+
+    .flow-card__header h3 {
+      color: $info-dark;
+
+      .dark & {
+        color: $info-light;
+      }
+    }
+  }
+
+  &--block {
+    border-left: 4px solid $error;
+
+    .flow-card__header h3 {
+      color: $error-dark;
+
+      .dark & {
+        color: $error-light;
+      }
+    }
+  }
+}
+
+// Status Pills
+.status-pill {
+  display: inline-block;
+  padding: $spacing-1 $spacing-3;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-medium;
+
+  &--active {
+    background: rgba($accent-green, 0.15);
+    color: $accent-green-dark;
+
+    .dark & {
+      color: $accent-green-light;
+    }
+  }
+
+  &--soon {
+    background: rgba($warning, 0.15);
+    color: $warning-dark;
+
+    .dark & {
+      color: $warning-light;
+    }
+  }
+
+  &--planned {
+    background: rgba($info, 0.15);
+    color: $info-dark;
+
+    .dark & {
+      color: $info-light;
+    }
+  }
+}
+
+// Version and Status Badges
+.doc-header__badge {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.version-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  background: $primary-blue-lighter;
+  color: $primary-blue;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-sm;
+
+  .dark & {
+    background: rgba($primary-blue, 0.2);
+    color: $primary-blue-light;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-sm;
+
+  &--stable {
+    background: rgba($accent-green, 0.15);
+    color: $accent-green-dark;
+
+    .dark & {
+      color: $accent-green-light;
+    }
+  }
+
+  &--beta {
+    background: rgba($warning, 0.15);
+    color: $warning-dark;
+
+    .dark & {
+      color: $warning-light;
+    }
+  }
+}
+
+// Purple icon variant
+.feature-icon--purple {
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+
+  .dark & {
+    background: rgba(139, 92, 246, 0.15);
+    color: #a78bfa;
+  }
+}

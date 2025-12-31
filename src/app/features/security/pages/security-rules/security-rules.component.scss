@@ -1,0 +1,431 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+@import '../../../documentation/pages/doc-page';
+
+// Category Summary
+.category-summary {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  margin-top: $spacing-4;
+
+  &__item {
+    display: grid;
+    grid-template-columns: 40px 1fr auto auto;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-3 $spacing-4;
+    background: $background-gray;
+    border-radius: $radius-md;
+    transition: background $transition-base;
+
+    .dark & {
+      background: $dark-surface;
+    }
+
+    &:hover {
+      background: $border-gray;
+
+      .dark & {
+        background: $dark-surface-hover;
+      }
+    }
+  }
+
+  &__icon {
+    font-size: $text-xl;
+    text-align: center;
+  }
+
+  &__name {
+    font-weight: $font-medium;
+    color: #000000;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__count {
+    font-size: $text-sm;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+// Priority Badges
+.priority-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-full;
+
+  &--critical {
+    background: rgba($error, 0.15);
+    color: $error-dark;
+
+    .dark & {
+      color: $error-light;
+    }
+  }
+
+  &--high {
+    background: rgba($warning, 0.15);
+    color: $warning-dark;
+
+    .dark & {
+      color: $warning-light;
+    }
+  }
+
+  &--medium {
+    background: rgba($info, 0.15);
+    color: $info-dark;
+
+    .dark & {
+      color: $info-light;
+    }
+  }
+
+  &--low {
+    background: rgba($accent-green, 0.15);
+    color: $accent-green-dark;
+
+    .dark & {
+      color: $accent-green-light;
+    }
+  }
+}
+
+// Accordion
+.rules-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  margin-top: $spacing-4;
+}
+
+.accordion-item {
+  border: 1px solid $border-gray;
+  border-radius: $radius-lg;
+  overflow: hidden;
+
+  .dark & {
+    border-color: $dark-border;
+  }
+
+  &--expanded {
+    .accordion-header__chevron {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-4;
+  background: $background-gray;
+  border: none;
+  cursor: pointer;
+  transition: background $transition-base;
+
+  .dark & {
+    background: $dark-surface;
+  }
+
+  &:hover {
+    background: $border-gray;
+
+    .dark & {
+      background: $dark-surface-hover;
+    }
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+  }
+
+  &__icon {
+    font-size: $text-2xl;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__number {
+    @include flex-center;
+    width: 28px;
+    height: 28px;
+    background: $primary-blue;
+    color: white;
+    font-size: $text-sm;
+    font-weight: $font-bold;
+    border-radius: $radius-full;
+  }
+
+  &__name {
+    font-weight: $font-semibold;
+    color: #000000;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+  }
+
+  &__count {
+    font-size: $text-sm;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+
+  &__chevron {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+    color: $text-secondary;
+    transition: transform $transition-base;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+.accordion-content {
+  padding: $spacing-4;
+  border-top: 1px solid $border-gray;
+  background: white;
+
+  .dark & {
+    border-top-color: $dark-border;
+    background: $dark-background;
+  }
+}
+
+// Rules Table
+.rules-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $text-sm;
+
+  thead {
+    th {
+      padding: $spacing-3;
+      text-align: left;
+      font-weight: $font-semibold;
+      color: $text-secondary;
+      border-bottom: 2px solid $border-gray;
+
+      .dark & {
+        color: $dark-text-secondary;
+        border-bottom-color: $dark-border;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $border-gray;
+
+      .dark & {
+        border-bottom-color: $dark-border;
+      }
+
+      &:hover {
+        background: $background-gray;
+
+        .dark & {
+          background: $dark-surface;
+        }
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: $spacing-3;
+      color: #000000;
+
+      .dark & {
+        color: $dark-text-primary;
+      }
+
+      code {
+        @include inline-code;
+        font-size: $text-xs;
+      }
+    }
+  }
+}
+
+// Score Badge
+.score-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  font-size: $text-xs;
+  font-weight: $font-bold;
+  border-radius: $radius-sm;
+  font-family: $font-mono;
+
+  &.score--high {
+    background: rgba($error, 0.15);
+    color: $error-dark;
+
+    .dark & {
+      color: $error-light;
+    }
+  }
+
+  &.score--medium {
+    background: rgba($warning, 0.15);
+    color: $warning-dark;
+
+    .dark & {
+      color: $warning-light;
+    }
+  }
+
+  &.score--low {
+    background: rgba($accent-green, 0.15);
+    color: $accent-green-dark;
+
+    .dark & {
+      color: $accent-green-light;
+    }
+  }
+}
+
+// Composite Cards
+.composite-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-4;
+  margin-top: $spacing-6;
+}
+
+.composite-card {
+  @include card;
+  padding: $spacing-4;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-2;
+  }
+
+  &__id {
+    @include inline-code;
+    font-size: $text-xs;
+  }
+
+  &__name {
+    margin: 0 0 $spacing-2 0 !important;
+    font-size: $text-lg !important;
+  }
+
+  &__combination {
+    margin: 0;
+    font-size: $text-sm;
+    color: $text-secondary;
+    line-height: $leading-relaxed;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+// Version badge
+.doc-header__badge {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.version-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  background: $primary-blue-lighter;
+  color: $primary-blue;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-sm;
+
+  .dark & {
+    background: rgba($primary-blue, 0.2);
+    color: $primary-blue-light;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-sm;
+
+  &--stable {
+    background: rgba($accent-green, 0.15);
+    color: $accent-green-dark;
+
+    .dark & {
+      color: $accent-green-light;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .category-summary__item {
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .category-summary__count,
+  .category-summary__item .priority-badge {
+    grid-column: 2;
+  }
+
+  .accordion-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-3;
+
+    &__right {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+
+  .rules-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

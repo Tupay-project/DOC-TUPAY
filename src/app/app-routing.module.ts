@@ -8,6 +8,13 @@ import { IntroductionPageComponent } from './features/documentation/pages/introd
 import { AuthenticationPageComponent } from './features/documentation/pages/authentication-page/authentication-page.component';
 import { ErrorsPageComponent } from './features/documentation/pages/errors-page/errors-page.component';
 
+// Security Pages
+import { SecurityOverviewComponent } from './features/security/pages/security-overview/security-overview.component';
+import { SecurityRulesComponent } from './features/security/pages/security-rules/security-rules.component';
+import { SecurityScoringComponent } from './features/security/pages/security-scoring/security-scoring.component';
+import { SecurityApiComponent } from './features/security/pages/security-api/security-api.component';
+import { SecurityIntegrationComponent } from './features/security/pages/security-integration/security-integration.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -54,6 +61,32 @@ const routes: Routes = [
       {
         path: ':category/:endpointId',
         component: EndpointDetailPageComponent
+      }
+    ]
+  },
+  {
+    path: 'security',
+    component: DocsLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: SecurityOverviewComponent
+      },
+      {
+        path: 'rules',
+        component: SecurityRulesComponent
+      },
+      {
+        path: 'scoring',
+        component: SecurityScoringComponent
+      },
+      {
+        path: 'api',
+        component: SecurityApiComponent
+      },
+      {
+        path: 'integration',
+        component: SecurityIntegrationComponent
       }
     ]
   },

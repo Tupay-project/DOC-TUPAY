@@ -1,0 +1,187 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+@import '../../../documentation/pages/doc-page';
+
+// Environment Badges
+.env-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-sm;
+
+  &--prod {
+    background: rgba($accent-green, 0.15);
+    color: $accent-green-dark;
+
+    .dark & {
+      color: $accent-green-light;
+    }
+  }
+
+  &--sandbox {
+    background: rgba($warning, 0.15);
+    color: $warning-dark;
+
+    .dark & {
+      color: $warning-light;
+    }
+  }
+}
+
+// Response Tabs
+.response-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.response-tab {
+  border: 1px solid $border-gray;
+  border-radius: $radius-lg;
+  overflow: hidden;
+
+  .dark & {
+    border-color: $dark-border;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-3 $spacing-4;
+    font-weight: $font-semibold;
+
+    &--allow {
+      background: rgba($accent-green, 0.1);
+      border-bottom: 2px solid $accent-green;
+    }
+
+    &--stepup {
+      background: rgba($warning, 0.1);
+      border-bottom: 2px solid $warning;
+    }
+
+    &--hold {
+      background: rgba($info, 0.1);
+      border-bottom: 2px solid $info;
+    }
+
+    &--block {
+      background: rgba($error, 0.1);
+      border-bottom: 2px solid $error;
+    }
+  }
+
+  &__action {
+    font-family: $font-mono;
+  }
+
+  &__code {
+    font-size: $text-sm;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+
+  app-code-block {
+    ::ng-deep .code-block {
+      border-radius: 0;
+      border: none;
+    }
+  }
+}
+
+// Action Badges
+.action-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  font-size: $text-xs;
+  font-weight: $font-bold;
+  border-radius: $radius-sm;
+  font-family: $font-mono;
+
+  &--allow {
+    background: rgba($accent-green, 0.15);
+    color: $accent-green-dark;
+
+    .dark & {
+      color: $accent-green-light;
+    }
+  }
+
+  &--stepup {
+    background: rgba($warning, 0.15);
+    color: $warning-dark;
+
+    .dark & {
+      color: $warning-light;
+    }
+  }
+
+  &--hold {
+    background: rgba($info, 0.15);
+    color: $info-dark;
+
+    .dark & {
+      color: $info-light;
+    }
+  }
+
+  &--block {
+    background: rgba($error, 0.15);
+    color: $error-dark;
+
+    .dark & {
+      color: $error-light;
+    }
+  }
+}
+
+// Header badges
+.doc-header__badge {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.version-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  background: $primary-blue-lighter;
+  color: $primary-blue;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-sm;
+
+  .dark & {
+    background: rgba($primary-blue, 0.2);
+    color: $primary-blue-light;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: $spacing-1 $spacing-2;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-sm;
+
+  &--stable {
+    background: rgba($accent-green, 0.15);
+    color: $accent-green-dark;
+
+    .dark & {
+      color: $accent-green-light;
+    }
+  }
+}
+
+// Improve code readability in tables
+.doc-table {
+  code {
+    white-space: nowrap;
+  }
+}

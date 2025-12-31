@@ -1,0 +1,469 @@
+<article class="doc-page" role="main" aria-labelledby="integration-title">
+  <header class="doc-header">
+    <div class="doc-header__badge">
+      <span class="version-badge">Node.js</span>
+      <span class="status-badge status-badge--stable">Guia Completa</span>
+    </div>
+    <h1 id="integration-title">Guia de Integracion</h1>
+    <p class="doc-lead">
+      Implementa Shield Antifraude en tu flujo de pagos paso a paso.
+      Esta guia te llevara desde la configuracion inicial hasta la produccion.
+    </p>
+  </header>
+
+  <!-- Flujo de Integracion -->
+  <section class="doc-section" aria-labelledby="flow">
+    <h2 id="flow">Flujo de Integracion</h2>
+    <div class="integration-flow">
+      <div class="flow-diagram">
+        <pre>
+┌─────────────────────────────────────────────────────────────────────┐
+│                          FLUJO DE PAGO                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  1. Usuario inicia pago                                             │
+│         │                                                           │
+│         ▼                                                           │
+│  2. Recolectar datos (tarjeta, device fingerprint)                  │
+│         │                                                           │
+│         ▼                                                           │
+│  3. ──▶ POST /validate (Shield) ◀── Evaluar riesgo                  │
+│         │                                                           │
+│         ├── ALLOW ──▶ Continuar a procesador                        │
+│         │                                                           │
+│         ├── STEP_UP ──▶ Solicitar OTP ──▶ Verificar ──▶ Continuar   │
+│         │                                                           │
+│         ├── HOLD ──▶ Mostrar "En revision" ──▶ Webhook posterior    │
+│         │                                                           │
+│         └── BLOCK ──▶ Mostrar "Rechazado"                           │
+│                                                                     │
+│  4. Procesar pago con adquirente                                    │
+│         │                                                           │
+│         ▼                                                           │
+│  5. ──▶ POST /notify (Shield) ◀── Informar resultado                │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paso 1: Obtener Credenciales -->
+  <section class="doc-section" aria-labelledby="step1">
+    <h2 id="step1">Paso 1: Obtener Credenciales</h2>
+
+    <div class="steps-vertical">
+      <div class="step-vertical">
+        <div class="step-vertical__number">1</div>
+        <div class="step-vertical__content">
+          <h3>Acceder a la Consola</h3>
+          <p>
+            Ingresa a la <a href="https://console.tupay.finance" target="_blank">Consola de TuPay</a>
+            con tu cuenta de comercio.
+          </p>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">2</div>
+        <div class="step-vertical__content">
+          <h3>Crear API Key</h3>
+          <p>
+            Navega a <strong>Configuracion → Shield Antifraude → API Keys</strong> y crea una nueva
+            API Key para el ambiente deseado (Sandbox o Produccion).
+          </p>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">3</div>
+        <div class="step-vertical__content">
+          <h3>Guardar de forma segura</h3>
+          <p>
+            Guarda la API Key en un lugar seguro. Usa variables de entorno en tu servidor,
+            nunca la expongas en codigo del cliente.
+          </p>
+          <div class="info-box info-box--warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <div>
+              <h4>Seguridad</h4>
+              <p>
+                La API Key tiene acceso completo a Shield. Nunca la compartas ni la incluyas
+                en repositorios publicos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paso 2: Device Fingerprint -->
+  <section class="doc-section" aria-labelledby="step2">
+    <h2 id="step2">Paso 2: Implementar Device Fingerprint</h2>
+    <p>
+      El Device Fingerprint mejora significativamente la precision del analisis de riesgo.
+      Incluye el SDK en tu pagina de checkout:
+    </p>
+
+    <app-code-block
+      [code]="fingerprintCode"
+      language="html"
+      title="Frontend - Checkout page">
+    </app-code-block>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Site ID</h4>
+        <p>
+          Obtén tu <code>siteId</code> desde la Consola en <strong>Shield → Configuracion → SDK</strong>.
+          Es diferente para Sandbox y Produccion.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paso 3: Integracion Backend -->
+  <section class="doc-section" aria-labelledby="step3">
+    <h2 id="step3">Paso 3: Integracion en Backend</h2>
+    <p>
+      Implementa la validacion de Shield en tu flujo de checkout:
+    </p>
+
+    <app-code-block
+      [code]="nodeIntegration"
+      language="javascript"
+      title="Node.js - Express">
+    </app-code-block>
+  </section>
+
+  <!-- Paso 4: Step-Up Flow -->
+  <section class="doc-section" aria-labelledby="step4">
+    <h2 id="step4">Paso 4: Manejar Step-Up</h2>
+    <p>
+      Cuando Shield retorna <code>STEP_UP</code>, debes solicitar verificacion adicional al usuario:
+    </p>
+
+    <app-code-block
+      [code]="stepUpFlow"
+      language="javascript"
+      title="Verificacion OTP">
+    </app-code-block>
+
+    <h3>Metodos de Step-Up</h3>
+    <table class="doc-table" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Metodo</th>
+          <th scope="col">Cuando usar</th>
+          <th scope="col">Timeout</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>OTP_SMS</code></td>
+          <td>Score 21-35, usuario tiene movil registrado</td>
+          <td>5 minutos</td>
+        </tr>
+        <tr>
+          <td><code>OTP_EMAIL</code></td>
+          <td>Score 21-35, sin movil o fallback</td>
+          <td>10 minutos</td>
+        </tr>
+        <tr>
+          <td><code>BIOMETRIC</code></td>
+          <td>Score 36-50, app movil disponible</td>
+          <td>2 minutos</td>
+        </tr>
+        <tr>
+          <td><code>SECURITY_QUESTIONS</code></td>
+          <td>Score 36-50, fallback</td>
+          <td>5 minutos</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Paso 5: Webhooks -->
+  <section class="doc-section" aria-labelledby="step5">
+    <h2 id="step5">Paso 5: Configurar Webhooks</h2>
+    <p>
+      Configura un endpoint para recibir notificaciones de Shield, especialmente para
+      transacciones en <code>HOLD</code> que son resueltas posteriormente:
+    </p>
+
+    <app-code-block
+      [code]="webhookHandler"
+      language="javascript"
+      title="Webhook Handler">
+    </app-code-block>
+
+    <h3>Configuracion en Consola</h3>
+    <ol>
+      <li>Ve a <strong>Shield → Webhooks</strong></li>
+      <li>Agrega tu URL de webhook (debe ser HTTPS)</li>
+      <li>Selecciona los eventos a recibir</li>
+      <li>Copia el Signing Secret para verificar firmas</li>
+    </ol>
+
+    <h3>Eventos Disponibles</h3>
+    <table class="doc-table" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Evento</th>
+          <th scope="col">Descripcion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>validation.resolved</code></td>
+          <td>Una transaccion HOLD fue aprobada o rechazada</td>
+        </tr>
+        <tr>
+          <td><code>validation.expired</code></td>
+          <td>Una transaccion HOLD expiro sin decision</td>
+        </tr>
+        <tr>
+          <td><code>rule.triggered</code></td>
+          <td>Una regla critica fue activada</td>
+        </tr>
+        <tr>
+          <td><code>threshold.exceeded</code></td>
+          <td>Se excedio un limite de velocidad o volumen</td>
+        </tr>
+        <tr>
+          <td><code>list.updated</code></td>
+          <td>Una lista (black/white) fue modificada</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Paso 6: Notificar Resultados -->
+  <section class="doc-section" aria-labelledby="step6">
+    <h2 id="step6">Paso 6: Notificar Resultados</h2>
+    <p>
+      Es crucial notificar a Shield el resultado final de cada transaccion para mejorar
+      la precision del modelo ML:
+    </p>
+
+    <app-code-block
+      [code]="notifyResult"
+      language="javascript"
+      title="Notificar resultado">
+    </app-code-block>
+
+    <div class="info-box info-box--success">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <div>
+        <h4>Mejora Continua</h4>
+        <p>
+          Cuantos mas resultados notifiques (especialmente fraudes y chargebacks),
+          mejor sera la precision del modelo para tu comercio.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Checklist -->
+  <section class="doc-section" aria-labelledby="checklist">
+    <h2 id="checklist">Checklist de Produccion</h2>
+    <div class="checklist">
+      <div class="checklist__item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+        <span>API Key de produccion configurada como variable de entorno</span>
+      </div>
+      <div class="checklist__item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+        <span>Device Fingerprint SDK instalado en checkout</span>
+      </div>
+      <div class="checklist__item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+        <span>Endpoint /validate llamado antes de procesar pagos</span>
+      </div>
+      <div class="checklist__item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+        <span>Manejo de los 4 casos: ALLOW, STEP_UP, HOLD, BLOCK</span>
+      </div>
+      <div class="checklist__item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+        <span>Flujo de Step-Up implementado (OTP/biometrico)</span>
+      </div>
+      <div class="checklist__item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+        <span>Webhook endpoint configurado y verificando firmas</span>
+      </div>
+      <div class="checklist__item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+        <span>Notificacion de resultados (POST /notify) implementada</span>
+      </div>
+      <div class="checklist__item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+        <span>Timeout y fallback configurados (recomendado: 3s)</span>
+      </div>
+      <div class="checklist__item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+        <span>Logging y monitoreo de errores de Shield</span>
+      </div>
+      <div class="checklist__item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        </svg>
+        <span>Pruebas con tarjetas de prueba completadas</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="doc-section" aria-labelledby="faq">
+    <h2 id="faq">Preguntas Frecuentes</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3>¿Que pasa si Shield no responde?</h3>
+        <p>
+          Implementa un timeout de 3 segundos y una politica de fallback. Segun tu apetito
+          de riesgo, puedes aprobar (mayor conversion) o rechazar (mayor seguridad) cuando
+          Shield no responda.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Puedo personalizar los thresholds?</h3>
+        <p>
+          Si, desde la Consola puedes ajustar los rangos de score para cada accion
+          (ALLOW, STEP_UP, HOLD, BLOCK) segun tu modelo de negocio.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Shield almacena datos de tarjeta?</h3>
+        <p>
+          No. Solo recibimos los primeros 6 y ultimos 4 digitos (BIN + last4) para
+          identificacion. Nunca almacenamos el numero completo ni el CVV.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Como mejoro la precision del modelo?</h3>
+        <p>
+          Notificando el estado final de todas las transacciones mediante POST /notify,
+          especialmente los casos de fraude confirmado y chargebacks.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Cuanto tiempo toma una validacion?</h3>
+        <p>
+          El tiempo promedio es inferior a 50ms. El percentil 99 es de 100ms.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Soporte -->
+  <section class="doc-section" aria-labelledby="support">
+    <h2 id="support">Soporte</h2>
+    <div class="support-grid">
+      <div class="support-item">
+        <div class="support-item__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </div>
+        <h4>Email</h4>
+        <p>soporte&#64;tupay.finance</p>
+      </div>
+
+      <div class="support-item">
+        <div class="support-item__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+        </div>
+        <h4>Chat en Vivo</h4>
+        <p>Lun-Vie, 9am-6pm</p>
+      </div>
+
+      <div class="support-item">
+        <div class="support-item__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <h4>Status</h4>
+        <p>status.tupay.finance</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proximos Pasos -->
+  <section class="doc-section" aria-labelledby="next-steps">
+    <h2 id="next-steps">Proximos Pasos</h2>
+    <nav class="next-steps" aria-label="Navegacion a proximas secciones">
+      <a routerLink="/security" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <div>
+          <h4>Shield Antifraude</h4>
+          <p>Volver al resumen general</p>
+        </div>
+      </a>
+
+      <a routerLink="/security/api" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <div>
+          <h4>Referencia de API</h4>
+          <p>Documentacion completa de endpoints</p>
+        </div>
+      </a>
+
+      <a routerLink="/gateway/introduction" class="next-step-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <div>
+          <h4>TuPay Gateway</h4>
+          <p>Documentacion del Gateway de pagos</p>
+        </div>
+      </a>
+    </nav>
+  </section>
+</article>
