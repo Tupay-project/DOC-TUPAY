@@ -35,6 +35,54 @@
     </div>
   </section>
 
+  <!-- Seguridad de Nivel Bancario -->
+  <section class="doc-section" aria-labelledby="bank-security">
+    <h2 id="bank-security">Seguridad de Nivel Bancario</h2>
+    <div class="security-features">
+      <div class="security-feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="security-feature__icon">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <div class="security-feature__content">
+          <h4>Encriptacion de extremo a extremo</h4>
+          <p>Todas las peticiones y respuestas estan encriptadas con TLS 1.3 y certificados actualizados.</p>
+        </div>
+      </div>
+      <div class="security-feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="security-feature__icon">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <div class="security-feature__content">
+          <h4>Comunicacion segura</h4>
+          <p>Protocolos TLS 1.3 con certificados actualizados y validacion estricta.</p>
+        </div>
+      </div>
+      <div class="security-feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="security-feature__icon">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+        </svg>
+        <div class="security-feature__content">
+          <h4>Reporte automatico</h4>
+          <p>Generacion automatica de reportes ROS y CTR a las autoridades competentes (SIB, IVE, UAF).</p>
+        </div>
+      </div>
+      <div class="security-feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="security-feature__icon">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <div class="security-feature__content">
+          <h4>Cumplimiento AML/CFT</h4>
+          <p>Alineado con regulaciones de Guatemala (Decreto 67-2001) y Republica Dominicana (Ley 155-17).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Capacidades -->
   <section class="doc-section" aria-labelledby="capabilities">
     <h2 id="capabilities">Capacidades del Sistema</h2>
@@ -78,8 +126,8 @@
             <polyline points="22 4 12 14.01 9 11.01"></polyline>
           </svg>
         </div>
-        <h3>Cumplimiento regulatorio</h3>
-        <p>Alineado con normativas AML/CFT de Guatemala y Republica Dominicana.</p>
+        <h3>Monitoreo 24/7</h3>
+        <p>Supervision continua de transacciones con alertas en tiempo real.</p>
       </div>
     </div>
   </section>
@@ -317,6 +365,126 @@
         </tr>
       </tbody>
     </table>
+  </section>
+
+  <!-- Preguntas Frecuentes -->
+  <section class="doc-section" aria-labelledby="faq">
+    <h2 id="faq">Preguntas Frecuentes</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3>¿Por que se bloqueo mi transaccion?</h3>
+        <p>
+          Las transacciones se bloquean cuando el puntaje de riesgo supera 80 puntos. Esto puede
+          ocurrir por multiples factores como: IP sospechosa, dispositivo no reconocido, patron
+          de transacciones inusual, o coincidencia con listas de alerta. Contacta a soporte para
+          revision de casos especificos.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Por que me piden verificacion adicional?</h3>
+        <p>
+          Cuando detectamos algo inusual pero no claramente fraudulento (puntaje 21-50), solicitamos
+          verificacion adicional como codigo SMS, email o biometrico. Esto protege tu cuenta y
+          confirma que realmente eres tu quien realiza la operacion.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Cuanto tiempo tarda la revision manual?</h3>
+        <p>
+          Las transacciones en estado HOLD (revision manual) tienen un SLA maximo de 4 horas en
+          horario laboral. Nuestro equipo de cumplimiento revisa la documentacion y el contexto
+          para tomar una decision.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Mis datos estan seguros?</h3>
+        <p>
+          Si. Toda la informacion se transmite con encriptacion de extremo a extremo (TLS 1.3).
+          Los datos sensibles se almacenan encriptados y solo personal autorizado puede acceder
+          a ellos bajo estrictos controles de auditoria.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Por que necesitan tanta informacion para payouts?</h3>
+        <p>
+          Las regulaciones AML/CFT de Guatemala y Republica Dominicana requieren verificacion
+          plena de identidad para transferencias de dinero. Esto nos permite identificar y
+          prevenir lavado de dinero, financiamiento del terrorismo y otras actividades ilicitas.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Que pasa si mi transaccion es reportada?</h3>
+        <p>
+          Las transacciones que activan ciertas reglas criticas generan reportes automaticos a
+          las autoridades (SIB, IVE, UAF segun el pais). Estos reportes son confidenciales y
+          forman parte de nuestras obligaciones legales como entidad regulada.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Puedo apelar una decision de bloqueo?</h3>
+        <p>
+          Si. Puedes contactar a <strong>soporte&#64;tupay.finance</strong> con los detalles de
+          la transaccion. Nuestro equipo revisara el caso y, si corresponde, desbloqueara la
+          operacion o te indicara que documentacion adicional se requiere.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto y Soporte -->
+  <section class="doc-section" aria-labelledby="support">
+    <h2 id="support">Contacto y Soporte</h2>
+    <div class="support-grid">
+      <div class="support-card">
+        <div class="support-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </div>
+        <h4>Soporte General</h4>
+        <p>soporte&#64;tupay.finance</p>
+      </div>
+
+      <div class="support-card">
+        <div class="support-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <h4>Cumplimiento</h4>
+        <p>cumplimiento&#64;tupay.finance</p>
+      </div>
+
+      <div class="support-card">
+        <div class="support-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <h4>Horario</h4>
+        <p>Lun - Vie, 8:00 AM - 6:00 PM (GMT-6)</p>
+      </div>
+
+      <div class="support-card">
+        <div class="support-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <h4>Estado del Servicio</h4>
+        <p>status.tupay.finance</p>
+      </div>
+    </div>
   </section>
 
   <!-- Proximos Pasos -->

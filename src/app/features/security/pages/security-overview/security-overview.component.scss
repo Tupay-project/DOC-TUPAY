@@ -280,3 +280,171 @@
     color: #a78bfa;
   }
 }
+
+// Security Features (Bank-level security section)
+.security-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.security-feature {
+  display: flex;
+  gap: $spacing-4;
+  padding: $spacing-4;
+  background: $background-gray;
+  border-radius: $radius-lg;
+  border-left: 4px solid $primary-blue;
+
+  .dark & {
+    background: $dark-surface;
+    border-left-color: $primary-blue-light;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: $primary-blue;
+    stroke-width: 2;
+
+    .dark & {
+      color: $primary-blue-light;
+    }
+  }
+
+  &__content {
+    h4 {
+      margin: 0 0 $spacing-2 0;
+      font-size: $text-base;
+      font-weight: $font-semibold;
+      color: $text-primary;
+
+      .dark & {
+        color: $dark-text-primary;
+      }
+    }
+
+    p {
+      margin: 0;
+      font-size: $text-sm;
+      color: $text-secondary;
+      line-height: 1.5;
+
+      .dark & {
+        color: $dark-text-secondary;
+      }
+    }
+  }
+}
+
+// FAQ Section
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.faq-item {
+  @include card;
+  padding: $spacing-4;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  h3 {
+    margin: 0 0 $spacing-3 0;
+    font-size: $text-base;
+    font-weight: $font-semibold;
+    color: $primary-blue;
+
+    .dark & {
+      color: $primary-blue-light;
+    }
+  }
+
+  p {
+    margin: 0;
+    font-size: $text-sm;
+    color: $text-secondary;
+    line-height: 1.6;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+
+    strong {
+      color: $text-primary;
+
+      .dark & {
+        color: $dark-text-primary;
+      }
+    }
+  }
+}
+
+// Support Grid
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.support-card {
+  @include card;
+  padding: $spacing-4;
+  text-align: center;
+
+  .dark & {
+    @include card-dark;
+  }
+
+  &__icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto $spacing-3;
+    padding: $spacing-3;
+    background: $primary-blue-lighter;
+    border-radius: $radius-full;
+
+    .dark & {
+      background: rgba($primary-blue, 0.2);
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      color: $primary-blue;
+      stroke-width: 1.5;
+
+      .dark & {
+        color: $primary-blue-light;
+      }
+    }
+  }
+
+  h4 {
+    margin: 0 0 $spacing-2 0;
+    font-size: $text-sm;
+    font-weight: $font-semibold;
+    color: $text-primary;
+
+    .dark & {
+      color: $dark-text-primary;
+    }
+  }
+
+  p {
+    margin: 0;
+    font-size: $text-sm;
+    color: $text-secondary;
+
+    .dark & {
+      color: $dark-text-secondary;
+    }
+  }
+}

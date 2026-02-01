@@ -80,6 +80,11 @@ src/
 | `/gateway/errors` | Manejo de errores |
 | `/gtm/api/:category/:id` | Endpoints Guatemala |
 | `/dom/api/:category/:id` | Endpoints Rep. Dominicana |
+| `/security` | TuPay Shield - Overview |
+| `/security/rules` | Catalogo de reglas (150+) |
+| `/security/scoring` | Sistema de scoring |
+| `/security/api` | API Reference |
+| `/security/integration` | Guia de integracion |
 
 ## Caracteristicas
 
@@ -96,6 +101,12 @@ src/
 - Animaciones suaves en componentes
 - SDKs documentados (Node.js, Python, PHP)
 - Documentacion de webhooks
+- **TuPay Shield** - Documentacion completa del sistema antifraude:
+  - 150+ reglas de seguridad en 15 categorias
+  - Sistema de scoring con Machine Learning
+  - API Reference completa
+  - Guia de integracion paso a paso
+  - FAQs y soporte
 
 ### Componentes UI
 - Badges para metodos HTTP (GET, POST, PUT, DELETE)
@@ -154,7 +165,7 @@ Los estilos se manejan con SCSS. Variables principales en `src/styles/_variables
 
 ## Version
 
-- **Version**: 2.1.0
-- **Ultima actualizacion**: Diciembre 2024
+- **Version**: 2.2.0
+- **Ultima actualizacion**: Febrero 2026
 - **Angular**: 17.x
 - **Node.js**: 18+
