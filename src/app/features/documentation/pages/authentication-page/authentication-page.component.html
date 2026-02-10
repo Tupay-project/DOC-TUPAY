@@ -390,8 +390,467 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
       <div>
         <h4>Requisitos del Webhook</h4>
         <p>
-          Tu endpoint debe responder con un código HTTP <code>200</code> para confirmar
+          Tu servidor debe responder con un código HTTP <code>200</code> para confirmar
           la recepción. Si falla, TuPay reintentará el envío varias veces.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Webhook PayIn -->
+  <section class="doc-section">
+    <h2>Webhook de PayIn (Pago Entrante)</h2>
+    <p>
+      Cada vez que se crea o actualiza una transacción de pago entrante (PayIn),
+      TuPay enviará una notificación a la URL que hayas configurado con la siguiente estructura:
+    </p>
+
+    <app-code-block
+      [code]="payInWebhookExample"
+      language="javascript"
+      title="Ejemplo de Webhook PayIn">
+    </app-code-block>
+
+    <h3>Descripción de Campos</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Campo</th>
+          <th>Tipo</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>type</code></td>
+          <td>string</td>
+          <td>Siempre <code>"pay-in"</code> para pagos entrantes</td>
+        </tr>
+        <tr>
+          <td><code>transactionId</code></td>
+          <td>string</td>
+          <td>Identificador único de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>userId</code></td>
+          <td>string</td>
+          <td>Identificador del usuario asociado</td>
+        </tr>
+        <tr>
+          <td><code>amount</code></td>
+          <td>number</td>
+          <td>Monto solicitado de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>status</code></td>
+          <td>string</td>
+          <td>Estado actual de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>timestamp</code></td>
+          <td>string</td>
+          <td>Fecha y hora en formato ISO 8601</td>
+        </tr>
+        <tr>
+          <td><code>customId</code></td>
+          <td>string</td>
+          <td>Identificador personalizado que enviaste al crear la transacción</td>
+        </tr>
+        <tr>
+          <td><code>amountReceived</code></td>
+          <td>number</td>
+          <td>Monto efectivamente recibido</td>
+        </tr>
+        <tr>
+          <td><code>notes</code></td>
+          <td>string</td>
+          <td>Información adicional (puede estar vacío)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Webhook PayOut -->
+  <section class="doc-section">
+    <h2>Webhook de PayOut (Pago Saliente)</h2>
+    <p>
+      Cuando se crea o actualiza una transacción de pago saliente (PayOut),
+      recibirás una notificación con la siguiente estructura:
+    </p>
+
+    <app-code-block
+      [code]="payOutWebhookExample"
+      language="javascript"
+      title="Ejemplo de Webhook PayOut">
+    </app-code-block>
+
+    <h3>Descripción de Campos</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Campo</th>
+          <th>Tipo</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>type</code></td>
+          <td>string</td>
+          <td>Siempre <code>"pay-out"</code> para pagos salientes</td>
+        </tr>
+        <tr>
+          <td><code>transactionId</code></td>
+          <td>string</td>
+          <td>Identificador único de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>userId</code></td>
+          <td>string</td>
+          <td>Identificador del usuario asociado</td>
+        </tr>
+        <tr>
+          <td><code>reference</code></td>
+          <td>string</td>
+          <td>Referencia de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>amount</code></td>
+          <td>number</td>
+          <td>Monto de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>status</code></td>
+          <td>string</td>
+          <td>Estado actual de la transacción</td>
+        </tr>
+        <tr>
+          <td><code>timestamp</code></td>
+          <td>string</td>
+          <td>Fecha y hora en formato ISO 8601</td>
+        </tr>
+        <tr>
+          <td><code>customId</code></td>
+          <td>string</td>
+          <td>Identificador personalizado que enviaste al crear la transacción</td>
+        </tr>
+        <tr>
+          <td><code>observation</code></td>
+          <td>string</td>
+          <td>Observaciones adicionales (puede estar vacío)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Webhook PayOut Masivo -->
+  <section class="doc-section">
+    <h2>Webhook de PayOut Masivo</h2>
+    <p>
+      Cuando se procesan pagos salientes de forma masiva, recibirás una única notificación
+      que contiene el resumen de todas las transacciones del lote:
+    </p>
+
+    <app-code-block
+      [code]="payOutBulkWebhookExample"
+      language="javascript"
+      title="Ejemplo de Webhook PayOut Masivo">
+    </app-code-block>
+
+    <h3>Descripción de Campos</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Campo</th>
+          <th>Tipo</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>type</code></td>
+          <td>string</td>
+          <td>Siempre <code>"pay-outs"</code> para lotes masivos</td>
+        </tr>
+        <tr>
+          <td><code>totalTransactions</code></td>
+          <td>number</td>
+          <td>Cantidad total de transacciones en el lote</td>
+        </tr>
+        <tr>
+          <td><code>transactions</code></td>
+          <td>array</td>
+          <td>Lista de transacciones individuales con su estado</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Nota sobre PayOut Masivo</h4>
+        <p>
+          Cada transacción dentro del arreglo <code>transactions</code> contiene los campos
+          <code>transactionId</code>, <code>reference</code>, <code>amount</code> y <code>status</code>.
+          Revisa el estado individual de cada transacción ya que pueden variar dentro del mismo lote.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Estados de PayIn -->
+  <section class="doc-section">
+    <h2>Estados de Transacción - PayIn</h2>
+    <p>
+      Las transacciones de pago entrante (PayIn) pasan por los siguientes estados.
+      Recibirás un webhook cada vez que el estado cambie.
+    </p>
+
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>pending</code></td>
+          <td>La transacción fue creada y está esperando el pago del cliente</td>
+        </tr>
+        <tr>
+          <td><code>approved</code></td>
+          <td>El pago fue detectado y está siendo verificado</td>
+        </tr>
+        <tr>
+          <td><code>paid</code></td>
+          <td>El pago fue confirmado exitosamente</td>
+        </tr>
+        <tr>
+          <td><code>rejected</code></td>
+          <td>La transacción fue rechazada</td>
+        </tr>
+        <tr>
+          <td><code>cancelled</code></td>
+          <td>La transacción fue cancelada</td>
+        </tr>
+        <tr>
+          <td><code>expired</code></td>
+          <td>La transacción expiró por falta de pago</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Flujo Normal</h3>
+    <p>
+      <code>pending</code> &rarr; <code>approved</code> &rarr; <code>paid</code>
+    </p>
+
+    <div class="info-box info-box--success">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <h4>Estado final exitoso</h4>
+        <p>
+          El estado <code>paid</code> indica que el pago fue completado correctamente.
+          Usa este estado para confirmar la operación en tu sistema.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Estados de PayOut -->
+  <section class="doc-section">
+    <h2>Estados de Transacción - PayOut</h2>
+    <p>
+      Las transacciones de pago saliente (PayOut) pasan por los siguientes estados.
+      Recibirás un webhook cada vez que el estado cambie.
+    </p>
+
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>pending</code></td>
+          <td>La transacción fue creada y está en espera de aprobación</td>
+        </tr>
+        <tr>
+          <td><code>approved</code></td>
+          <td>La transacción fue aprobada y será procesada</td>
+        </tr>
+        <tr>
+          <td><code>processing</code></td>
+          <td>La transacción está siendo procesada</td>
+        </tr>
+        <tr>
+          <td><code>paid</code></td>
+          <td>El pago fue enviado al destinatario</td>
+        </tr>
+        <tr>
+          <td><code>completed</code></td>
+          <td>La transacción fue completada exitosamente</td>
+        </tr>
+        <tr>
+          <td><code>rejected</code></td>
+          <td>La transacción fue rechazada</td>
+        </tr>
+        <tr>
+          <td><code>failed</code></td>
+          <td>La transacción falló durante el procesamiento</td>
+        </tr>
+        <tr>
+          <td><code>cancelled</code></td>
+          <td>La transacción fue cancelada</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Flujo Normal</h3>
+    <p>
+      <code>pending</code> &rarr; <code>approved</code> &rarr; <code>processing</code> &rarr; <code>paid</code> &rarr; <code>completed</code>
+    </p>
+
+    <div class="info-box info-box--success">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <h4>Estado final exitoso</h4>
+        <p>
+          El estado <code>completed</code> indica que el pago saliente fue completado correctamente.
+          Usa este estado para confirmar la operación en tu sistema.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Verificación de Firma -->
+  <section class="doc-section">
+    <h2>Verificación de Firma (Seguridad)</h2>
+    <p>
+      Cada webhook enviado por TuPay incluye una firma digital HMAC-SHA256 para que puedas
+      verificar que la notificación es auténtica. Es altamente recomendable que valides
+      esta firma en cada webhook que recibas.
+    </p>
+
+    <h3>Headers de Seguridad</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>Header</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>X-TuPay-Signature</code></td>
+          <td>Firma HMAC-SHA256 del contenido del webhook</td>
+        </tr>
+        <tr>
+          <td><code>X-TuPay-Timestamp</code></td>
+          <td>Marca de tiempo del momento en que se envió el webhook</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box info-box--warning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <div>
+        <h4>Importante</h4>
+        <p>
+          La firma se genera concatenando el timestamp y el cuerpo del webhook separados por un punto:
+          <code>timestamp.payload</code>. Utiliza tu <strong>Secret Key</strong> como clave para el HMAC.
+        </p>
+      </div>
+    </div>
+
+    <h3>Verificación en Node.js</h3>
+    <app-code-block
+      [code]="webhookVerifyNodeExample"
+      language="javascript"
+      title="Verificación HMAC-SHA256 en Node.js">
+    </app-code-block>
+
+    <h3>Verificación en Python</h3>
+    <app-code-block
+      [code]="webhookVerifyPythonExample"
+      language="python"
+      title="Verificación HMAC-SHA256 en Python">
+    </app-code-block>
+
+    <h3>Verificación en PHP</h3>
+    <app-code-block
+      [code]="webhookVerifyPhpExample"
+      language="php"
+      title="Verificación HMAC-SHA256 en PHP">
+    </app-code-block>
+  </section>
+
+  <!-- Recomendaciones -->
+  <section class="doc-section">
+    <h2>Recomendaciones</h2>
+
+    <div class="best-practices">
+      <div class="practice-card practice-card--do">
+        <div class="practice-card__header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <h4>Buenas Prácticas</h4>
+        </div>
+        <ul>
+          <li>Responde siempre con HTTP <code>200</code> lo antes posible</li>
+          <li>Valida la firma HMAC-SHA256 en cada webhook recibido</li>
+          <li>Implementa idempotencia usando el <code>transactionId</code></li>
+          <li>Procesa los webhooks de forma asíncrona</li>
+          <li>Registra todos los webhooks recibidos para auditoría</li>
+        </ul>
+      </div>
+
+      <div class="practice-card practice-card--dont">
+        <div class="practice-card__header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <h4>Evitar</h4>
+        </div>
+        <ul>
+          <li>No realices procesos largos antes de responder al webhook</li>
+          <li>No ignores la verificación de firma</li>
+          <li>No asumas que los webhooks llegarán en orden</li>
+          <li>No proceses el mismo webhook más de una vez sin idempotencia</li>
+          <li>No expongas tu Secret Key en código del cliente</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Reintentos Automáticos</h4>
+        <p>
+          Si tu servidor no responde con un código <code>200</code>, TuPay reintentará el envío
+          del webhook automáticamente. Asegúrate de que tu lógica soporte recibir el mismo
+          webhook más de una vez (idempotencia).
         </p>
       </div>
     </div>
