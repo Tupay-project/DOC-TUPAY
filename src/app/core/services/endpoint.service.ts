@@ -88,8 +88,14 @@ export class EndpointService {
   /**
    * Obtiene ruta de la colección según país y tipo
    */
+  private readonly countryNames: Record<CountryCode, string> = {
+    GTM: 'Guatemala',
+    DOM: 'Republica_Dominicana',
+    COL: 'Colombia'
+  };
+
   private getCollectionPath(country: CountryCode, type: 'payin' | 'payout'): string {
-    const countryName = country === 'GTM' ? 'Guatemala' : 'Republica_Dominicana';
+    const countryName = this.countryNames[country];
     const typeName = type === 'payin' ? 'Payin' : 'PayOut';
     return `assets/data/endpoints/${countryName}_-_${typeName}_postman_collection.json`;
   }

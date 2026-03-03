@@ -16,8 +16,8 @@
       </h1>
       
       <p class="hero__description">
-        Integra pagos entrantes y salientes de forma segura, ágil y confiable. 
-        Procesa transacciones en Guatemala y República Dominicana con nuestra API REST simple y potente.
+        Integra pagos entrantes y salientes de forma segura, ágil y confiable.
+        Procesa transacciones en Guatemala, República Dominicana y Colombia con nuestra API REST simple y potente.
       </p>
 
       <div class="hero__actions">
@@ -129,6 +129,18 @@
         <span class="country-card__flag">🇩🇴</span>
         <h3 class="country-card__name">República Dominicana</h3>
         <p class="country-card__currency">Peso Dominicano (DOP)</p>
+        <div class="country-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </div>
+      </button>
+
+      <button class="country-card" (click)="navigateToCountryDocs('COL')">
+        <span class="country-card__flag">🇨🇴</span>
+        <h3 class="country-card__name">Colombia</h3>
+        <p class="country-card__currency">Peso Colombiano (COP)</p>
         <div class="country-card__arrow">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="5" y1="12" x2="19" y2="12"></line>

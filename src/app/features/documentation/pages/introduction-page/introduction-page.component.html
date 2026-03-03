@@ -16,7 +16,7 @@
     <h2 id="what-is">Que es TuPay API?</h2>
     <p>
       TuPay API es una interfaz REST que te permite procesar transacciones financieras en
-      Guatemala y Republica Dominicana. Con nuestra API puedes:
+      Guatemala, Republica Dominicana y Colombia. Con nuestra API puedes:
     </p>
     <ul role="list">
       <li><strong>Recibir pagos (PayIn):</strong> Genera enlaces de pago seguros para tus clientes</li>
@@ -82,10 +82,15 @@
         <div class="step-vertical__content">
           <h3>Obtén tu API Key</h3>
           <p>
-            Accede al <a href="https://dashboard.tupay.finance" target="_blank">Dashboard de TuPay</a> 
-            con tu cuenta. Navega a tu perfil y copia tu API Key. Este identificador único autenticará 
-            todas tus peticiones.
+            Accede al Dashboard de TuPay segun tu pais, navega a tu perfil y copia tu API Key.
+            Este identificador unico autenticara todas tus peticiones.
           </p>
+          <ul>
+            <li><strong>Guatemala:</strong> <a href="https://guatemala.tupay.finance" target="_blank">guatemala.tupay.finance</a></li>
+            <li><strong>Republica Dominicana:</strong> <a href="https://rd.tupay.finance" target="_blank">rd.tupay.finance</a></li>
+            <li><strong>Colombia:</strong> <a href="https://colombia.tupay.finance" target="_blank">colombia.tupay.finance</a></li>
+            <li><strong>Sandbox:</strong> <a href="https://staging.tupay.finance" target="_blank">staging.tupay.finance</a></li>
+          </ul>
         </div>
       </div>
 
@@ -134,11 +139,26 @@
         <line x1="12" y1="8" x2="12.01" y2="8"></line>
       </svg>
       <div>
-        <h4>URLs por País</h4>
+        <h4>APIs por País</h4>
         <p>TuPay API opera en diferentes URLs según el país:</p>
         <ul>
           <li><strong>Guatemala:</strong> <code>https://api-guatemala.tupay.finance</code></li>
           <li><strong>República Dominicana:</strong> <code>https://api-rd.tupay.finance</code></li>
+          <li><strong>Colombia:</strong> <code>https://api-co.tupay.finance</code></li>
+        </ul>
+        <br>
+        <h4>Dashboards por País</h4>
+        <p>Accede al dashboard correspondiente a tu país para gestionar tus transacciones y obtener tu API Key:</p>
+        <ul>
+          <li><strong>Guatemala:</strong> <a href="https://guatemala.tupay.finance" target="_blank"><code>https://guatemala.tupay.finance</code></a></li>
+          <li><strong>República Dominicana:</strong> <a href="https://rd.tupay.finance" target="_blank"><code>https://rd.tupay.finance</code></a></li>
+          <li><strong>Colombia:</strong> <a href="https://colombia.tupay.finance" target="_blank"><code>https://colombia.tupay.finance</code></a></li>
+        </ul>
+        <br>
+        <h4>Entorno Sandbox (desarrollo/pruebas)</h4>
+        <ul>
+          <li><strong>API Sandbox:</strong> <code>https://apitupay-dev.up.railway.app</code></li>
+          <li><strong>Dashboard Sandbox:</strong> <a href="https://staging.tupay.finance" target="_blank"><code>https://staging.tupay.finance</code></a></li>
         </ul>
       </div>
     </div>

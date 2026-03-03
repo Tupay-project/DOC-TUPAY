@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { EndpointService } from '@core/services/endpoint.service';
-import { COUNTRIES } from '@core/models/api.models';
+import { COUNTRIES, CountryCode } from '@core/models/api.models';
 
 @Component({
   selector: 'app-home-page',
@@ -37,7 +37,7 @@ console.log(data);`;
     {
       icon: 'globe',
       title: 'Multi-País',
-      description: 'Soporta operaciones en Guatemala y República Dominicana con moneda local.'
+      description: 'Soporta operaciones en Guatemala, República Dominicana y Colombia con moneda local.'
     },
     {
       icon: 'code',
@@ -60,7 +60,7 @@ console.log(data);`;
     {
       step: 2,
       title: 'Elige tu país',
-      description: 'Selecciona Guatemala o República Dominicana según tu operación.'
+      description: 'Selecciona Guatemala, República Dominicana o Colombia según tu operación.'
     },
     {
       step: 3,
@@ -76,7 +76,7 @@ console.log(data);`;
 
   ngOnInit(): void {}
 
-  navigateToCountryDocs(countryCode: 'GTM' | 'DOM'): void {
+  navigateToCountryDocs(countryCode: CountryCode): void {
     this.endpointService.setCurrentCountry(countryCode);
     this.router.navigate([countryCode.toLowerCase(), 'api']);
   }

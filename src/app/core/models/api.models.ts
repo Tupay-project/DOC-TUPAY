@@ -86,7 +86,7 @@ export interface EndpointGroup {
 // Configuración por País
 // ============================================
 
-export type CountryCode = 'GTM' | 'DOM';
+export type CountryCode = 'GTM' | 'DOM' | 'COL';
 
 export interface Country {
   code: CountryCode;
@@ -122,6 +122,17 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     baseUrl: 'https://api-rd.tupay.finance',
     locale: 'es-DO',
     timezone: 'America/Santo_Domingo'
+  },
+  COL: {
+    code: 'COL',
+    name: 'Colombia',
+    fullName: 'Colombia',
+    currency: 'COP',
+    currencySymbol: '$',
+    flag: '🇨🇴',
+    baseUrl: 'https://api-co.tupay.finance',
+    locale: 'es-CO',
+    timezone: 'America/Bogota'
   }
 };
 

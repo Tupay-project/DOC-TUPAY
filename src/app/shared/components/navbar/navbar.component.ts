@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
 
   isDarkMode$: Observable<boolean>;
   currentCountry: Country = COUNTRIES.GTM;
-  countries = [COUNTRIES.GTM, COUNTRIES.DOM];
+  countries = Object.values(COUNTRIES);
   showCountryDropdown = false;
   showMobileMenu = false;
 

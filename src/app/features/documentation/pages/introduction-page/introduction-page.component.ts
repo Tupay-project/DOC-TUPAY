@@ -39,7 +39,7 @@ export class IntroductionPageComponent {
 
 const tupay = new TuPay({
   apiKey: process.env.TUPAY_API_KEY,
-  country: 'GTM' // o 'DOM' para Rep. Dominicana
+  country: 'GTM' // o 'DOM' para Rep. Dominicana, 'COL' para Colombia
 });
 
 // Crear un PayIn
@@ -59,7 +59,7 @@ console.log(payin.checkoutUrl);`;
 
 tupay = TuPay(
     api_key=os.environ.get('TUPAY_API_KEY'),
-    country='GTM'  # o 'DOM' para Rep. Dominicana
+    country='GTM'  # o 'DOM' para Rep. Dominicana, 'COL' para Colombia
 )
 
 # Crear un PayIn
@@ -80,7 +80,7 @@ use TuPay\\TuPayClient;
 
 $tupay = new TuPayClient([
     'api_key' => getenv('TUPAY_API_KEY'),
-    'country' => 'GTM' // o 'DOM' para Rep. Dominicana
+    'country' => 'GTM' // o 'DOM' para Rep. Dominicana, 'COL' para Colombia
 ]);
 
 // Crear un PayIn
