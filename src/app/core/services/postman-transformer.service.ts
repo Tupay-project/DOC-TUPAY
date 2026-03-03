@@ -114,11 +114,16 @@ export class PostmanTransformerService {
   /**
    * Extrae la base URL del nombre de la colección
    */
+  private readonly countryBaseUrls: Record<string, string> = {
+    guatemala: 'https://api-guatemala.tupay.finance',
+    dominicana: 'https://api-rd.tupay.finance',
+    colombia: 'https://api-co.tupay.finance'
+  };
+
   private extractBaseUrl(collectionName: string): string {
-    if (collectionName.toLowerCase().includes('guatemala')) {
-      return 'https://api-guatemala.tupay.finance';
-    } else if (collectionName.toLowerCase().includes('dominicana')) {
-      return 'https://api-rd.tupay.finance';
+    const name = collectionName.toLowerCase();
+    for (const [key, url] of Object.entries(this.countryBaseUrls)) {
+      if (name.includes(key)) return url;
     }
     return 'https://api.tupay.finance';
   }
