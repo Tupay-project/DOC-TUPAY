@@ -108,7 +108,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'GTQ',
     currencySymbol: 'Q',
     flag: '🇬🇹',
-    baseUrl: 'https://api-guatemala.tupay.finance',
+    baseUrl: 'https://api-gt-v2.tupay.finance',
     locale: 'es-GT',
     timezone: 'America/Guatemala'
   },
@@ -119,7 +119,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'DOP',
     currencySymbol: 'RD$',
     flag: '🇩🇴',
-    baseUrl: 'https://api-rd.tupay.finance',
+    baseUrl: 'https://api-rd-v2.tupay.finance',
     locale: 'es-DO',
     timezone: 'America/Santo_Domingo'
   },

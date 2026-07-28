@@ -7,7 +7,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class IntroductionPageComponent {
-  quickStartCode = `curl -X POST "https://api-guatemala.tupay.finance/api/payin/register" \\
+  quickStartCode = `curl -X POST "https://api-gt-v2.tupay.finance/api/payin/register" \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: YOUR_API_KEY" \\
   -d '{
@@ -15,9 +15,9 @@ export class IntroductionPageComponent {
     "amount": "100",
     "userName": "John Doe",
     "userEmail": "john@example.com",
-    "userPhone": "12345678",
-    "userIdentificationNumber": "123456789",
-    "dueDate": "2025/12/31"
+    "userPhone": "51234567",
+    "userIdentificationNumber": "1234567890101",
+    "dueDate": "2027/12/31"
   }'`;
 
   responseExample = `{
@@ -28,7 +28,7 @@ export class IntroductionPageComponent {
     "id": "65baf429-9e41-44c5-bb16-5785aa087160",
     "status": "pending",
     "reference": "39001303",
-    "checkoutUrl": "https://guatemala.tupay.finance/checkout/65baf429...",
+    "checkoutUrl": "https://guatemala-v2.tupay.finance/checkout/65baf429...",
     "currency": "GTQ",
     "amount": "100.00",
     "customId": "1"
@@ -48,9 +48,9 @@ const payin = await tupay.payin.create({
   currency: 'GTQ',
   userName: 'John Doe',
   userEmail: 'john@example.com',
-  userPhone: '12345678',
-  userIdentificationNumber: '123456789',
-  dueDate: '2025/12/31'
+  userPhone: '51234567',
+  userIdentificationNumber: '1234567890101',
+  dueDate: '2027/12/31'
 });
 
 console.log(payin.checkoutUrl);`;
@@ -68,9 +68,9 @@ payin = tupay.payin.create(
     currency='GTQ',
     user_name='John Doe',
     user_email='john@example.com',
-    user_phone='12345678',
-    user_identification_number='123456789',
-    due_date='2025/12/31'
+    user_phone='51234567',
+    user_identification_number='1234567890101',
+    due_date='2027/12/31'
 )
 
 print(payin.checkout_url)`;
@@ -89,9 +89,9 @@ $payin = $tupay->payin->create([
     'currency' => 'GTQ',
     'userName' => 'John Doe',
     'userEmail' => 'john@example.com',
-    'userPhone' => '12345678',
-    'userIdentificationNumber' => '123456789',
-    'dueDate' => '2025/12/31'
+    'userPhone' => '51234567',
+    'userIdentificationNumber' => '1234567890101',
+    'dueDate' => '2027/12/31'
 ]);
 
 echo $payin->checkoutUrl;`;

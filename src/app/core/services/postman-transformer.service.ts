@@ -115,8 +115,8 @@ export class PostmanTransformerService {
    * Extrae la base URL del nombre de la colección
    */
   private readonly countryBaseUrls: Record<string, string> = {
-    guatemala: 'https://api-guatemala.tupay.finance',
-    dominicana: 'https://api-rd.tupay.finance',
+    guatemala: 'https://api-gt-v2.tupay.finance',
+    dominicana: 'https://api-rd-v2.tupay.finance',
     colombia: 'https://api-co.tupay.finance'
   };
 

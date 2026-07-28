@@ -11,7 +11,7 @@ import { COUNTRIES, CountryCode } from '@core/models/api.models';
 })
 export class HomePageComponent implements OnInit {
   
-  exampleCode = `const response = await fetch("https://api-guatemala.tupay.finance/api/payin/register", {
+  exampleCode = `const response = await fetch("https://api-gt-v2.tupay.finance/api/payin/register", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -21,7 +21,10 @@ export class HomePageComponent implements OnInit {
     currency: "GTQ",
     amount: "100",
     userName: "John Doe",
-    userEmail: "john@example.com"
+    userEmail: "john@example.com",
+    userPhone: "51234567",
+    userIdentificationNumber: "1234567890101",
+    dueDate: "2027/12/31"
   })
 });
 

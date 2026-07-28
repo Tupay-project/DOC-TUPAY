@@ -38,11 +38,11 @@
     <div class="dashboard-links">
       <h3>Dashboards por País</h3>
       <div class="dashboard-cards">
-        <a href="https://guatemala.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
+        <a href="https://guatemala-v2.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
           <div class="dashboard-card__flag">🇬🇹</div>
           <div class="dashboard-card__info">
             <h4>Guatemala</h4>
-            <code>guatemala.tupay.finance</code>
+            <code>guatemala-v2.tupay.finance</code>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -50,11 +50,11 @@
             <line x1="10" y1="14" x2="21" y2="3"></line>
           </svg>
         </a>
-        <a href="https://rd.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
+        <a href="https://rd-v2.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
           <div class="dashboard-card__flag">🇩🇴</div>
           <div class="dashboard-card__info">
             <h4>República Dominicana</h4>
-            <code>rd.tupay.finance</code>
+            <code>rd-v2.tupay.finance</code>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -74,10 +74,22 @@
             <line x1="10" y1="14" x2="21" y2="3"></line>
           </svg>
         </a>
+        <a href="https://staging-v2.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
+          <div class="dashboard-card__flag">🧪</div>
+          <div class="dashboard-card__info">
+            <h4>Sandbox V2</h4>
+            <code>staging-v2.tupay.finance</code>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
         <a href="https://staging.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
           <div class="dashboard-card__flag">🧪</div>
           <div class="dashboard-card__info">
-            <h4>Sandbox</h4>
+            <h4>Sandbox V1</h4>
             <code>staging.tupay.finance</code>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -139,49 +151,57 @@
 
   <section class="doc-section">
     <h2>Formato de API Key</h2>
-    <p>Las API Keys de TuPay siguen este formato:</p>
-    
+    <p>
+      Una API Key de TuPay es una cadena hexadecimal generada de forma aleatoria por la
+      plataforma. No lleva prefijos ni separadores: se copia y se envía tal cual en el
+      header <code>x-api-key</code>.
+    </p>
+
     <div class="key-format">
       <div class="key-format__part">
-        <span class="key-format__label">Prefijo</span>
-        <code>sk_</code>
-        <p>Identifica que es una Secret Key</p>
-      </div>
-      <div class="key-format__separator">_</div>
-      <div class="key-format__part">
-        <span class="key-format__label">Entorno</span>
-        <code>live</code>
-        <p>Producción (live) o Pruebas (test)</p>
-      </div>
-      <div class="key-format__separator">_</div>
-      <div class="key-format__part">
-        <span class="key-format__label">Identificador</span>
-        <code>abc123...</code>
-        <p>Identificador único de 32 caracteres</p>
+        <span class="key-format__label">Ejemplo</span>
+        <code>3f9a1c7e5b2d48a6...</code>
+        <p>Cadena hexadecimal sin prefijo</p>
       </div>
     </div>
 
     <table class="doc-table">
       <thead>
         <tr>
-          <th>Tipo</th>
-          <th>Prefijo</th>
+          <th>Entorno</th>
+          <th>Dónde se obtiene</th>
           <th>Uso</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Producción</td>
-          <td><code></code></td>
+          <td>Dashboard del país (Guatemala, República Dominicana o Colombia)</td>
           <td>Transacciones reales con dinero real</td>
         </tr>
         <tr>
           <td>Pruebas</td>
-          <td><code>sk_test_</code></td>
+          <td>Dashboard de Sandbox (<code>staging-v2.tupay.finance</code>)</td>
           <td>Pruebas sin cargo real</td>
         </tr>
       </tbody>
     </table>
+
+    <div class="info-box info-box--info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div>
+        <h4>Una API Key por país</h4>
+        <p>
+          Cada país opera sobre su propia instancia y su propio esquema de datos, por lo que
+          la API Key de un país no es válida en otro. Usa la key emitida por el dashboard del
+          país contra el cual estás integrando.
+        </p>
+      </div>
+    </div>
   </section>
 
   <section class="doc-section">
@@ -276,7 +296,7 @@
         <h4>.env (Node.js)</h4>
         <app-code-block
           code="TUPAY_API_KEY=abc123xyz456def789ghi012jkl345
-TUPAY_BASE_URL=https://api-guatemala.tupay.finance"
+TUPAY_BASE_URL=https://api-gt-v2.tupay.finance"
           language="bash">
         </app-code-block>
       </div>
@@ -452,18 +472,18 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
         </tr>
         <tr>
           <td><code>transactionId</code></td>
-          <td>string</td>
+          <td>number</td>
           <td>Identificador único de la transacción</td>
         </tr>
         <tr>
           <td><code>userId</code></td>
-          <td>string</td>
+          <td>number</td>
           <td>Identificador del usuario asociado</td>
         </tr>
         <tr>
           <td><code>amount</code></td>
-          <td>number</td>
-          <td>Monto solicitado de la transacción</td>
+          <td>string</td>
+          <td>Monto solicitado de la transacción, en la moneda del país</td>
         </tr>
         <tr>
           <td><code>status</code></td>
@@ -477,18 +497,13 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
         </tr>
         <tr>
           <td><code>customId</code></td>
-          <td>string</td>
+          <td>string | null</td>
           <td>Identificador personalizado que enviaste al crear la transacción</td>
         </tr>
         <tr>
           <td><code>amountReceived</code></td>
-          <td>number</td>
+          <td>string | null</td>
           <td>Monto efectivamente recibido</td>
-        </tr>
-        <tr>
-          <td><code>notes</code></td>
-          <td>string</td>
-          <td>Información adicional (puede estar vacío)</td>
         </tr>
       </tbody>
     </table>
@@ -540,8 +555,8 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
         </tr>
         <tr>
           <td><code>amount</code></td>
-          <td>number</td>
-          <td>Monto de la transacción</td>
+          <td>string</td>
+          <td>Monto de la transacción, en la moneda del país</td>
         </tr>
         <tr>
           <td><code>status</code></td>
@@ -555,13 +570,13 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
         </tr>
         <tr>
           <td><code>customId</code></td>
-          <td>string</td>
+          <td>string | null</td>
           <td>Identificador personalizado que enviaste al crear la transacción</td>
         </tr>
         <tr>
           <td><code>observation</code></td>
-          <td>string</td>
-          <td>Observaciones adicionales (puede estar vacío)</td>
+          <td>string | null</td>
+          <td>Observaciones adicionales (puede venir en null)</td>
         </tr>
       </tbody>
     </table>
@@ -597,6 +612,16 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
           <td>Siempre <code>"pay-outs"</code> para lotes masivos</td>
         </tr>
         <tr>
+          <td><code>userId</code></td>
+          <td>number</td>
+          <td>Identificador del usuario dueño del lote</td>
+        </tr>
+        <tr>
+          <td><code>timestamp</code></td>
+          <td>string</td>
+          <td>Fecha y hora del envío en formato ISO 8601</td>
+        </tr>
+        <tr>
           <td><code>totalTransactions</code></td>
           <td>number</td>
           <td>Cantidad total de transacciones en el lote</td>
@@ -618,9 +643,12 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
       <div>
         <h4>Nota sobre PayOut Masivo</h4>
         <p>
-          Cada transacción dentro del arreglo <code>transactions</code> contiene los campos
-          <code>transactionId</code>, <code>reference</code>, <code>amount</code> y <code>status</code>.
-          Revisa el estado individual de cada transacción ya que pueden variar dentro del mismo lote.
+          Cada transacción dentro del arreglo <code>transactions</code> contiene
+          <code>transactionId</code>, <code>reference</code>, <code>amount</code>,
+          <code>status</code>, <code>customId</code> y <code>observation</code>.
+          El lote solo incluye transacciones que llegaron a un estado final
+          (<code>paid</code>, <code>approved</code>, <code>rejected</code>, <code>failed</code>
+          o <code>canceled</code>), y los estados pueden variar dentro del mismo lote.
         </p>
       </div>
     </div>
@@ -647,6 +675,10 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
           <td>La transacción fue creada y está esperando el pago del cliente</td>
         </tr>
         <tr>
+          <td><code>pending_match</code></td>
+          <td>El pago fue reportado y está en conciliación con el movimiento bancario</td>
+        </tr>
+        <tr>
           <td><code>approved</code></td>
           <td>El pago fue detectado y está siendo verificado</td>
         </tr>
@@ -659,12 +691,12 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
           <td>La transacción fue rechazada</td>
         </tr>
         <tr>
-          <td><code>cancelled</code></td>
-          <td>La transacción fue cancelada</td>
+          <td><code>failed</code></td>
+          <td>La transacción falló durante el procesamiento</td>
         </tr>
         <tr>
-          <td><code>expired</code></td>
-          <td>La transacción expiró por falta de pago</td>
+          <td><code>canceled</code></td>
+          <td>La transacción fue cancelada</td>
         </tr>
       </tbody>
     </table>
@@ -713,8 +745,8 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
           <td>La transacción fue aprobada y será procesada</td>
         </tr>
         <tr>
-          <td><code>processing</code></td>
-          <td>La transacción está siendo procesada</td>
+          <td><code>processed</code></td>
+          <td>La transacción fue enviada al proveedor y está en procesamiento</td>
         </tr>
         <tr>
           <td><code>paid</code></td>
@@ -733,7 +765,7 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
           <td>La transacción falló durante el procesamiento</td>
         </tr>
         <tr>
-          <td><code>cancelled</code></td>
+          <td><code>canceled</code></td>
           <td>La transacción fue cancelada</td>
         </tr>
       </tbody>
@@ -741,7 +773,7 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
 
     <h3>Flujo Normal</h3>
     <p>
-      <code>pending</code> &rarr; <code>approved</code> &rarr; <code>processing</code> &rarr; <code>paid</code> &rarr; <code>completed</code>
+      <code>pending</code> &rarr; <code>approved</code> &rarr; <code>processed</code> &rarr; <code>paid</code> &rarr; <code>completed</code>
     </p>
 
     <div class="info-box info-box--success">
@@ -796,8 +828,10 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
       <div>
         <h4>Importante</h4>
         <p>
-          La firma se genera concatenando el timestamp y el cuerpo del webhook separados por un punto:
-          <code>timestamp.payload</code>. Utiliza tu <strong>Secret Key</strong> como clave para el HMAC.
+          La firma se calcula sobre el <strong>cuerpo del webhook tal cual se recibe</strong>
+          (<code>HMAC-SHA256(cuerpo)</code>), sin concatenar el timestamp. La clave del HMAC es tu
+          propia <strong>API Key</strong>, la misma que usas en el header <code>x-api-key</code>.
+          El header <code>X-TuPay-Timestamp</code> es informativo y no entra en el cálculo.
         </p>
       </div>
     </div>
@@ -858,7 +892,7 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
           <li>No ignores la verificación de firma</li>
           <li>No asumas que los webhooks llegarán en orden</li>
           <li>No proceses el mismo webhook más de una vez sin idempotencia</li>
-          <li>No expongas tu Secret Key en código del cliente</li>
+          <li>No expongas tu API Key en código del cliente</li>
         </ul>
       </div>
     </div>

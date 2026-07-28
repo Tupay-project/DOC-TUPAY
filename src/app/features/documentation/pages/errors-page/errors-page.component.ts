@@ -20,26 +20,26 @@ export class ErrorsPageComponent {
     {
       code: 400,
       name: 'Bad Request',
-      description: 'La petición contiene datos inválidos o mal formateados.',
+      description: 'La petición incumple una regla de negocio o incluye un campo no permitido.',
       causes: [
+        'Transacción duplicada aún en revisión',
+        'Campo no permitido en el body (la API solo acepta los campos documentados)',
         'JSON mal formado en el body',
-        'Campos requeridos faltantes',
-        'Valores fuera de rango permitido',
-        'Formato de fecha incorrecto'
+        'Monto menor o igual a cero'
       ],
-      solution: 'Verifica que todos los campos requeridos estén presentes y tengan el formato correcto.',
+      solution: 'Envía únicamente los campos documentados del endpoint y revisa el mensaje devuelto.',
       example: `{
   "success": false,
-  "message": "Validation failed",
-  "code": 400,
+  "message": "Ya tienes una transacción similar en revisión. Espera un momento mientras se valida, por favor.",
+  "code": 400
+}
+
+// Campo no permitido en el body
+{
   "errors": [
     {
-      "field": "amount",
-      "message": "Amount must be a positive number"
-    },
-    {
-      "field": "userEmail",
-      "message": "Invalid email format"
+      "msg": "Field not allowed: userBank",
+      "param": "userBank"
     }
   ]
 }`
@@ -54,29 +54,46 @@ export class ErrorsPageComponent {
         'API Key deshabilitada',
         'API Key expirada'
       ],
-      solution: 'Verifica que estés usando la API Key correcta en el header x-api-key.',
+      solution: 'Verifica que estés usando la API Key correcta del país al que apuntas, en el header x-api-key.',
       example: `{
   "success": false,
-  "message": "Invalid API key or missing authentication",
-  "code": 401,
-  "error": "Unauthorized"
+  "message": "API Key inválida o desactivada",
+  "code": 401
+}
+
+// Si no se envía ninguna credencial
+{
+  "success": false,
+  "message": "Authentication required. Please provide a valid token or API key",
+  "code": 401
 }`
     },
     {
       code: 403,
       name: 'Forbidden',
-      description: 'No tienes permisos para acceder a este recurso.',
+      description: 'Uno o más campos del body no pasaron la validación, o no tienes permisos sobre el recurso.',
       causes: [
-        'API Key sin permisos suficientes',
-        'Acceso a recurso de otra cuenta',
-        'Plan no incluye esta funcionalidad'
+        'Campo requerido faltante (userName, userPhone, userEmail, userIdentificationNumber, dueDate...)',
+        'Formato inválido (por ejemplo, userEmail no es un correo válido)',
+        'amount no numérico o menor o igual a cero',
+        'API Key sin permisos sobre el recurso solicitado'
       ],
-      solution: 'Contacta con soporte para verificar los permisos de tu cuenta.',
+      solution: 'Revisa el arreglo errors: cada entrada indica el campo (path) y el motivo (msg).',
       example: `{
-  "success": false,
-  "message": "Access denied to this resource",
-  "code": 403,
-  "error": "Forbidden"
+  "errors": [
+    {
+      "type": "field",
+      "msg": "Invalid value",
+      "path": "amount",
+      "location": "body"
+    },
+    {
+      "type": "field",
+      "msg": "Invalid value",
+      "path": "userEmail",
+      "location": "body"
+    }
+  ]
 }`
     },
     {
@@ -97,40 +114,21 @@ export class ErrorsPageComponent {
 }`
     },
     {
-      code: 422,
-      name: 'Unprocessable Entity',
-      description: 'La petición está bien formada pero contiene errores de lógica de negocio.',
-      causes: [
-        'Transacción duplicada',
-        'Monto insuficiente',
-        'Cuenta de destino inválida',
-        'Fecha de vencimiento en el pasado'
-      ],
-      solution: 'Revisa la lógica de negocio y los datos enviados.',
-      example: `{
-  "success": false,
-  "message": "Ya tienes una transacción similar en revisión",
-  "code": 422,
-  "error": "Unprocessable Entity"
-}`
-    },
-    {
       code: 429,
       name: 'Too Many Requests',
-      description: 'Has excedido el límite de peticiones permitidas.',
+      description: 'Has excedido el límite de 10.000 peticiones por IP cada 15 minutos.',
       causes: [
-        'Demasiadas peticiones en corto tiempo',
-        'Rate limit excedido',
-        'Comportamiento sospechoso detectado'
+        'Demasiadas peticiones en corto tiempo desde la misma IP',
+        'Reintentos sin backoff tras un error',
+        'Varios procesos compartiendo la misma IP de salida'
       ],
-      solution: 'Implementa backoff exponencial y respeta los rate limits.',
-      example: `{
-  "success": false,
-  "message": "Rate limit exceeded. Try again in 60 seconds",
-  "code": 429,
-  "error": "Too Many Requests",
-  "retryAfter": 60
-}`
+      solution: 'Implementa backoff exponencial y usa las cabeceras RateLimit-Remaining y RateLimit-Reset para regular tu consumo.',
+      example: `HTTP/1.1 429 Too Many Requests
+RateLimit-Limit: 10000
+RateLimit-Remaining: 0
+RateLimit-Reset: 842
+
+Too many requests, please try again later.`
     },
     {
       code: 500,

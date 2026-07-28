@@ -5,29 +5,29 @@
       <span class="version-badge">v1.0</span>
       <span class="status-badge status-badge--stable">Estable</span>
     </div>
-    <h1 id="intro-title">Introduccion a TuPay API</h1>
+    <h1 id="intro-title">Introducción a TuPay API</h1>
     <p class="doc-lead">
-      Bienvenido a la documentacion de la API de TuPay Finance. Esta guia te ayudara a integrar
-      pagos entrantes (PayIn) y salientes (PayOut) en tu aplicacion de forma segura y eficiente.
+      Bienvenido a la documentación de la API de TuPay Finance. Esta guía te ayudará a integrar
+      pagos entrantes (PayIn) y salientes (PayOut) en tu aplicación de forma segura y eficiente.
     </p>
   </header>
 
   <section class="doc-section" aria-labelledby="what-is">
-    <h2 id="what-is">Que es TuPay API?</h2>
+    <h2 id="what-is">¿Qué es TuPay API?</h2>
     <p>
       TuPay API es una interfaz REST que te permite procesar transacciones financieras en
-      Guatemala, Republica Dominicana y Colombia. Con nuestra API puedes:
+      Guatemala, República Dominicana y Colombia. Con nuestra API puedes:
     </p>
     <ul role="list">
       <li><strong>Recibir pagos (PayIn):</strong> Genera enlaces de pago seguros para tus clientes</li>
       <li><strong>Enviar fondos (PayOut):</strong> Realiza transferencias a cuentas bancarias o billeteras digitales</li>
-      <li><strong>Consultar estados:</strong> Verifica el estado de cualquier transaccion en tiempo real</li>
-      <li><strong>Gestionar webhooks:</strong> Recibe notificaciones automaticas de cambios de estado</li>
+      <li><strong>Consultar estados:</strong> Verifica el estado de cualquier transacción en tiempo real</li>
+      <li><strong>Gestionar webhooks:</strong> Recibe notificaciones automáticas de cambios de estado</li>
     </ul>
   </section>
 
   <section class="doc-section" aria-labelledby="features">
-    <h2 id="features">Caracteristicas Principales</h2>
+    <h2 id="features">Características Principales</h2>
     <div class="feature-grid" role="list">
       <div class="feature-item" role="listitem">
         <div class="feature-icon feature-icon--blue" aria-hidden="true">
@@ -36,7 +36,7 @@
           </svg>
         </div>
         <h3>Seguridad</h3>
-        <p>Autenticacion mediante API Key con encriptacion SSL/TLS en todas las comunicaciones.</p>
+        <p>Autenticación mediante API Key con encriptación SSL/TLS en todas las comunicaciones.</p>
       </div>
 
       <div class="feature-item" role="listitem">
@@ -67,7 +67,7 @@
           </svg>
         </div>
         <h3>Multi-tenant</h3>
-        <p>Soporte nativo para multiples paises y monedas con aislamiento de datos.</p>
+        <p>Soporte nativo para múltiples países y monedas con aislamiento de datos.</p>
       </div>
     </div>
   </section>
@@ -82,14 +82,15 @@
         <div class="step-vertical__content">
           <h3>Obtén tu API Key</h3>
           <p>
-            Accede al Dashboard de TuPay segun tu pais, navega a tu perfil y copia tu API Key.
-            Este identificador unico autenticara todas tus peticiones.
+            Accede al Dashboard de TuPay según tu país, navega a tu perfil y copia tu API Key.
+            Este identificador único autenticará todas tus peticiones.
           </p>
           <ul>
-            <li><strong>Guatemala:</strong> <a href="https://guatemala.tupay.finance" target="_blank">guatemala.tupay.finance</a></li>
-            <li><strong>Republica Dominicana:</strong> <a href="https://rd.tupay.finance" target="_blank">rd.tupay.finance</a></li>
+            <li><strong>Guatemala:</strong> <a href="https://guatemala-v2.tupay.finance" target="_blank">guatemala-v2.tupay.finance</a></li>
+            <li><strong>Republica Dominicana:</strong> <a href="https://rd-v2.tupay.finance" target="_blank">rd-v2.tupay.finance</a></li>
             <li><strong>Colombia:</strong> <a href="https://colombia.tupay.finance" target="_blank">colombia.tupay.finance</a></li>
-            <li><strong>Sandbox:</strong> <a href="https://staging.tupay.finance" target="_blank">staging.tupay.finance</a></li>
+            <li><strong>Sandbox (V2):</strong> <a href="https://staging-v2.tupay.finance" target="_blank">staging-v2.tupay.finance</a></li>
+            <li><strong>Sandbox (V1):</strong> <a href="https://staging.tupay.finance" target="_blank">staging.tupay.finance</a></li>
           </ul>
         </div>
       </div>
@@ -106,6 +107,36 @@
             language="curl"
             title="Crear PayIn">
           </app-code-block>
+          <p>
+            El ejemplo usa Guatemala. Para otro país cambia la <strong>URL base</strong> y la
+            <strong>moneda</strong> según la tabla de abajo; el resto del cuerpo es idéntico.
+          </p>
+          <table class="doc-table" role="table" aria-label="URL base y moneda por país">
+            <thead>
+              <tr>
+                <th scope="col">País</th>
+                <th scope="col">Moneda</th>
+                <th scope="col">URL base</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🇬🇹 Guatemala</td>
+                <td><code>GTQ</code></td>
+                <td><code>https://api-gt-v2.tupay.finance</code></td>
+              </tr>
+              <tr>
+                <td>🇩🇴 República Dominicana</td>
+                <td><code>DOP</code></td>
+                <td><code>https://api-rd-v2.tupay.finance</code></td>
+              </tr>
+              <tr>
+                <td>🇨🇴 Colombia</td>
+                <td><code>COP</code></td>
+                <td><code>https://api-co.tupay.finance</code></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -142,23 +173,24 @@
         <h4>APIs por País</h4>
         <p>TuPay API opera en diferentes URLs según el país:</p>
         <ul>
-          <li><strong>Guatemala:</strong> <code>https://api-guatemala.tupay.finance</code></li>
-          <li><strong>República Dominicana:</strong> <code>https://api-rd.tupay.finance</code></li>
+          <li><strong>Guatemala:</strong> <code>https://api-gt-v2.tupay.finance</code></li>
+          <li><strong>República Dominicana:</strong> <code>https://api-rd-v2.tupay.finance</code></li>
           <li><strong>Colombia:</strong> <code>https://api-co.tupay.finance</code></li>
         </ul>
         <br>
         <h4>Dashboards por País</h4>
         <p>Accede al dashboard correspondiente a tu país para gestionar tus transacciones y obtener tu API Key:</p>
         <ul>
-          <li><strong>Guatemala:</strong> <a href="https://guatemala.tupay.finance" target="_blank"><code>https://guatemala.tupay.finance</code></a></li>
-          <li><strong>República Dominicana:</strong> <a href="https://rd.tupay.finance" target="_blank"><code>https://rd.tupay.finance</code></a></li>
+          <li><strong>Guatemala:</strong> <a href="https://guatemala-v2.tupay.finance" target="_blank"><code>https://guatemala-v2.tupay.finance</code></a></li>
+          <li><strong>República Dominicana:</strong> <a href="https://rd-v2.tupay.finance" target="_blank"><code>https://rd-v2.tupay.finance</code></a></li>
           <li><strong>Colombia:</strong> <a href="https://colombia.tupay.finance" target="_blank"><code>https://colombia.tupay.finance</code></a></li>
         </ul>
         <br>
         <h4>Entorno Sandbox (desarrollo/pruebas)</h4>
         <ul>
           <li><strong>API Sandbox:</strong> <code>https://apitupay-dev.up.railway.app</code></li>
-          <li><strong>Dashboard Sandbox:</strong> <a href="https://staging.tupay.finance" target="_blank"><code>https://staging.tupay.finance</code></a></li>
+          <li><strong>Dashboard Sandbox V2:</strong> <a href="https://staging-v2.tupay.finance" target="_blank"><code>https://staging-v2.tupay.finance</code></a></li>
+          <li><strong>Dashboard Sandbox V1:</strong> <a href="https://staging.tupay.finance" target="_blank"><code>https://staging.tupay.finance</code></a></li>
         </ul>
       </div>
     </div>
@@ -167,34 +199,29 @@
   <section class="doc-section" aria-labelledby="rate-limits">
     <h2 id="rate-limits">Rate Limits</h2>
     <p>
-      Para garantizar la estabilidad del servicio, aplicamos los siguientes limites:
+      Para garantizar la estabilidad del servicio, aplicamos los siguientes límites:
     </p>
-    <table class="doc-table" role="table" aria-label="Limites de peticiones por tipo de cliente">
+    <table class="doc-table" role="table" aria-label="Límites de peticiones a la API">
       <thead>
         <tr>
-          <th scope="col">Tipo de Cliente</th>
-          <th scope="col">Limite</th>
-          <th scope="col">Periodo</th>
+          <th scope="col">Alcance</th>
+          <th scope="col">Límite</th>
+          <th scope="col">Ventana</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Estandar</td>
-          <td>100 requests</td>
-          <td>Por minuto</td>
-        </tr>
-        <tr>
-          <td>Premium</td>
-          <td>500 requests</td>
-          <td>Por minuto</td>
-        </tr>
-        <tr>
-          <td>Enterprise</td>
-          <td>Personalizado</td>
-          <td>Segun contrato</td>
+          <td>Todos los endpoints <code>/api/*</code></td>
+          <td>10.000 peticiones por IP</td>
+          <td>15 minutos</td>
         </tr>
       </tbody>
     </table>
+    <p>
+      Cada respuesta incluye las cabeceras estándar <code>RateLimit-Limit</code>,
+      <code>RateLimit-Remaining</code> y <code>RateLimit-Reset</code> para que puedas
+      monitorear tu consumo. El límite es el mismo en Guatemala, República Dominicana y Colombia.
+    </p>
   </section>
   
   <section class="doc-section" aria-labelledby="support-section">
@@ -245,8 +272,8 @@
   </section>
 
   <section class="doc-section" aria-labelledby="next-steps">
-    <h2 id="next-steps">Proximos Pasos</h2>
-    <nav class="next-steps" aria-label="Navegacion a proximas secciones">
+    <h2 id="next-steps">Próximos Pasos</h2>
+    <nav class="next-steps" aria-label="Navegación a próximas secciones">
       <a routerLink="/gateway/authentication" class="next-step-card" aria-describedby="auth-desc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <circle cx="7" cy="17" r="3"></circle>
@@ -254,8 +281,8 @@
           <path d="m10.39 10.71 3.54 3.54"></path>
         </svg>
         <div>
-          <h4>Autenticacion</h4>
-          <p id="auth-desc">Aprende como autenticar tus peticiones</p>
+          <h4>Autenticación</h4>
+          <p id="auth-desc">Aprende cómo autenticar tus peticiones</p>
         </div>
       </a>
 
@@ -278,7 +305,7 @@
         </svg>
         <div>
           <h4>Manejo de Errores</h4>
-          <p id="errors-desc">Codigos de error y como manejarlos</p>
+          <p id="errors-desc">Códigos de error y cómo manejarlos</p>
         </div>
       </a>
     </nav>
