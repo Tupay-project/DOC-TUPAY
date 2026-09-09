@@ -82,15 +82,16 @@
         <div class="step-vertical__content">
           <h3>Obtén tu API Key</h3>
           <p>
-            Accede al Dashboard de TuPay según tu país, navega a tu perfil y copia tu API Key.
+            Accede al Dashboard de TuPay de tu país, navega a tu perfil y copia tu API Key.
             Este identificador único autenticará todas tus peticiones.
           </p>
           <ul>
-            <li><strong>Guatemala:</strong> <a href="https://guatemala-v2.tupay.finance" target="_blank">guatemala-v2.tupay.finance</a></li>
-            <li><strong>Republica Dominicana:</strong> <a href="https://rd-v2.tupay.finance" target="_blank">rd-v2.tupay.finance</a></li>
-            <li><strong>Colombia:</strong> <a href="https://colombia.tupay.finance" target="_blank">colombia.tupay.finance</a></li>
-            <li><strong>Sandbox (V2):</strong> <a href="https://staging-v2.tupay.finance" target="_blank">staging-v2.tupay.finance</a></li>
-            <li><strong>Sandbox (V1):</strong> <a href="https://staging.tupay.finance" target="_blank">staging.tupay.finance</a></li>
+            <li *ngFor="let country of countries">
+              <strong>{{ country.name }}:</strong>
+              <a [href]="country.dashboardUrl" target="_blank" rel="noopener">{{ country.dashboardHost }}</a>
+            </li>
+            <li><strong>Sandbox (V2):</strong> <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener">{{ sandbox.dashboardHost }}</a></li>
+            <li><strong>Sandbox (V1):</strong> <a href="https://staging.tupay.finance" target="_blank" rel="noopener">staging.tupay.finance</a></li>
           </ul>
         </div>
       </div>
@@ -108,8 +109,8 @@
             title="Crear PayIn">
           </app-code-block>
           <p>
-            El ejemplo usa Guatemala. Para otro país cambia la <strong>URL base</strong> y la
-            <strong>moneda</strong> según la tabla de abajo; el resto del cuerpo es idéntico.
+            El contrato de la API es el mismo en todos los países. Lo que cambia es la
+            <strong>URL base</strong> y la <strong>moneda</strong>:
           </p>
           <table class="doc-table" role="table" aria-label="URL base y moneda por país">
             <thead>
@@ -120,20 +121,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>🇬🇹 Guatemala</td>
-                <td><code>GTQ</code></td>
-                <td><code>https://api-gt-v2.tupay.finance</code></td>
-              </tr>
-              <tr>
-                <td>🇩🇴 República Dominicana</td>
-                <td><code>DOP</code></td>
-                <td><code>https://api-rd-v2.tupay.finance</code></td>
-              </tr>
-              <tr>
-                <td>🇨🇴 Colombia</td>
-                <td><code>COP</code></td>
-                <td><code>https://api-co.tupay.finance</code></td>
+              <tr *ngFor="let country of countries">
+                <td>{{ country.flag }} {{ country.name }}</td>
+                <td><code>{{ country.currency }}</code></td>
+                <td><code>{{ country.baseUrl }}</code></td>
               </tr>
             </tbody>
           </table>
@@ -173,27 +164,116 @@
         <h4>APIs por País</h4>
         <p>TuPay API opera en diferentes URLs según el país:</p>
         <ul>
-          <li><strong>Guatemala:</strong> <code>https://api-gt-v2.tupay.finance</code></li>
-          <li><strong>República Dominicana:</strong> <code>https://api-rd-v2.tupay.finance</code></li>
-          <li><strong>Colombia:</strong> <code>https://api-co.tupay.finance</code></li>
+          <li *ngFor="let country of countries">
+            <strong>{{ country.name }}:</strong> <code>{{ country.baseUrl }}</code>
+          </li>
         </ul>
         <br>
         <h4>Dashboards por País</h4>
-        <p>Accede al dashboard correspondiente a tu país para gestionar tus transacciones y obtener tu API Key:</p>
+        <p>Accede al dashboard de tu país para gestionar tus transacciones y obtener tu API Key:</p>
         <ul>
-          <li><strong>Guatemala:</strong> <a href="https://guatemala-v2.tupay.finance" target="_blank"><code>https://guatemala-v2.tupay.finance</code></a></li>
-          <li><strong>República Dominicana:</strong> <a href="https://rd-v2.tupay.finance" target="_blank"><code>https://rd-v2.tupay.finance</code></a></li>
-          <li><strong>Colombia:</strong> <a href="https://colombia.tupay.finance" target="_blank"><code>https://colombia.tupay.finance</code></a></li>
+          <li *ngFor="let country of countries">
+            <strong>{{ country.name }}:</strong>
+            <a [href]="country.dashboardUrl" target="_blank" rel="noopener"><code>{{ country.dashboardUrl }}</code></a>
+          </li>
         </ul>
         <br>
         <h4>Entorno Sandbox (desarrollo/pruebas)</h4>
+        <p>El Sandbox es único y compartido por todos los países.</p>
         <ul>
-          <li><strong>API Sandbox:</strong> <code>https://apitupay-dev.up.railway.app</code></li>
-          <li><strong>Dashboard Sandbox V2:</strong> <a href="https://staging-v2.tupay.finance" target="_blank"><code>https://staging-v2.tupay.finance</code></a></li>
-          <li><strong>Dashboard Sandbox V1:</strong> <a href="https://staging.tupay.finance" target="_blank"><code>https://staging.tupay.finance</code></a></li>
+          <li><strong>API Sandbox:</strong> <code>{{ sandbox.baseUrl }}</code></li>
+          <li>
+            <strong>Dashboard Sandbox V2:</strong>
+            <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener"><code>{{ sandbox.dashboardUrl }}</code></a>
+          </li>
+          <li><strong>Dashboard Sandbox V1:</strong> <a href="https://staging.tupay.finance" target="_blank" rel="noopener"><code>https://staging.tupay.finance</code></a></li>
         </ul>
       </div>
     </div>
+  </section>
+
+  <section class="doc-section" aria-labelledby="country-params">
+    <h2 id="country-params">Parámetros por País</h2>
+    <p>
+      El contrato de la API es el mismo en todos los países. Lo que cambia es el valor que
+      debes enviar en <code>currency</code> y el documento de identidad que espera
+      <code>userIdentificationNumber</code>.
+    </p>
+
+    <table class="doc-table" role="table" aria-label="Moneda y documento de identidad por pais">
+      <thead>
+        <tr>
+          <th scope="col">País</th>
+          <th scope="col"><code>currency</code></th>
+          <th scope="col">Documento</th>
+          <th scope="col">Ejemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of countries">
+          <td>{{ country.flag }} {{ country.name }}</td>
+          <td><code>{{ country.currency }}</code></td>
+          <td>{{ country.identification.label }}</td>
+          <td><code>{{ country.identification.example }}</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Tipos de Cuenta (PayOut)</h3>
+    <p>
+      El campo <code>userTypeAccount</code> siempre acepta los mismos dos valores,
+      <code>savings</code> y <code>checking</code>. El nombre comercial que usa cada país
+      es distinto:
+    </p>
+
+    <table class="doc-table" role="table" aria-label="Nombre local de cada tipo de cuenta por pais">
+      <thead>
+        <tr>
+          <th scope="col">País</th>
+          <th scope="col"><code>savings</code></th>
+          <th scope="col"><code>checking</code></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of countries">
+          <td>{{ country.flag }} {{ country.name }}</td>
+          <td>{{ country.accountTypes.savings }}</td>
+          <td>{{ country.accountTypes.checking }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="doc-section" aria-labelledby="payment-methods">
+    <h2 id="payment-methods">Métodos de Pago por País</h2>
+    <p>
+      El contrato de la API es el mismo en todos los países; lo que cambia es el
+      medio que el cliente usa para pagar. La lista siguiente se edita en la
+      configuración de cada país (<code>methods</code>), sin tocar el código de
+      los componentes.
+    </p>
+
+    <table class="doc-table" role="table" aria-label="Metodos de pago por pais">
+      <thead>
+        <tr>
+          <th scope="col">País</th>
+          <th scope="col">Métodos de Pago</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of countries">
+          <td>{{ country.flag }} {{ country.name }}</td>
+          <td>
+            <ul class="method-list">
+              <li *ngFor="let method of country.methods">
+                <strong>{{ method.name_method }}</strong>
+                <span>{{ method.description }}</span>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
   <section class="doc-section" aria-labelledby="rate-limits">
@@ -286,7 +366,7 @@
         </div>
       </a>
 
-      <a routerLink="/gtm/api" class="next-step-card" aria-describedby="api-desc">
+      <a [routerLink]="['/', selectedCountry.code.toLowerCase(), 'api']" class="next-step-card" aria-describedby="api-desc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>

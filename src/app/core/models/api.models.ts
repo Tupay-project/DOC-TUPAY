@@ -88,6 +88,43 @@ export interface EndpointGroup {
 
 export type CountryCode = 'GTM' | 'DOM' | 'COL';
 
+/**
+ * Documento de identidad que la API espera en `userIdentificationNumber`.
+ * Varía por país, por eso se documenta junto al resto de la configuración.
+ */
+export interface CountryIdentification {
+  /** Nombre local del documento (DPI, Cédula...) */
+  label: string;
+  /** Valor de ejemplo, con el mismo formato que acepta la API */
+  example: string;
+  /** Aclaración de formato que se muestra en las tablas de parámetros */
+  hint: string;
+}
+
+/** Terminología bancaria local para el enum `userTypeAccount` de la API. */
+export interface CountryAccountTypes {
+  /** Nombre local de `savings` */
+  savings: string;
+  /** Nombre local de `checking` */
+  checking: string;
+}
+
+/**
+ * Método de pago disponible en un país. Estructura editable:
+ * se pueden agregar, quitar o renombrar métodos sin tocar el código.
+ * Refleja la forma que devuelve la API en `data.methods` de la respuesta PayIn.
+ */
+export interface CountryPaymentMethod {
+  /** Slug del método; forma la URL del checkout: /checkout/{id}/{slug} */
+  id: string;
+  /** Nombre comercial que devuelve la API en `name_method` */
+  name_method: string;
+  /** Logo del método (URL) o null */
+  logo: string | null;
+  /** Descripción corta que se muestra en la documentación */
+  description: string;
+}
+
 export interface Country {
   code: CountryCode;
   name: string;
@@ -95,9 +132,25 @@ export interface Country {
   currency: string;
   currencySymbol: string;
   flag: string;
+  /** URL base de la API de producción */
   baseUrl: string;
+  /** URL del dashboard del país */
+  dashboardUrl: string;
   locale: string;
   timezone: string;
+  /**
+   * `false` mientras el ambiente del país no esté publicado.
+   * La documentación se muestra igual, marcada como próximamente.
+   */
+  available: boolean;
+  identification: CountryIdentification;
+  accountTypes: CountryAccountTypes;
+  /** Banco de ejemplo usado en los payloads de PayOut */
+  exampleBank: string;
+  /** Teléfono de ejemplo, sin prefijo de país */
+  examplePhone: string;
+  /** Métodos de pago disponibles en el país (editable) */
+  methods: CountryPaymentMethod[];
 }
 
 export const COUNTRIES: Record<CountryCode, Country> = {
@@ -109,8 +162,35 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currencySymbol: 'Q',
     flag: '🇬🇹',
     baseUrl: 'https://api-gt-v2.tupay.finance',
+    dashboardUrl: 'https://guatemala-v2.tupay.finance',
     locale: 'es-GT',
-    timezone: 'America/Guatemala'
+    timezone: 'America/Guatemala',
+    available: true,
+    identification: {
+      label: 'DPI / NIT',
+      example: '1234567890101',
+      hint: 'DPI (CUI) de 13 dígitos o NIT, sin guiones'
+    },
+    accountTypes: {
+      savings: 'Cuenta de Ahorro',
+      checking: 'Cuenta Monetaria'
+    },
+    exampleBank: 'Banco Industrial',
+    examplePhone: '51234567',
+    methods: [
+      {
+        id: 'transferencia',
+        name_method: 'Transferencia bancaria',
+        logo: null,
+        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+      },
+      {
+        id: 'efectivo',
+        name_method: 'Pago en efectivo',
+        logo: null,
+        description: 'El cliente paga en efectivo en puntos o comercios autorizados.'
+      }
+    ]
   },
   DOM: {
     code: 'DOM',
@@ -120,8 +200,35 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currencySymbol: 'RD$',
     flag: '🇩🇴',
     baseUrl: 'https://api-rd-v2.tupay.finance',
+    dashboardUrl: 'https://rd-v2.tupay.finance',
     locale: 'es-DO',
-    timezone: 'America/Santo_Domingo'
+    timezone: 'America/Santo_Domingo',
+    available: true,
+    identification: {
+      label: 'Cédula',
+      example: '00112345678',
+      hint: 'Cédula de 11 dígitos, sin guiones'
+    },
+    accountTypes: {
+      savings: 'Cuenta de Ahorros',
+      checking: 'Cuenta Corriente'
+    },
+    exampleBank: 'Banco Popular Dominicano',
+    examplePhone: '8091234567',
+    methods: [
+      {
+        id: 'transferencia',
+        name_method: 'Transferencia bancaria',
+        logo: null,
+        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+      },
+      {
+        id: 'efectivo',
+        name_method: 'Pago en efectivo',
+        logo: null,
+        description: 'El cliente paga en efectivo en puntos o comercios autorizados.'
+      }
+    ]
   },
   COL: {
     code: 'COL',
@@ -131,10 +238,53 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currencySymbol: '$',
     flag: '🇨🇴',
     baseUrl: 'https://api-co.tupay.finance',
+    dashboardUrl: 'https://colombia.tupay.finance',
     locale: 'es-CO',
-    timezone: 'America/Bogota'
+    timezone: 'America/Bogota',
+    available: true,
+    identification: {
+      label: 'Cédula',
+      example: '1234567890',
+      hint: 'Cédula de ciudadanía, sin puntos ni espacios'
+    },
+    accountTypes: {
+      savings: 'Cuenta de Ahorros',
+      checking: 'Cuenta Corriente'
+    },
+    exampleBank: 'Bancolombia',
+    examplePhone: '3001234567',
+    methods: [
+      {
+        id: 'transferencia',
+        name_method: 'Transferencia bancaria',
+        logo: null,
+        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+      },
+      {
+        id: 'pse',
+        name_method: 'Pago en línea (PSE)',
+        logo: null,
+        description: 'El cliente paga desde su banco usando el botón de pagos en línea.'
+      }
+    ]
   }
 };
+
+/**
+ * Ambiente compartido de Sandbox / Staging. Es único para todos los países.
+ */
+export const SANDBOX = {
+  name: 'Sandbox V2',
+  dashboardUrl: 'https://staging-v2.tupay.finance',
+  baseUrl: 'https://apitupay-dev.up.railway.app'
+};
+
+/** Países listados en el orden en que se muestran en la documentación. */
+export const COUNTRY_LIST: Country[] = [
+  COUNTRIES.GTM,
+  COUNTRIES.DOM,
+  COUNTRIES.COL
+];
 
 // ============================================
 // postman.model.ts
