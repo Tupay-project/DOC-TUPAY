@@ -72,7 +72,7 @@ export interface CodeExample {
   title?: string;
 }
 
-export type CodeLanguage = 'curl' | 'javascript' | 'python' | 'php' | 'java' | 'go' | 'ruby' | 'bash';
+export type CodeLanguage = 'curl' | 'javascript' | 'python' | 'php' | 'java' | 'go' | 'ruby' | 'bash' | 'html' | 'jsx' | 'typescript' | 'dart';
 
 export interface EndpointGroup {
   name: string;
