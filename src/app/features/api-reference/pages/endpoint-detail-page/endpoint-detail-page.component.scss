@@ -4,6 +4,7 @@
 
 .endpoint-detail {
   max-width: 900px;
+  width: 100%;
   @include flex-column;
   gap: $spacing-12;
 }
@@ -139,6 +140,7 @@
   border: 1px solid $border-gray;
   border-radius: $radius-md;
   overflow: hidden;
+  max-width: 100%;
 
   .dark & {
     border-color: $dark-border;
@@ -153,6 +155,7 @@
     font-size: $text-sm;
     font-weight: $font-semibold;
     color: $text-secondary;
+    min-width: 0;
 
     .dark & {
       background: $dark-surface-elevated;
@@ -170,6 +173,7 @@
     gap: $spacing-4;
     padding: $spacing-4;
     border-top: 1px solid $border-gray;
+    min-width: 0;
 
     .dark & {
       border-top-color: $dark-border;
@@ -187,7 +191,9 @@
 
   &__col {
     font-size: $text-sm;
-    color: #000000; // REGLA: Negro
+    color: #000000;
+    min-width: 0;
+    overflow: hidden;
 
     .dark & {
       color: $dark-text-primary;
@@ -195,6 +201,7 @@
 
     code {
       font-size: $text-sm;
+      word-break: break-all;
     }
   }
 }

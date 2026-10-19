@@ -1,33 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ThemeService } from './core/services/theme.service';
 import { EndpointService } from './core/services/endpoint.service';
+import { SearchModalService } from './core/services/search-modal.service';
 
 @Component({
   selector: 'app-root',
-  template: '<router-outlet></router-outlet>',
+  template: '<router-outlet></router-outlet><app-toast></app-toast>',
   styles: []
 })
 export class AppComponent implements OnInit {
   
   constructor(
     private themeService: ThemeService,
-    private endpointService: EndpointService
+    private endpointService: EndpointService,
+    private searchModalService: SearchModalService
   ) {}
 
   ngOnInit(): void {
-    // Inicializar tema
     this.themeService.setTheme(this.themeService.getCurrentTheme());
-    
-    // Cargar endpoints para país por defecto
     this.endpointService.setCurrentCountry('GTM');
+  }
 
-    // Listener para Ctrl+K (búsqueda)
-    document.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        // Aquí se abriría el modal de búsqueda
-        console.log('Búsqueda activada');
-      }
-    });
+  @HostListener('document:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent): void {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+      event.preventDefault();
+      this.searchModalService.open();
+    }
   }
 }

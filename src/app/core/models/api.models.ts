@@ -141,6 +141,8 @@ export interface Country {
   currency: string;
   currencySymbol: string;
   flag: string;
+  /** Código ISO 3166-1 alpha-2 en minúscula (ej. `gt`) para el asset `assets/images/flags/<flagCode>.svg` */
+  flagCode: string;
   /** URL base de la API de producción */
   baseUrl: string;
   /** URL del dashboard del país */
@@ -170,6 +172,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'GTQ',
     currencySymbol: 'Q',
     flag: '🇬🇹',
+    flagCode: 'gt',
     baseUrl: 'https://api-gt-v2.tupay.finance',
     dashboardUrl: 'https://guatemala-v2.tupay.finance',
     locale: 'es-GT',
@@ -207,7 +210,8 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     fullName: 'República Dominicana',
     currency: 'DOP',
     currencySymbol: 'RD$',
-    flag: '🇩🇴',
+    flag: '🇩',
+    flagCode: 'do',
     baseUrl: 'https://api-rd-v2.tupay.finance',
     dashboardUrl: 'https://rd-v2.tupay.finance',
     locale: 'es-DO',
@@ -246,6 +250,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'COP',
     currencySymbol: '$',
     flag: '🇨🇴',
+    flagCode: 'co',
     baseUrl: 'https://api-co.tupay.finance',
     dashboardUrl: 'https://colombia.tupay.finance',
     locale: 'es-CO',

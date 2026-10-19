@@ -9,8 +9,9 @@
       </svg>
       <input
         type="text"
+        #searchInput
         class="search-modal__input"
-        placeholder="Buscar endpoints, documentación..."
+        [attr.placeholder]="'search.placeholder' | t"
         [(ngModel)]="searchQuery"
         (input)="onSearchInput($event)"
         autofocus>

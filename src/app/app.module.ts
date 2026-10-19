@@ -19,6 +19,8 @@ import { BadgeComponent } from './shared/components/badge/badge.component';
 import { CodeBlockComponent } from './shared/components/code-block/code-block.component';
 import { SearchModalComponent } from './shared/components/search-modal/search-modal.component';
 import { TryItOutComponent } from './shared/components/try-it-out/try-it-out.component';
+import { ToastComponent } from './shared/components/toast/toast.component';
+import { FlagComponent } from './shared/components/flag/flag.component';
 
 // Pages - Home
 import { HomePageComponent } from './features/home/pages/home-page/home-page.component';
@@ -44,6 +46,8 @@ import { ErrorsPageComponent } from './features/documentation/pages/errors-page/
     CodeBlockComponent,
     SearchModalComponent,
     TryItOutComponent,
+    ToastComponent,
+    FlagComponent,
     // Pages
     HomePageComponent,
     EndpointDetailPageComponent,

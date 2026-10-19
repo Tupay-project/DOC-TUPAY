@@ -59,7 +59,7 @@
           class="navbar__country-btn"
           (click)="toggleCountryDropdown()"
           [class.active]="showCountryDropdown">
-          <span class="navbar__country-flag">{{ currentCountry.flag }}</span>
+          <app-flag [code]="currentCountry.flagCode" [alt]="currentCountry.name" size="sm"></app-flag>
           <span class="navbar__country-name hide-mobile">{{ currentCountry.name }}</span>
           <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <polyline points="6 9 12 15 18 9"></polyline>
@@ -73,7 +73,7 @@
             class="navbar__dropdown-item"
             [class.active]="country.code === currentCountry.code"
             (click)="selectCountry(country)">
-            <span class="navbar__country-flag">{{ country.flag }}</span>
+            <app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag>
             <div class="navbar__dropdown-content">
               <span class="navbar__dropdown-title">{{ country.name }}</span>
               <span class="navbar__dropdown-subtitle">{{ country.currency }}</span>
