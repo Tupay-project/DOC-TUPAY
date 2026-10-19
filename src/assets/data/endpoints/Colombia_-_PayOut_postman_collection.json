@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "col-payout-001",
 		"name": "Colombia - PayOut",
-		"description": "# TuPay PayOut\n\nEste endpoint permite generar un **Payout** utilizando la plataforma **TuPay**. Su función principal es facilitar la creación de una transacción segura y eficiente, donde los usuarios pueden realizar pagos de manera rápida y confiable.\n\n## Autorización\n\nTú debes enviar el parametro **x-api-key** en el **HEADERS** con la **API KEY** del usuario\n\n### Error de autorización respuesta\n\nSi falta una clave API, está mal formada o no es válida, recibirá un código de respuesta HTTP 401 No autorizado.",
+		"description": "# TuPay PayOut\n\nEste endpoint permite generar un **PayOut** utilizando la plataforma **TuPay**. Su función principal es facilitar la creación de una transacción segura y eficiente, donde los usuarios pueden realizar pagos de manera rápida y confiable.\n\n## Autorización\n\nTú debes enviar el parámetro **x-api-key** en el **HEADERS** con la **API Key** del usuario\n\n### Error de autorización respuesta\n\nSi falta una clave API, está mal formada o no es válida, recibirá un código de respuesta HTTP 401 No autorizado.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30722009"
 	},
@@ -31,14 +31,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"jhondoe@gmail.com\",\n  \"userBank\": \"Bancolombia\",\n  \"userTypeAccount\": \"savings\",\n  \"userNumAccount\": \"12345678901\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}"
+							"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"John Doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"jhondoe@gmail.com\",\n  \"userBank\": \"Bancolombia\",\n  \"userTypeAccount\": \"savings\",\n  \"userNumAccount\": \"12345678901\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/payout/register",
 							"host": ["{{baseUrl}}"],
 							"path": ["api", "payout", "register"]
 						},
-						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `customId` | **number** | 123 | customized identifier | no |\n| `currency` | **String** | COP | type of currency | si |\n| `amount` | **String** | 50000 | transaction payment amount | si |\n| `userName` | **String** | Jose perez | Nombre del comprador | si |\n| `userPhone` | **String** | 3001234567 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | si |\n| `userEmail` | **String** | [prueba@email.com](https://mailto:prueba@email.com) | Correo electrónico del comprador | si |\n| `userBank` | **String** | Bancolombia | Bank name | si |\n| `userTypeAccount` | **String** | savings or checking | type of bank account | si |\n| `userNumAccount` | **String** | 12345678901 | Account number | si |\n| `userIdentificationNumber` | **String** | 1234567890 | Document number | si |\n| `dueDate` | **String** | 2027/12/30 | Expiration date | si |"
+						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `customId` | **number** | 123 | customized identifier | no |\n| `currency` | **String** | COP | type of currency | Sí |\n| `amount` | **String** | 50000 | transaction payment amount | Sí |\n| `userName` | **String** | José Pérez | Nombre del comprador | Sí |\n| `userPhone` | **String** | 3001234567 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | Sí |\n| `userEmail` | **String** | [prueba@email.com](https://mailto:prueba@email.com) | Correo electrónico del comprador | Sí |\n| `userBank` | **String** | Bancolombia | Bank name | Sí |\n| `userTypeAccount` | **String** | savings or checking | type of bank account | Sí |\n| `userNumAccount` | **String** | 12345678901 | Account number | Sí |\n| `userIdentificationNumber` | **String** | 1234567890 | Document number | Sí |\n| `dueDate` | **String** | 2027/12/30 | Expiration date | Sí |"
 					},
 					"response": [
 						{
@@ -53,7 +53,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"jhondoe@gmail.com\",\n  \"userBank\": \"Bancolombia\",\n  \"userTypeAccount\": \"savings\",\n  \"userNumAccount\": \"12345678901\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"John Doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"jhondoe@gmail.com\",\n  \"userBank\": \"Bancolombia\",\n  \"userTypeAccount\": \"savings\",\n  \"userNumAccount\": \"12345678901\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -66,8 +66,8 @@
 									"path": ["api", "payout", "register"]
 								}
 							},
-							"status": "OK",
-							"code": 200,
+							"status": "Created",
+							"code": 201,
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
@@ -80,7 +80,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"transactionId\": 1,\n    \"success\": true,\n    \"message\": \"payout successfully created\",\n    \"code\": 200,\n    \"reference\": \"60001001\",\n    \"customId\": \"1\",\n    \"uuid\": \"b2c3d4e5-6789-01ab-cdef-234567890abc\"\n}"
+							"body": "{\n    \"transactionId\": 1,\n    \"success\": true,\n    \"message\": \"payout successfully created\",\n    \"code\": 201,\n    \"reference\": \"60001001\",\n    \"customId\": \"1\",\n    \"uuid\": \"b2c3d4e5-6789-01ab-cdef-234567890abc\"\n}"
 						},
 						{
 							"name": "Malformed Request",
@@ -175,7 +175,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"Payout found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"b2c3d4e5-6789-01ab-cdef-234567890abc\",\n        \"reference\": \"60001001\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payout\",\n        \"userName\": \"jhon doe\",\n        \"userPhone\": \"3001234567\",\n        \"userEmail\": \"jhondoe@gmail.com\",\n        \"userBank\": \"Bancolombia\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"savings\",\n        \"userNumAccount\": \"12345678901\",\n        \"userIdentificationNumber\": \"1234567890\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 1,\n        \"providerId\": null,\n        \"customId\": \"1\",\n        \"countryId\": 3,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"0.00\",\n        \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n        \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n        \"provider_id\": null,\n        \"user_id\": 1,\n        \"country_id\": 3\n    }\n}"
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payout found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"b2c3d4e5-6789-01ab-cdef-234567890abc\",\n        \"reference\": \"60001001\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payout\",\n        \"userName\": \"John Doe\",\n        \"userPhone\": \"3001234567\",\n        \"userEmail\": \"jhondoe@gmail.com\",\n        \"userBank\": \"Bancolombia\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"savings\",\n        \"userNumAccount\": \"12345678901\",\n        \"userIdentificationNumber\": \"1234567890\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 1,\n        \"providerId\": null,\n        \"customId\": \"1\",\n        \"countryId\": 3,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"0.00\",\n        \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n        \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n        \"provider_id\": null,\n        \"user_id\": 1,\n        \"country_id\": 3\n    }\n}"
 						},
 						{
 							"name": "Not Found",
@@ -222,7 +222,7 @@
 							"host": ["{{baseUrl}}"],
 							"path": ["api", "payout", "user-payouts"]
 						},
-						"description": "Enpoint para obtener todos los payouts"
+						"description": "Endpoint para obtener todos los payouts"
 					},
 					"response": [
 						{
@@ -250,12 +250,92 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"Payout found.\",\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"uuid\": \"b2c3d4e5-6789-01ab-cdef-234567890abc\",\n            \"reference\": \"60001001\",\n            \"currency\": \"COP\",\n            \"amount\": \"50000.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payout\",\n            \"userName\": \"jhon doe\",\n            \"userPhone\": \"3001234567\",\n            \"userEmail\": \"jhondoe@gmail.com\",\n            \"userBank\": \"Bancolombia\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"12345678901\",\n            \"userIdentificationNumber\": \"1234567890\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 1,\n            \"providerId\": null,\n            \"customId\": \"1\",\n            \"countryId\": 3,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"0.00\",\n            \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n            \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n            \"provider_id\": null,\n            \"user_id\": 1,\n            \"country_id\": 3\n        }\n    ]\n}"
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payout found.\",\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"uuid\": \"b2c3d4e5-6789-01ab-cdef-234567890abc\",\n            \"reference\": \"60001001\",\n            \"currency\": \"COP\",\n            \"amount\": \"50000.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payout\",\n            \"userName\": \"John Doe\",\n            \"userPhone\": \"3001234567\",\n            \"userEmail\": \"jhondoe@gmail.com\",\n            \"userBank\": \"Bancolombia\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"12345678901\",\n            \"userIdentificationNumber\": \"1234567890\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 1,\n            \"providerId\": null,\n            \"customId\": \"1\",\n            \"countryId\": 3,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"0.00\",\n            \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n            \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n            \"provider_id\": null,\n            \"user_id\": 1,\n            \"country_id\": 3\n        }\n    ]\n}"
 						}
 					]
+				},
+				{
+					"name": "Detalle por id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payout/detail/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payout",
+								"detail",
+								"1"
+							]
+						},
+						"description": "Endpoint para obtener un payout por su id."
+					},
+					"response": []
+				},
+				{
+					"name": "Listar por cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payout/custom-id/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payout",
+								"custom-id",
+								"1"
+							]
+						},
+						"description": "Endpoint para obtener un payout por custom id."
+					},
+					"response": []
 				}
 			],
-			"description": "El `/payout` endpoints registra tus Payouts"
+			"description": "El `/payout` endpoint registra tus PayOuts"
 		}
 	],
 	"auth": {

@@ -7,7 +7,7 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <polygon points="5 3 19 12 5 21 5 3"></polygon>
     </svg>
-    <span>Try It Out</span>
+    <span>Pruébalo</span>
     <svg class="try-it-out__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
@@ -40,10 +40,10 @@
       </p>
     </div>
 
-    <!-- Request Body (si aplica) -->
+    <!-- Cuerpo de la solicitud (si aplica) -->
     <div class="try-it-out__section" *ngIf="endpoint.method !== 'GET' && endpoint.requestBody">
       <label class="try-it-out__label" for="requestBody">
-        Request Body
+        Cuerpo de la solicitud
       </label>
       <textarea
         id="requestBody"
@@ -65,7 +65,7 @@
           <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
         </svg>
         <span class="spinner" *ngIf="loading"></span>
-        <span>{{ loading ? 'Enviando...' : 'Send Request' }}</span>
+        <span>{{ loading ? 'Enviando...' : 'Enviar solicitud' }}</span>
       </button>
     </div>
 
@@ -82,7 +82,7 @@
     <!-- Response -->
     <div class="try-it-out__response" *ngIf="response">
       <div class="try-it-out__response-header">
-        <h4>Response</h4>
+        <h4>Respuesta</h4>
         <div class="try-it-out__response-meta">
           <span 
             class="try-it-out__status"
@@ -99,7 +99,7 @@
         <app-code-block
           [code]="response.body | json"
           language="javascript"
-          title="Response Body">
+          title="Cuerpo de la respuesta">
         </app-code-block>
       </div>
     </div>
