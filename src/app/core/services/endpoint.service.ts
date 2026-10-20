@@ -9,6 +9,7 @@ import {
   CountryCode 
 } from '../models/api.models';
 import { PostmanTransformerService } from './postman-transformer.service';
+import { TranslationService } from './translation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,8 @@ export class EndpointService {
 
   constructor(
     private http: HttpClient,
-    private transformer: PostmanTransformerService
+    private transformer: PostmanTransformerService,
+    private translationService: TranslationService
   ) {}
 
   /**
@@ -132,7 +134,8 @@ export class EndpointService {
         if (payinEndpoints.length > 0) {
           groups.push({
             name: 'PayIn',
-            description: 'Endpoints para recibir pagos',
+            nameKey: 'endpoint.groups.payinName',
+            description: this.translationService.translate('endpoint.groups.payin'),
             endpoints: payinEndpoints,
             icon: 'arrow-down-circle'
           });
@@ -141,7 +144,8 @@ export class EndpointService {
         if (payoutEndpoints.length > 0) {
           groups.push({
             name: 'PayOut',
-            description: 'Endpoints para enviar fondos',
+            nameKey: 'endpoint.groups.payoutName',
+            description: this.translationService.translate('endpoint.groups.payout'),
             endpoints: payoutEndpoints,
             icon: 'arrow-up-circle'
           });

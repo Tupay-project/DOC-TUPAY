@@ -34,41 +34,41 @@ console.log(data);`;
   features = [
     {
       icon: 'zap',
-      title: 'Rápido y Seguro',
-      description: 'Procesa pagos de manera ágil con la máxima seguridad en cada transacción.'
+      title: 'home.features.fastTitle',
+      description: 'home.features.fastDesc'
     },
     {
       icon: 'globe',
-      title: 'Multi-País',
-      description: 'Soporta operaciones en Guatemala, República Dominicana y Colombia con moneda local.'
+      title: 'home.features.coverageTitle',
+      description: 'home.features.coverageDesc'
     },
     {
       icon: 'code',
-      title: 'Fácil Integración',
-      description: 'API REST simple y bien documentada con ejemplos en múltiples lenguajes.'
+      title: 'home.features.integrationTitle',
+      description: 'home.features.integrationDesc'
     },
     {
       icon: 'shield',
-      title: 'API Key Segura',
-      description: 'Autenticación mediante API Key con control total de permisos.'
+      title: 'home.features.secureTitle',
+      description: 'home.features.secureDesc'
     }
   ];
 
   quickStartSteps = [
     {
       step: 1,
-      title: 'Obtén tu API Key',
-      description: 'Accede al Dashboard y encuentra tu API Key en tu perfil de usuario.'
+      title: 'home.steps.keyTitle',
+      description: 'home.steps.keyDesc'
     },
     {
       step: 2,
-      title: 'Elige tu país',
-      description: 'Selecciona Guatemala, República Dominicana o Colombia según tu operación.'
+      title: 'home.steps.configTitle',
+      description: 'home.steps.configDesc'
     },
     {
       step: 3,
-      title: 'Haz tu primera llamada',
-      description: 'Usa PayIn para recibir pagos o PayOut para enviar fondos.'
+      title: 'home.steps.callTitle',
+      description: 'home.steps.callDesc'
     }
   ];
 

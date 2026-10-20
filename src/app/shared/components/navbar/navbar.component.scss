@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: $z-sticky;
+  z-index: $z-popover;
   height: $navbar-height;
   background: $background-white;
   border-bottom: 1px solid $border-gray;
@@ -24,9 +24,21 @@
     max-width: 100%;
     padding: 0 $spacing-6;
     gap: $spacing-4;
+    position: relative;
 
     @include mobile {
       padding: 0 $spacing-4;
+    }
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+
+    &.icon-sm {
+      width: 14px;
+      height: 14px;
     }
   }
 
@@ -47,6 +59,11 @@
     color: #000000; // REGLA: Negro en modo claro
     cursor: pointer;
     transition: background $transition-fast;
+    position: relative;
+    z-index: 1070;
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 
     .dark & {
       color: $dark-text-primary;
@@ -71,6 +88,7 @@
     @include flex-center;
     gap: $spacing-3;
     text-decoration: none;
+    object-fit: contain;
   }
 
   &__logo-icon {
@@ -267,6 +285,23 @@
 
   &__country-name {
     white-space: nowrap;
+  }
+
+  &__language-selector {
+    position: relative;
+  }
+
+  &__language-btn {
+    gap: $spacing-2;
+  }
+
+  &__language-code {
+    font-size: $text-xs;
+    font-weight: $font-semibold;
+  }
+
+  &__dropdown--language {
+    min-width: 180px;
   }
 
   &__dropdown {

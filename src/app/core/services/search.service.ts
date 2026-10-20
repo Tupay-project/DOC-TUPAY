@@ -3,13 +3,17 @@ import { Observable, combineLatest } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SearchResult, SearchOptions, Endpoint } from '../models/api.models';
 import { EndpointService } from './endpoint.service';
+import { TranslationService } from './translation.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  constructor(private endpointService: EndpointService) {}
+  constructor(
+    private endpointService: EndpointService,
+    private translationService: TranslationService
+  ) {}
 
   /**
    * Busca en endpoints
@@ -55,27 +59,30 @@ export class SearchService {
     let relevance = 0;
     const highlights: any[] = [];
 
+    const translatedName = endpoint.nameKey ? this.translationService.translate(endpoint.nameKey) : endpoint.name;
+    const translatedDescription = endpoint.descriptionKey ? this.translationService.translate(endpoint.descriptionKey) : endpoint.description;
+
     // Búsqueda en nombre (peso: 10)
-    if (endpoint.name.toLowerCase().includes(searchTerm)) {
+    if (translatedName.toLowerCase().includes(searchTerm)) {
       relevance += 10;
       highlights.push({
         field: 'name',
-        snippet: endpoint.name,
+        snippet: translatedName,
         matchedText: searchTerm
       });
     }
 
     // Búsqueda exacta en nombre (bonus: 5)
-    if (endpoint.name.toLowerCase() === searchTerm) {
+    if (translatedName.toLowerCase() === searchTerm) {
       relevance += 5;
     }
 
     // Búsqueda en descripción (peso: 5)
-    if (endpoint.description.toLowerCase().includes(searchTerm)) {
+    if (translatedDescription.toLowerCase().includes(searchTerm)) {
       relevance += 5;
       highlights.push({
         field: 'description',
-        snippet: this.getSnippet(endpoint.description, searchTerm),
+        snippet: this.getSnippet(translatedDescription, searchTerm),
         matchedText: searchTerm
       });
     }
@@ -103,8 +110,8 @@ export class SearchService {
     return {
       id: endpoint.id,
       type: 'endpoint',
-      title: endpoint.name,
-      description: endpoint.description,
+      title: translatedName,
+      description: translatedDescription,
       path: `/${this.endpointService.getCurrentCountry().toLowerCase()}/api/${endpoint.category}/${endpoint.id}`,
       category: endpoint.category,
       method: endpoint.method,

@@ -93,6 +93,9 @@
   }
 
   &__code {
+    max-width: 100%;
+    overflow-x: auto;
+    
     @include mobile {
       order: -1;
     }
@@ -370,10 +373,6 @@
     .country-card__arrow {
       transform: translateX(4px);
     }
-  }
-
-  &__flag {
-    font-size: 64px;
   }
 
   &__name {

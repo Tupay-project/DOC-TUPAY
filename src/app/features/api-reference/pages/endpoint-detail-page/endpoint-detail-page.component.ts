@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Endpoint, CodeLanguage } from '@core/models/api.models';
 import { EndpointService } from '@core/services/endpoint.service';
 import { ToastService } from '@core/services/toast.service';
+import { TranslationService } from '@core/services/translation.service';
 
 @Component({
   selector: 'app-endpoint-detail-page',
@@ -23,7 +24,8 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private endpointService: EndpointService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private translationService: TranslationService
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +72,10 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
     return this.endpoint?.responses.find(r => r.status === this.selectedResponseStatus);
   }
 
+  public resolveDescription(fallback: string, key?: string): string {
+    return key ? this.translationService.translate(key) : fallback;
+  }
+
   getFullUrl(): string {
     if (!this.endpoint) return '';
     return `${this.endpoint.baseUrl}${this.endpoint.path}`;
@@ -79,9 +85,12 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
     const url = this.getFullUrl();
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url).then(() => {
-        this.toastService.success('URL copiada', url);
+        this.toastService.success(this.translationService.translate('common.copiedUrl'), url);
       }).catch(() => {
-        this.toastService.error('Error al copiar', 'No se pudo copiar la URL');
+        this.toastService.error(
+          this.translationService.translate('common.copyErrorTitle'),
+          this.translationService.translate('common.copyUrlErrorMessage')
+        );
       });
     } else {
       const textarea = document.createElement('textarea');
@@ -90,7 +99,7 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
       textarea.select();
       document.execCommand('copy');
       document.body.removeChild(textarea);
-      this.toastService.success('URL copiada', url);
+      this.toastService.success(this.translationService.translate('common.copiedUrl'), url);
     }
   }
 }
