@@ -188,13 +188,7 @@
         </tbody>
       </table>
     </div>
-    <p>Ejemplo combinado:</p>
-    <app-code-block
-      [code]="personalizationExample"
-      language="bash"
-      title="Checkout personalizado">
-    </app-code-block>
-  </section>
+    </section>
 
   <section class="doc-section" aria-labelledby="option-b">
     <h2 id="option-b">Opción B: Renderizar tus propios botones</h2>
@@ -242,99 +236,6 @@
         </p>
       </div>
     </div>
-  </section>
-
-  <section class="doc-section" aria-labelledby="check-status">
-    <h2 id="check-status">Consultar el estado de un PayIn</h2>
-    <p>
-      Puedes consultar el estado de una transacción por su referencia o por tu
-      <code>customId</code>:
-    </p>
-    <h3>Por referencia</h3>
-    <app-code-block
-      [code]="statusByReference"
-      language="bash"
-      title="Consulta por referencia">
-    </app-code-block>
-    <h3>Por custom ID</h3>
-    <app-code-block
-      [code]="statusByCustomId"
-      language="bash"
-      title="Consulta por customId">
-    </app-code-block>
-    <h3>Headers</h3>
-    <app-code-block
-      [code]="statusHeaders"
-      language="bash"
-      title="Header de consulta">
-    </app-code-block>
-    <h3>Respuesta</h3>
-    <app-code-block
-      [code]="statusResponseExample"
-      language="javascript"
-      title="Respuesta de consulta de estado">
-    </app-code-block>
-
-    <h3>Estados posibles</h3>
-    <div class="doc-table-wrap">
-      <table class="doc-table" role="table" aria-label="Estados posibles de un PayIn">
-        <thead>
-          <tr>
-            <th scope="col">Estado</th>
-            <th scope="col">Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let status of statuses">
-            <td><code>{{ status.value }}</code></td>
-            <td>{{ status.description }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="doc-section" aria-labelledby="urls-by-country">
-    <h2 id="urls-by-country">URLs de referencia por país</h2>
-    <p>
-      El contrato de la API es el mismo en todos los países; lo que cambia es la
-      URL base de la API y la del checkout.
-    </p>
-    <div class="doc-table-wrap">
-      <table class="doc-table" role="table" aria-label="URLs de referencia por pais">
-        <thead>
-          <tr>
-            <th scope="col">País</th>
-            <th scope="col">Base URL API</th>
-            <th scope="col">Base URL Checkout</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let country of countries">
-            <td>{{ country.flag }} {{ country.name }}</td>
-            <td>
-              <a [href]="country.baseUrl" target="_blank" rel="noopener"><code>{{ country.baseUrl }}</code></a>
-            </td>
-            <td>
-              <a [href]="country.dashboardUrl" target="_blank" rel="noopener"><code>{{ country.dashboardUrl }}</code></a>
-            </td>
-          </tr>
-          <tr>
-            <td>{{ sandbox.name }}</td>
-            <td>
-              <a [href]="sandbox.baseUrl" target="_blank" rel="noopener"><code>{{ sandbox.baseUrl }}</code></a>
-            </td>
-            <td>
-              <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener"><code>{{ sandbox.dashboardUrl }}</code></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>
-      El Sandbox es único y compartido por todos los países para desarrollo y
-      pruebas.
-    </p>
   </section>
 
   <section class="doc-section" aria-labelledby="important-notes">

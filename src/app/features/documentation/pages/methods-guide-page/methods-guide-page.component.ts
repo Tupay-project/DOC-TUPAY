@@ -4,13 +4,10 @@
 // ============================================
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { COUNTRIES, COUNTRY_LIST, SANDBOX, Country, CodeLanguage } from '@core/models/api.models';
+import { COUNTRIES, Country, CodeLanguage } from '@core/models/api.models';
 import { EndpointService } from '@core/services/endpoint.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-/** Quita el protocolo para mostrar solo el host en los enlaces. */
-const host = (url: string) => url.replace(/^https?:\/\//, '');
 
 /** Id de transacción de ejemplo usado en las URLs de checkout. */
 const EXAMPLE_TX_ID = '65baf429-9e41-44c5-bb16-5785aa087160';
@@ -40,18 +37,6 @@ const METHOD_TABS: MethodCodeTab[] = [
   encapsulation: ViewEncapsulation.None
 })
 export class MethodsGuidePageComponent implements OnInit, OnDestroy {
-  readonly countries = COUNTRY_LIST.map(country => ({
-    ...country,
-    dashboardHost: host(country.dashboardUrl),
-    baseHost: host(country.baseUrl)
-  }));
-
-  readonly sandbox = {
-    ...SANDBOX,
-    dashboardHost: host(SANDBOX.dashboardUrl),
-    baseHost: host(SANDBOX.baseUrl)
-  };
-
   readonly methodTabs = METHOD_TABS;
 
   readonly queryParams = [
@@ -59,14 +44,6 @@ export class MethodsGuidePageComponent implements OnInit, OnDestroy {
     { param: 'color', value: '{hex}', description: 'Color principal del checkout, sin el símbolo # (ej. 4de8b0).' },
     { param: 'opacity', value: '{0-1}', description: 'Opacidad del fondo del checkout (ej. 0.08).' },
     { param: 'logo', value: '{url}', description: 'Logo que se muestra en el checkout (ej. https://tu-logo.png).' }
-  ];
-
-  readonly statuses = [
-    { value: 'pending', description: 'Esperando pago' },
-    { value: 'paid', description: 'Pago completado' },
-    { value: 'processing', description: 'Pago en proceso' },
-    { value: 'rejected', description: 'Pago rechazado' },
-    { value: 'failed', description: 'Pago fallido' }
   ];
 
   selectedTabId: MethodTabId = 'html';
@@ -171,41 +148,6 @@ export class MethodsGuidePageComponent implements OnInit, OnDestroy {
     return `<a href="${c.dashboardUrl}/checkout/${EXAMPLE_TX_ID}">
   Pagar ahora
 </a>`;
-  }
-
-  get personalizationExample(): string {
-    const c = this.selectedCountry;
-    const methodId = c.methods[0]?.id ?? 'transfer';
-    return `${c.dashboardUrl}/checkout/${EXAMPLE_TX_ID}/${methodId}?simple=true&color=4de8b0&logo=https://mi-logo.png`;
-  }
-
-  get statusByReference(): string {
-    return `GET ${this.selectedCountry.baseUrl}/api/payin/get-reference/{reference}`;
-  }
-
-  get statusByCustomId(): string {
-    return `GET ${this.selectedCountry.baseUrl}/api/payin/custom-id/{customId}`;
-  }
-
-  get statusHeaders(): string {
-    return `x-api-key: TU_API_KEY`;
-  }
-
-  get statusResponseExample(): string {
-    const c = this.selectedCountry;
-    const sample = {
-      success: true,
-      data: {
-        id: EXAMPLE_TX_ID,
-        reference: '39001303',
-        customId: '1',
-        status: 'paid',
-        amount: '100.00',
-        currency: c.currency,
-        checkoutUrl: `${c.dashboardUrl}/checkout/...`
-      }
-    };
-    return JSON.stringify(sample, null, 2);
   }
 
   private methodsArraySnippet(c: Country): string {
