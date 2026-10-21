@@ -1,4 +1,4 @@
-﻿<!-- authentication-page.component.html -->
+<!-- authentication-page.component.html -->
 <article class="doc-page">
   <header class="doc-header">
     <h1>{{ 'auth.title' | t }}</h1>
@@ -28,11 +28,16 @@
     <div class="dashboard-links">
       <h3>{{ 'auth.dashboards' | t }}</h3>
       <div class="dashboard-cards">
-        <a href="https://guatemala-v2.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
-          <div class="dashboard-card__flag"><app-flag code="gt" alt="Guatemala" size="xl"></app-flag></div>
+        <a
+          *ngFor="let country of countries"
+          [href]="country.dashboardUrl"
+          target="_blank"
+          rel="noopener"
+          class="dashboard-card">
+          <div class="dashboard-card__flag"><app-flag [code]="country.flagCode" [alt]="country.name" size="xl"></app-flag></div>
           <div class="dashboard-card__info">
-            <h4>Guatemala</h4>
-            <code>guatemala-v2.tupay.finance</code>
+            <h4>{{ country.name }} <em *ngIf="!country.available">{{ 'intro.soon' | t }}</em></h4>
+            <code>{{ country.dashboardHost }}</code>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -40,35 +45,11 @@
             <line x1="10" y1="14" x2="21" y2="3"></line>
           </svg>
         </a>
-        <a href="https://rd-v2.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
-          <div class="dashboard-card__flag"><app-flag code="do" alt="República Dominicana" size="xl"></app-flag></div>
-          <div class="dashboard-card__info">
-            <h4>República Dominicana</h4>
-            <code>rd-v2.tupay.finance</code>
-          </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-            <polyline points="15 3 21 3 21 9"></polyline>
-            <line x1="10" y1="14" x2="21" y2="3"></line>
-          </svg>
-        </a>
-        <a href="https://colombia.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
-          <div class="dashboard-card__flag"><app-flag code="co" alt="Colombia" size="xl"></app-flag></div>
-          <div class="dashboard-card__info">
-            <h4>Colombia</h4>
-            <code>colombia.tupay.finance</code>
-          </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-            <polyline points="15 3 21 3 21 9"></polyline>
-            <line x1="10" y1="14" x2="21" y2="3"></line>
-          </svg>
-        </a>
-        <a href="https://staging-v2.tupay.finance/" target="_blank" rel="noopener" class="dashboard-card">
+        <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener" class="dashboard-card">
           <div class="dashboard-card__flag">🧪</div>
           <div class="dashboard-card__info">
             <h4>{{ 'auth.sandbox' | t }} V2</h4>
-            <code>staging-v2.tupay.finance</code>
+            <code>{{ sandbox.dashboardHost }}</code>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -267,6 +248,9 @@
   <section class="doc-section">
     <h2>{{ 'auth.envTitle' | t }}</h2>
     <p>{{ 'auth.envText' | t }}</p>
+    <p>
+      <span [innerHTML]="'auth.envAdjustHtml' | tHtml"></span>
+    </p>
 
     <div class="env-examples">
       <div class="env-example">
@@ -335,9 +319,7 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
           <div class="step-vertical__number">1</div>
           <div class="step-vertical__content">
             <h3>{{ 'auth.wh1Title' | t }}</h3>
-            <p>
-              {{ 'auth.wh1Text' | t }}
-            </p>
+            <p [innerHTML]="'auth.wh1TextHtml' | tHtml"></p>
           </div>
         </div>
 
@@ -395,7 +377,8 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
       </svg>
       <div>
         <h4>{{ 'auth.whReqTitle' | t }}</h4>
-        <p [innerHTML]="'auth.whReqTextHtml' | tHtml"></p>
+        <p [innerHTML]="'auth.whReqText1Html' | tHtml"></p>
+        <p [innerHTML]="'auth.whReqText2Html' | tHtml"></p>
       </div>
     </div>
   </section>
@@ -454,7 +437,7 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
         <tr>
           <td><code>customId</code></td>
           <td>string | null</td>
-          <td>{{ 'auth.fCustomId' | t }}</td>
+          <td [innerHTML]="'auth.fCustomIdHtml' | tHtml"></td>
         </tr>
         <tr>
           <td><code>amountReceived</code></td>
@@ -524,7 +507,7 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
         <tr>
           <td><code>customId</code></td>
           <td>string | null</td>
-          <td>{{ 'auth.fCustomId' | t }}</td>
+          <td [innerHTML]="'auth.fCustomIdHtml' | tHtml"></td>
         </tr>
         <tr>
           <td><code>observation</code></td>
@@ -599,10 +582,9 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
 
   <!-- {{ 'auth.state' | t }}s de PayIn -->
   <section class="doc-section">
-    <h2>{{ 'auth.state' | t }}s de Transacción - PayIn</h2>
+    <h2>{{ 'auth.payinStatesTitle' | t }}</h2>
     <p>
-      Las transacciones de pago entrante (PayIn) pasan por los siguientes {{ 'auth.state' | t }}s.
-      Recibirás un webhook cada vez que el {{ 'auth.state' | t }} cambie.
+      {{ 'auth.payinStatesText' | t }}
     </p>
 
     <table class="doc-table">
@@ -724,7 +706,7 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
     </div>
   </section>
 
-  <!-- Verificación de Firma -->
+  <!-- Verificaci�n de Firma -->
   <section class="doc-section">
     <h2>{{ 'auth.sigTitle' | t }}</h2>
     <p>{{ 'auth.sigText' | t }}</p>
@@ -749,6 +731,30 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
       </tbody>
     </table>
 
+    <h3>{{ 'auth.sigHowTitle' | t }}</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>{{ 'auth.element' | t }}</th>
+          <th>{{ 'auth.value' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ 'auth.sigAlgorithm' | t }}</td>
+          <td>{{ 'auth.sigAlgorithmValue' | t }}</td>
+        </tr>
+        <tr>
+          <td>{{ 'auth.sigKeyLabel' | t }}</td>
+          <td [innerHTML]="'auth.sigKeyValueHtml' | tHtml"></td>
+        </tr>
+        <tr>
+          <td>{{ 'auth.sigMessage' | t }}</td>
+          <td>{{ 'auth.sigMessageValue' | t }}</td>
+        </tr>
+      </tbody>
+    </table>
+
     <div class="info-box info-box--warning">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
@@ -757,9 +763,94 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
       </svg>
       <div>
         <h4>{{ 'auth.sigImportantTitle' | t }}</h4>
-        <p [innerHTML]="'auth.sigImportantTextHtml' | tHtml"></p>
+        <p [innerHTML]="'auth.sigImportantText1Html' | tHtml"></p>
+        <p [innerHTML]="'auth.sigImportantText2Html' | tHtml"></p>
       </div>
     </div>
+
+    <h3>{{ 'auth.sigStepsTitle' | t }}</h3>
+    <p [innerHTML]="'auth.sigStepsTextHtml' | tHtml"></p>
+
+    <app-code-block
+      [code]="signaturePayInCaptureExample"
+      language="bash"
+      [title]="'auth.sigCapPayin' | t">
+    </app-code-block>
+
+    <app-code-block
+      [code]="signaturePayOutCaptureExample"
+      language="bash"
+      [title]="'auth.sigCapPayout' | t">
+    </app-code-block>
+
+    <div class="steps-vertical">
+      <div class="step-vertical">
+        <div class="step-vertical__number">2</div>
+        <div class="step-vertical__content">
+          <h3>{{ 'auth.sigStep2Title' | t }}</h3>
+          <p [innerHTML]="'auth.sigStep2TextHtml' | tHtml"></p>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">3</div>
+        <div class="step-vertical__content">
+          <h3>{{ 'auth.sigStep3Title' | t }}</h3>
+          <p>
+            {{ 'auth.sigStep3Text' | t }}
+          </p>
+        </div>
+      </div>
+
+      <div class="step-vertical">
+        <div class="step-vertical__number">4</div>
+        <div class="step-vertical__content">
+          <h3>{{ 'auth.sigStep4Title' | t }}</h3>
+          <p [innerHTML]="'auth.sigStep4TextHtml' | tHtml"></p>
+        </div>
+      </div>
+    </div>
+
+    <h3>{{ 'auth.sigTerminalTitle' | t }}</h3>
+    <p [innerHTML]="'auth.sigTerminalTextHtml' | tHtml"></p>
+
+    <app-code-block
+      [code]="signatureOpensslExample"
+      language="bash"
+      [title]="'auth.sigOpensslTitle' | t">
+    </app-code-block>
+
+    <h3>{{ 'auth.sigMismatchTitle' | t }}</h3>
+    <table class="doc-table">
+      <thead>
+        <tr>
+          <th>{{ 'auth.sigCause' | t }}</th>
+          <th>{{ 'auth.sigSolution' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ 'auth.sigCause1' | t }}</td>
+          <td [innerHTML]="'auth.sigCause1FixHtml' | tHtml"></td>
+        </tr>
+        <tr>
+          <td>{{ 'auth.sigCause2' | t }}</td>
+          <td [innerHTML]="'auth.sigCause2FixHtml' | tHtml"></td>
+        </tr>
+        <tr>
+          <td>{{ 'auth.sigCause3' | t }}</td>
+          <td [innerHTML]="'auth.sigCause3FixHtml' | tHtml"></td>
+        </tr>
+        <tr>
+          <td>{{ 'auth.sigCause4' | t }}</td>
+          <td>{{ 'auth.sigCause4Fix' | t }}</td>
+        </tr>
+        <tr>
+          <td>{{ 'auth.sigCause5' | t }}</td>
+          <td>{{ 'auth.sigCause5Fix' | t }}</td>
+        </tr>
+      </tbody>
+    </table>
 
     <h3>{{ 'auth.sigVerifyNodeTitle' | t }}</h3>
     <app-code-block
@@ -798,7 +889,7 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
         <ul>
           <li [innerHTML]="'auth.recDo1Html' | tHtml"></li>
           <li>{{ 'auth.recDo2' | t }}</li>
-          <li [innerHTML]="'auth.recDo3' | tHtml"></li>
+          <li [innerHTML]="'auth.recDo3Html' | tHtml"></li>
           <li>{{ 'auth.recDo4' | t }}</li>
           <li>{{ 'auth.recDo5' | t }}</li>
         </ul>
@@ -838,7 +929,8 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
   <section class="doc-section">
     <h2>{{ 'auth.nextTitle' | t }}</h2>
     <div class="next-steps">
-      <a routerLink="/gtm/api" class="next-step-card">
+      <!-- Referencia de la API: oculto hasta que la p�gina tenga contenido -->
+      <!-- <a [routerLink]="['/', defaultCountry.code.toLowerCase(), 'api']" class="next-step-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>
@@ -847,7 +939,7 @@ const baseUrl = process.env.TUPAY_BASE_URL;"
           <h4>{{ 'auth.nextExploreTitle' | t }}</h4>
           <p>{{ 'auth.nextExploreText' | t }}</p>
         </div>
-      </a>
+      </a> -->
 
       <a routerLink="/gateway/errors" class="next-step-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">

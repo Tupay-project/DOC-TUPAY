@@ -76,10 +76,12 @@
              {{ 'intro.step1Text' | t }}
            </p>
           <ul>
-            <li *ngFor="let country of countries">
-              <strong>{{ country.name }}:</strong>{{' '}}
-              <a [href]="country.dashboardUrl" target="_blank" rel="noopener">{{ country.dashboardHost }}</a>
-            </li>
+            <ng-container *ngFor="let country of countries">
+              <li *ngIf="country.available">
+                <strong>{{ country.name }}:</strong>{{' '}}
+                <a [href]="country.dashboardUrl" target="_blank" rel="noopener">{{ country.dashboardHost }}</a>
+              </li>
+            </ng-container>
             <li>
               <strong>{{ 'intro.sandbox' | t }} (V2):</strong>{{' '}}
               <a [href]="sandbox.dashboardUrl" target="_blank" rel="noopener">{{ sandbox.dashboardHost }}</a>
@@ -114,11 +116,13 @@
                 </tr>
               </thead>
             <tbody>
-              <tr *ngFor="let country of countries">
+              <ng-container *ngFor="let country of countries">
+              <tr *ngIf="country.available">
                 <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
                 <td><code>{{ country.currency }}</code></td>
                 <td><code>{{ country.baseUrl }}</code></td>
               </tr>
+            </ng-container>
             </tbody>
           </table>
         </div>
@@ -154,18 +158,22 @@
         <h4>{{ 'intro.apisTitle' | t }}</h4>
         <p>{{ 'intro.dashboardText' | t }}</p>
         <ul>
-          <li *ngFor="let country of countries">
-            <strong>{{ country.name }}:</strong> <code>{{ country.baseUrl }}</code>
-          </li>
+            <ng-container *ngFor="let country of countries">
+              <li *ngIf="country.available">
+                <strong>{{ country.name }}:</strong> <code>{{ country.baseUrl }}</code>
+              </li>
+            </ng-container>
         </ul>
         <br>
         <h4>{{ 'intro.dashboardsTitle' | t }}</h4>
         <p>{{ 'intro.dashboardText' | t }}</p>
         <ul>
-          <li *ngFor="let country of countries">
-            <strong>{{ country.name }}:</strong>
-            <a [href]="country.dashboardUrl" target="_blank" rel="noopener"><code>{{ country.dashboardUrl }}</code></a>
-          </li>
+            <ng-container *ngFor="let country of countries">
+              <li *ngIf="country.available">
+                <strong>{{ country.name }}:</strong>
+                <a [href]="country.dashboardUrl" target="_blank" rel="noopener"><code>{{ country.dashboardUrl }}</code></a>
+              </li>
+            </ng-container>
         </ul>
         <br>
         <h4>{{ 'intro.sandboxTitle' | t }}</h4>
@@ -185,7 +193,7 @@
     <h2 id="country-params">{{ 'intro.countryParamsTitle' | t }}</h2>
     <p [innerHTML]="'intro.countryParamsTextHtml' | tHtml"></p>
 
-    <table class="doc-table" role="table" [attr.aria-label]="'intro.countryParamsTableAria' | t">
+    <table class="doc-table" role="table" [attr.aria-label]="'intro.identificationTableAria' | t">
       <thead>
         <tr>
           <th scope="col">{{ 'intro.country' | t }}</th>
@@ -195,12 +203,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let country of countries">
-          <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
-          <td><code>{{ country.currency }}</code></td>
-          <td>{{ country.identification.label }}</td>
-          <td><code>{{ country.identification.example }}</code></td>
-        </tr>
+            <ng-container *ngFor="let country of countries">
+              <tr *ngIf="country.available">
+                <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
+                <td><code>{{ country.currency }}</code></td>
+                <td>{{ country.identification.label }}</td>
+                <td><code>{{ country.identification.example }}</code></td>
+              </tr>
+            </ng-container>
       </tbody>
     </table>
 
@@ -216,11 +226,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let country of countries">
-          <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
-          <td>{{ country.accountTypes.savings | t }}</td>
-          <td>{{ country.accountTypes.checking | t }}</td>
-        </tr>
+            <ng-container *ngFor="let country of countries">
+              <tr *ngIf="country.available">
+                <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
+                <td>{{ country.accountTypes.savings | t }}</td>
+                <td>{{ country.accountTypes.checking | t }}</td>
+              </tr>
+            </ng-container>
       </tbody>
     </table>
   </section>
@@ -237,17 +249,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let country of countries">
-          <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
-          <td>
-            <ul class="method-list">
-              <li *ngFor="let method of country.methods">
-                <strong>{{ method.name_method | t }}</strong>
-                <span>{{ method.description | t }}</span>
-              </li>
-            </ul>
-          </td>
-        </tr>
+            <ng-container *ngFor="let country of countries">
+              <tr *ngIf="country.available">
+                <td><app-flag [code]="country.flagCode" [alt]="country.name" size="sm"></app-flag> {{ country.name }}</td>
+                <td>
+                  <ul class="method-list">
+                    <li *ngFor="let method of country.methods">
+                      <strong>{{ method.name_method | t }}</strong>
+                      <span>{{ method.description | t }}</span>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </ng-container>
       </tbody>
     </table>
   </section>
@@ -288,7 +302,7 @@
             <polyline points="22,6 12,13 2,6"></polyline>
           </svg>
         </div>
-        <h4>{{ 'intro.email' | t }}</h4>
+        <h4>{{ 'common.email' | t }}</h4>
         <p>soporte&#64;tupay.finance</p>
       </div>
 
@@ -340,7 +354,8 @@
         </div>
       </a>
 
-      <a [routerLink]="['/', selectedCountry.code.toLowerCase(), 'api']" class="next-step-card" aria-describedby="api-desc">
+      <!-- Referencia de la API: oculto hasta que la página tenga contenido -->
+      <!-- <a [routerLink]="['/', selectedCountry.code.toLowerCase(), 'api']" class="next-step-card" aria-describedby="api-desc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>
@@ -349,7 +364,7 @@
           <h4>{{ 'intro.apiNextTitle' | t }}</h4>
           <p id="api-desc">{{ 'intro.apiNextDesc' | t }}</p>
         </div>
-      </a>
+      </a> -->
 
       <a routerLink="/gateway/errors" class="next-step-card" aria-describedby="errors-desc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">

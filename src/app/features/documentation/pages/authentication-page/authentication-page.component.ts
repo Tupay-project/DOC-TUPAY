@@ -1,4 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { COUNTRIES, COUNTRY_LIST, SANDBOX } from '@core/models/api.models';
+
+/** Quita el protocolo para mostrar solo el host en los enlaces. */
+const host = (url: string) => url.replace(/^https?:\/\//, '');
 
 @Component({
   selector: 'app-authentication-page',
@@ -7,6 +11,19 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class AuthenticationPageComponent {
+  readonly countries = COUNTRY_LIST.map(country => ({
+    ...country,
+    dashboardHost: host(country.dashboardUrl)
+  }));
+
+  readonly sandbox = {
+    ...SANDBOX,
+    dashboardHost: host(SANDBOX.dashboardUrl)
+  };
+
+  /** País por defecto de los enlaces a la referencia de la API. */
+  readonly defaultCountry = COUNTRIES.COL;
+
   exampleHeader = `curl -X POST "https://api-gt-v2.tupay.finance/api/payin/register" \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: abc123xyz456def789ghi012jkl345"`;
@@ -102,6 +119,33 @@ response = requests.post(
     }
   ]
 }`;
+
+  // Webhooks capturados en Sandbox; la firma está recalculada con la API Key de ejemplo
+  signaturePayInCaptureExample = `POST /su-ruta-webhook HTTP/1.1
+Content-Type: application/json
+Content-Length: 170
+X-TuPay-Signature: e4ab80bc3cc0dfcbce19ccc3f687541936c6cc6ddc1fc1358ec50c8863c13de6
+X-TuPay-Timestamp: 2026-09-16T15:36:48.411Z
+
+{"type":"pay-in","transactionId":149,"userId":42,"amount":"120.00","status":"paid","timestamp":"2026-09-16T15:36:48.411Z","customId":"20260917","amountReceived":"120.00"}`;
+
+  signaturePayOutCaptureExample = `POST /su-ruta-webhook HTTP/1.1
+Content-Type: application/json
+Content-Length: 169
+X-TuPay-Signature: 6fde6bdb39ae2cb0f7848c1fd311312b55ba6559fe4d56474fd3931ce3f78f05
+X-TuPay-Timestamp: 2026-09-16T15:29:08.774Z
+
+{"type":"pay-out","transactionId":148,"userId":42,"reference":"REF-002","amount":"15.00","status":"pending","timestamp":"2026-09-16T15:29:08.774Z","customId":"20260916"}`;
+
+  signatureOpensslExample = `API_KEY='3f9a1c7e5b2d48a6f1e4d9c7b5a2e8d3c6f1b0a4d7e2c9f5b3a8d1e6c4f7b0a3d9'
+
+# PayIn -> e4ab80bc3cc0dfcbce19ccc3f687541936c6cc6ddc1fc1358ec50c8863c13de6
+printf '%s' '{"type":"pay-in","transactionId":149,"userId":42,"amount":"120.00","status":"paid","timestamp":"2026-09-16T15:36:48.411Z","customId":"20260917","amountReceived":"120.00"}' \\
+  | openssl dgst -sha256 -hmac "$API_KEY"
+
+# PayOut -> 6fde6bdb39ae2cb0f7848c1fd311312b55ba6559fe4d56474fd3931ce3f78f05
+printf '%s' '{"type":"pay-out","transactionId":148,"userId":42,"reference":"REF-002","amount":"15.00","status":"pending","timestamp":"2026-09-16T15:29:08.774Z","customId":"20260916"}' \\
+  | openssl dgst -sha256 -hmac "$API_KEY"`;
 
   webhookVerifyNodeExample = `const crypto = require('crypto');
 

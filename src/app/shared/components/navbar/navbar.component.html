@@ -21,7 +21,7 @@
           <rect x="45" y="8" width="50" height="24" rx="4" fill="#00C7E6"/>
           <text x="52" y="26" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">PAY</text>
         </svg>
-        <span class="navbar__title">Finance API</span>
+        <span class="navbar__title">{{ 'navbar.title' | t }}</span>
       </a>
     </div>
 
@@ -91,7 +91,8 @@
           class="navbar__action-btn navbar__language-btn"
           (click)="toggleLanguageDropdown()"
           [class.active]="showLanguageDropdown"
-          [attr.aria-label]="'navbar.selectLanguage' | t">
+          [attr.aria-label]="'navbar.selectLanguage' | t"
+          [attr.title]="'navbar.language' | t">
           <app-flag [code]="currentLanguageOption.flagCode" [alt]="currentLanguageOption.name" size="sm"></app-flag>
           <span class="navbar__language-code hide-mobile">{{ currentLanguage | uppercase }}</span>
         </button>

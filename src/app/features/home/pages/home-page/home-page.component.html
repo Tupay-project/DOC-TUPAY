@@ -27,13 +27,14 @@
           </svg>
           {{ 'home.viewDocs' | t }}
         </button>
-        <button class="btn btn-secondary" (click)="navigateToCountryDocs('GTM')">
+        <!-- Referencia de la API: oculto hasta que la página tenga contenido -->
+        <!-- <button class="btn btn-secondary" (click)="navigateToCountryDocs('GTM')">
           <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <polyline points="16 18 22 12 16 6"></polyline>
             <polyline points="8 6 2 12 8 18"></polyline>
           </svg>
           {{ 'home.apiReference' | t }}
-        </button>
+        </button> -->
       </div>
     </div>
 
@@ -112,41 +113,19 @@
     <p class="section-subtitle">{{ 'home.countriesSubtitle' | t }}</p>
     
     <div class="country-cards">
-      <button class="country-card" (click)="navigateToCountryDocs('GTM')">
-        <app-flag code="gt" alt="Guatemala" size="xl"></app-flag>
-        <h3 class="country-card__name">Guatemala</h3>
-        <p class="country-card__currency">Quetzal (GTQ)</p>
-        <div class="country-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </div>
-      </button>
-
-      <button class="country-card" (click)="navigateToCountryDocs('DOM')">
-        <app-flag code="do" alt="República Dominicana" size="xl"></app-flag>
-        <h3 class="country-card__name">República Dominicana</h3>
-        <p class="country-card__currency">Peso Dominicano (DOP)</p>
-        <div class="country-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </div>
-      </button>
-
-      <button class="country-card" (click)="navigateToCountryDocs('COL')">
-        <app-flag code="co" alt="Colombia" size="xl"></app-flag>
-        <h3 class="country-card__name">Colombia</h3>
-        <p class="country-card__currency">Peso Colombiano (COP)</p>
-        <div class="country-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </div>
-      </button>
+      <ng-container *ngFor="let country of countries">
+        <button class="country-card" *ngIf="country.available" (click)="navigateToIntroduction(country.code)">
+          <app-flag [code]="country.flagCode" [alt]="country.name" size="xl"></app-flag>
+          <h3 class="country-card__name">{{ country.name }}</h3>
+          <p class="country-card__currency">{{ country.currency }}</p>
+          <div class="country-card__arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </ng-container>
     </div>
   </section>
 </div>

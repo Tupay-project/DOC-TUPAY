@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { TRANSLATIONS } from '@core/i18n';
+import { COUNTRIES } from '@core/models/api.models';
 import { TranslationService } from '@core/services/translation.service';
 
 interface ErrorCode {
@@ -18,6 +19,9 @@ interface ErrorCode {
   encapsulation: ViewEncapsulation.None
 })
 export class ErrorsPageComponent {
+  /** País por defecto de los enlaces a la referencia de la API. */
+  readonly defaultCountry = COUNTRIES.COL;
+
   constructor(private translationService: TranslationService) {}
 
   /** Ejemplos de respuesta de la API (datos de ejemplo, no se traducen). */
@@ -95,7 +99,7 @@ Too many requests, please try again later.`,
   /** Lista de códigos resuelta desde el diccionario del idioma activo. */
   get errorCodes(): ErrorCode[] {
     const codes = TRANSLATIONS[this.translationService.getCurrentLanguage()].errors.codes;
-    const order = [400, 401, 403, 404, 429, 500, 503];
+    const order = [400, 401, 403, 404, 422, 429, 500, 503];
     return order.map(code => {
       const entry = (codes as Record<string, {
         name: string;

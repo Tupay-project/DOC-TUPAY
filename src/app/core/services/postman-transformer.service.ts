@@ -95,7 +95,7 @@ export class PostmanTransformerService {
       'payin-listar': 'endpoint.descriptions.listAllPayin',
       'payin-subir-comprobante': 'endpoint.descriptions.uploadReceipt',
       'payin-detalle-por-id': 'endpoint.descriptions.payinDetailById',
-      'payout-registrar': 'endpoint.descriptions.listPayoutByReference',
+      'payout-registrar': 'endpoint.descriptions.registerPayout',
       'payout-listar-por-referencia': 'endpoint.descriptions.listPayoutByReference',
       'payout-listar': 'endpoint.descriptions.listAllPayout',
       'payout-detalle-por-id': 'endpoint.descriptions.payoutDetailById',

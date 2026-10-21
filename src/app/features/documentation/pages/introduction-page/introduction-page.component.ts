@@ -28,7 +28,7 @@ export class IntroductionPageComponent implements OnInit, OnDestroy {
   };
 
   /** País seleccionado en el selector (los ejemplos de esta página cambian con él). */
-  selectedCountry: Country = COUNTRIES.GTM;
+  selectedCountry: Country = COUNTRIES.COL;
 
   private destroy$ = new Subject<void>();
 
@@ -36,7 +36,7 @@ export class IntroductionPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.endpointService.currentCountry$.pipe(takeUntil(this.destroy$)).subscribe(code => {
-      this.selectedCountry = COUNTRIES[code] ?? COUNTRIES.GTM;
+      this.selectedCountry = COUNTRIES[code] ?? COUNTRIES.COL;
     });
   }
 

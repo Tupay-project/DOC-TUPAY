@@ -145,8 +145,13 @@ export class SearchService {
    */
   highlightText(text: string, searchTerm: string): string {
     if (!searchTerm) return text;
-    
-    const regex = new RegExp(`(${searchTerm})`, 'gi');
-    return text.replace(regex, '<mark>$1</mark>');
+
+    // El término se escapa antes de armar el regex y el texto se escapa como
+    // HTML: el resultado se inyecta con [innerHTML] en el modal de búsqueda.
+    const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escaped})`, 'gi');
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML.replace(regex, '<mark>$1</mark>');
   }
 }
