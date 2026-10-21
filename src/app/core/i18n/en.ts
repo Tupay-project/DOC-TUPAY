@@ -90,6 +90,7 @@ export const en = {
     introduction: 'Introduction',
     authentication: 'Authentication',
     errors: 'Errors',
+    country: 'Country',
     endpoints: {
       register: 'Register',
       uploadReceipt: 'Upload receipt',
