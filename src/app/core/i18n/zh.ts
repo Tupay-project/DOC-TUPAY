@@ -52,7 +52,7 @@ export const zh = {
       },
       qr: {
         description: '客户扫描二维码或在二维码内选择支付方式。',
-        name: 'QR CobroDigital',
+        name: 'QR',
       },
       rapipago: {
         description: '客户在 Rapipago 网络生成账单以现金付款。',

@@ -52,7 +52,7 @@ export const es = {
       },
       qr: {
         description: 'El cliente escanea el código QR o elige un medio de pago dentro del QR.',
-        name: 'QR CobroDigital',
+        name: 'QR',
       },
       rapipago: {
         description: 'El cliente paga en efectivo generando su boleta en la red Rapipago.',
