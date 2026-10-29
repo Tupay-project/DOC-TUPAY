@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Endpoint, CodeLanguage } from '@core/models/api.models';
 import { EndpointService } from '@core/services/endpoint.service';
+import { ToastService } from '@core/services/toast.service';
+import { TranslationService } from '@core/services/translation.service';
 
 @Component({
   selector: 'app-endpoint-detail-page',
@@ -21,15 +23,29 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private endpointService: EndpointService
+    private endpointService: EndpointService,
+    private toastService: ToastService,
+    private translationService: TranslationService
   ) {}
 
   ngOnInit(): void {
+    // El estado de carga lo lleva el servicio: al cambiar de país la colección
+    // se recarga y los endpoints llegan de forma asíncrona.
+    this.endpointService.loading$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(loading => this.loading = loading);
+
     this.route.params.pipe(
       takeUntil(this.destroy$)
     ).subscribe(params => {
-      const endpointId = params['endpointId'];
-      this.loadEndpoint(endpointId);
+      // Un enlace directo a /dom/api/... debe mostrar los datos de República
+      // Dominicana, no los del país que estuviera cargado.
+      const country = this.endpointService.resolveCountryCode(params['country']);
+      if (country && country !== this.endpointService.getCurrentCountry()) {
+        this.endpointService.setCurrentCountry(country);
+      }
+
+      this.loadEndpoint(params['endpointId']);
     });
   }
 
@@ -39,12 +55,10 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
   }
 
   private loadEndpoint(id: string): void {
-    this.loading = true;
     this.endpointService.getEndpointById(id).pipe(
       takeUntil(this.destroy$)
     ).subscribe(endpoint => {
       this.endpoint = endpoint;
-      this.loading = false;
       
       if (endpoint?.responses && endpoint.responses.length > 0) {
         this.selectedResponseStatus = endpoint.responses[0].status;
@@ -68,6 +82,10 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
     return this.endpoint?.responses.find(r => r.status === this.selectedResponseStatus);
   }
 
+  public resolveDescription(fallback: string, key?: string): string {
+    return key ? this.translationService.translate(key) : fallback;
+  }
+
   getFullUrl(): string {
     if (!this.endpoint) return '';
     return `${this.endpoint.baseUrl}${this.endpoint.path}`;
@@ -75,6 +93,23 @@ export class EndpointDetailPageComponent implements OnInit, OnDestroy {
 
   copyUrl(): void {
     const url = this.getFullUrl();
-    navigator.clipboard.writeText(url);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        this.toastService.success(this.translationService.translate('common.copiedUrl'), url);
+      }).catch(() => {
+        this.toastService.error(
+          this.translationService.translate('common.copyErrorTitle'),
+          this.translationService.translate('common.copyUrlErrorMessage')
+        );
+      });
+    } else {
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      this.toastService.success(this.translationService.translate('common.copiedUrl'), url);
+    }
   }
 }

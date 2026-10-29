@@ -12,10 +12,14 @@ export type ParameterLocation = 'header' | 'path' | 'query' | 'body';
 export interface Endpoint {
   id: string;
   name: string;
+  /** Clave i18n del nombre; si existe, el template la traduce y `name` queda como fallback. */
+  nameKey?: string;
   method: HttpMethod;
   path: string;
   baseUrl: string;
   description: string;
+  /** Clave i18n de la descripción; si existe, el template la traduce y `description` queda como fallback. */
+  descriptionKey?: string;
   category: 'payin' | 'payout';
   headers: Header[];
   pathParameters?: Parameter[];
@@ -31,6 +35,8 @@ export interface Header {
   value: string;
   required: boolean;
   description?: string;
+  /** Clave i18n; si existe, el template la traduce y `description` queda como fallback. */
+  descriptionKey?: string;
 }
 
 export interface Parameter {
@@ -49,18 +55,33 @@ export interface Parameter {
   location: ParameterLocation;
 }
 
+export interface RequestBodyField {
+  name: string;
+  type: string;
+  example: string;
+  description: string;
+  /** Clave i18n; si existe, el template la traduce y `description` queda como fallback. */
+  descriptionKey?: string;
+  required: boolean;
+}
+
 export interface RequestBody {
   contentType: string;
   description?: string;
+  /** Clave i18n; si existe, el template la traduce y `description` queda como fallback. */
+  descriptionKey?: string;
   schema: any;
   example?: any;
   required: boolean;
+  fields?: RequestBodyField[];
 }
 
 export interface ApiResponse {
   status: number;
   statusText: string;
   description: string;
+  /** Clave i18n; si existe, el template la traduce y `description` queda como fallback. */
+  descriptionKey?: string;
   body: any;
   headers?: Header[];
   isError: boolean;
@@ -76,6 +97,8 @@ export type CodeLanguage = 'curl' | 'javascript' | 'python' | 'php' | 'java' | '
 
 export interface EndpointGroup {
   name: string;
+  /** Clave i18n del nombre; si existe, el template la traduce y `name` queda como fallback. */
+  nameKey?: string;
   description: string;
   endpoints: Endpoint[];
   icon?: string;
@@ -132,6 +155,8 @@ export interface Country {
   currency: string;
   currencySymbol: string;
   flag: string;
+  /** Código ISO 3166-1 alpha-2 en minúscula (ej. `gt`) para el asset `assets/images/flags/<flagCode>.svg` */
+  flagCode: string;
   /** URL base de la API de producción */
   baseUrl: string;
   /** URL del dashboard del país */
@@ -161,34 +186,35 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'GTQ',
     currencySymbol: 'Q',
     flag: '🇬🇹',
+    flagCode: 'gt',
     baseUrl: 'https://api-gt-v2.tupay.finance',
     dashboardUrl: 'https://guatemala-v2.tupay.finance',
     locale: 'es-GT',
     timezone: 'America/Guatemala',
-    available: true,
+    available: false,
     identification: {
       label: 'DPI / NIT',
       example: '1234567890101',
       hint: 'DPI (CUI) de 13 dígitos o NIT, sin guiones'
     },
     accountTypes: {
-      savings: 'Cuenta de Ahorro',
-      checking: 'Cuenta Monetaria'
+      savings: 'country.accountTypes.savings',
+      checking: 'country.accountTypes.checking'
     },
     exampleBank: 'Banco Industrial',
     examplePhone: '51234567',
     methods: [
       {
         id: 'transferencia',
-        name_method: 'Transferencia bancaria',
+        name_method: 'country.methods.transferencia.name',
         logo: null,
-        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+        description: 'country.methods.transferencia.description'
       },
       {
         id: 'efectivo',
-        name_method: 'Pago en efectivo',
+        name_method: 'country.methods.efectivo.name',
         logo: null,
-        description: 'El cliente paga en efectivo en puntos o comercios autorizados.'
+        description: 'country.methods.efectivo.description'
       }
     ]
   },
@@ -199,6 +225,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'DOP',
     currencySymbol: 'RD$',
     flag: '🇩🇴',
+    flagCode: 'do',
     baseUrl: 'https://api-rd-v2.tupay.finance',
     dashboardUrl: 'https://rd-v2.tupay.finance',
     locale: 'es-DO',
@@ -210,23 +237,23 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       hint: 'Cédula de 11 dígitos, sin guiones'
     },
     accountTypes: {
-      savings: 'Cuenta de Ahorros',
-      checking: 'Cuenta Corriente'
+      savings: 'country.accountTypes.savings',
+      checking: 'country.accountTypes.checking'
     },
     exampleBank: 'Banco Popular Dominicano',
     examplePhone: '8091234567',
     methods: [
       {
         id: 'transferencia',
-        name_method: 'Transferencia bancaria',
+        name_method: 'country.methods.transferencia.name',
         logo: null,
-        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+        description: 'country.methods.transferencia.description'
       },
       {
         id: 'efectivo',
-        name_method: 'Pago en efectivo',
+        name_method: 'country.methods.efectivo.name',
         logo: null,
-        description: 'El cliente paga en efectivo en puntos o comercios autorizados.'
+        description: 'country.methods.efectivo.description'
       }
     ]
   },
@@ -237,6 +264,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     currency: 'COP',
     currencySymbol: '$',
     flag: '🇨🇴',
+    flagCode: 'co',
     baseUrl: 'https://api-co.tupay.finance',
     dashboardUrl: 'https://colombia.tupay.finance',
     locale: 'es-CO',
@@ -248,23 +276,23 @@ export const COUNTRIES: Record<CountryCode, Country> = {
       hint: 'Cédula de ciudadanía, sin puntos ni espacios'
     },
     accountTypes: {
-      savings: 'Cuenta de Ahorros',
-      checking: 'Cuenta Corriente'
+      savings: 'country.accountTypes.savings',
+      checking: 'country.accountTypes.checking'
     },
     exampleBank: 'Bancolombia',
     examplePhone: '3001234567',
     methods: [
       {
         id: 'transferencia',
-        name_method: 'Transferencia bancaria',
+        name_method: 'country.methods.transferencia.name',
         logo: null,
-        description: 'El cliente paga desde su banca en línea a una cuenta local.'
+        description: 'country.methods.transferencia.description'
       },
       {
         id: 'pse',
-        name_method: 'Pago en línea (PSE)',
+        name_method: 'country.methods.pse.name',
         logo: null,
-        description: 'El cliente paga desde su banco usando el botón de pagos en línea.'
+        description: 'country.methods.pse.description'
       }
     ]
   }
@@ -516,3 +544,30 @@ export const ERROR_CATEGORIES: Record<number, 'client' | 'server'> = {
   502: 'server',
   503: 'server'
 };
+
+// ============================================
+// language.model.ts
+// Idiomas soportados por la documentación
+// ============================================
+
+export type Language = 'es' | 'en' | 'zh';
+
+/** Idioma usado cuando no se puede detectar otro. */
+export const DEFAULT_LANGUAGE: Language = 'es';
+
+export const SUPPORTED_LANGUAGES: Language[] = ['es', 'en', 'zh'];
+
+export interface LanguageOption {
+  code: Language;
+  /** Nombre nativo del idioma (se muestra igual sin importar el idioma activo). */
+  name: string;
+  flag: string;
+  /** Código ISO 3166-1 alpha-2 en minúscula del país asociado al idioma */
+  flagCode: string;
+}
+
+export const LANGUAGES: LanguageOption[] = [
+  { code: 'es', name: 'Español', flag: '🇦', flagCode: 'ar' },
+  { code: 'en', name: 'English', flag: '🇺🇸', flagCode: 'us' },
+  { code: 'zh', name: '中文', flag: '🇨', flagCode: 'cn' }
+];

@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "col-payin-001",
-		"name": "Colombia - Payin",
-		"description": "# TuPay Payin\n\nEste endpoint permite generar un **Payin** utilizando la plataforma **TuPay**. Su función principal es facilitar la creación de una transacción segura y eficiente, donde los usuarios pueden realizar pagos de manera rápida y confiable.\n\n## Autorización\n\nTú debes enviar el parametro **x-api-key** en el **HEADERS** con la **API KEY** del usuario\n\n### Error de autorización respuesta\n\nSi falta una clave API, está mal formada o no es válida, recibirá un código de respuesta HTTP 401 No autorizado.",
+		"name": "Colombia - PayIn",
+		"description": "# TuPay PayIn\n\nEste endpoint permite generar un **PayIn** utilizando la plataforma **TuPay**. Su función principal es facilitar la creación de una transacción segura y eficiente, donde los usuarios pueden realizar pagos de manera rápida y confiable.\n\n## Autorización\n\nTú debes enviar el parámetro **x-api-key** en el **HEADERS** con la **API Key** del usuario\n\n### Error de autorización respuesta\n\nSi falta una clave API, está mal formada o no es válida, recibirá un código de respuesta HTTP 401 No autorizado.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30722009"
 	},
@@ -31,14 +31,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}"
+							"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"John Doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/payin/register",
 							"host": ["{{baseUrl}}"],
 							"path": ["api", "payin", "register"]
 						},
-						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `currency` | **String** | COP | Codigo de la moneda | si |\n| `amount` | **String** | 50000 | Cantidad de dinero por la que se generará la tasa | si |\n| `CustomId` | **number** | 123 | customized identifier | no |\n| `userName` | **String** | Jose perez | Nombre del comprador | si |\n| `userPhone` | **String** | 3001234567 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | si |\n| `userEmail` | **String** | [prueba@email.com](https://mailto:prueba@email.com) | Correo electrónico del comprador | si |\n| `userIdentificationNumber` | **String** | 1234567890 | Número de documento del comprador | si |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento del enlace de pago | si |\n\nImportante: la respueta de 201 Created devuelve la variable checkoutUrl esta es el link del Checkout"
+						"description": "| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `currency` | **String** | COP | Código de la moneda | Sí |\n| `amount` | **String** | 50000 | Cantidad de dinero por la que se generará la tasa | Sí |\n| `CustomId` | **number** | 123 | customized identifier | no |\n| `userName` | **String** | José Pérez | Nombre del comprador | Sí |\n| `userPhone` | **String** | 3001234567 | Número de teléfono del comprador, evite añadir el prefijo del país y el signo más (+) | Sí |\n| `userEmail` | **String** | [prueba@email.com](https://mailto:prueba@email.com) | Correo electrónico del comprador | Sí |\n| `userIdentificationNumber` | **String** | 1234567890 | Número de documento del comprador | Sí |\n| `dueDate` | **String** | 2027/12/30 | Fecha de vencimiento del enlace de pago | Sí |\n\nImportante: la respuesta de 201 Created devuelve la variable checkoutUrl este es el enlace del checkout"
 					},
 					"response": [
 						{
@@ -53,7 +53,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"John Doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -67,8 +67,8 @@
 									"path": ["api", "payin", "register"]
 								}
 							},
-							"status": "OK",
-							"code": 200,
+							"status": "Created",
+							"code": 201,
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
@@ -81,7 +81,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"Transaction successfully created\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"status\": \"pending\",\n        \"reference\": \"50001001\",\n        \"checkoutUrl\": \"https://colombia.tupay.finance/checkout/a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"customId\": \"1\",\n        \"methods\": [\n            {\n                \"url\": \"https://colombia.tupay.finance/checkout/a1b2c3d4-5678-90ab-cdef-1234567890ab/transferencia\",\n                \"name_method\": \"Transferencia bancaria\",\n                \"logo\": null\n            },\n            {\n                \"url\": \"https://colombia.tupay.finance/checkout/a1b2c3d4-5678-90ab-cdef-1234567890ab/pse\",\n                \"name_method\": \"Pago en línea (PSE)\",\n                \"logo\": null\n            }\n        ]\n    }\n}"
+							"body": "{\n    \"success\": true,\n    \"message\": \"Transaction successfully created\",\n    \"code\": 201,\n    \"data\": {\n        \"id\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"status\": \"pending\",\n        \"reference\": \"50001001\",\n        \"checkoutUrl\": \"https://colombia.tupay.finance/checkout/a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"customId\": \"1\",\n        \"methods\": [\n            {\n                \"url\": \"https://colombia.tupay.finance/checkout/a1b2c3d4-5678-90ab-cdef-1234567890ab/transferencia\",\n                \"name_method\": \"Transferencia bancaria\",\n                \"logo\": null\n            },\n            {\n                \"url\": \"https://colombia.tupay.finance/checkout/a1b2c3d4-5678-90ab-cdef-1234567890ab/pse\",\n                \"name_method\": \"Pago en línea (PSE)\",\n                \"logo\": null\n            }\n        ]\n    }\n}"
 						},
 						{
 							"name": "Bad Request",
@@ -95,7 +95,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"raw": "{\n  \"customId\": 1,\n  \"currency\": \"COP\",\n  \"amount\": \"50000\",\n  \"userName\": \"John Doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -137,7 +137,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"currency\": \"COP\",\n  \"userName\": \"jhon doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
+									"raw": "{\n  \"currency\": \"COP\",\n  \"userName\": \"John Doe\",\n  \"userPhone\": \"3001234567\",\n  \"userEmail\": \"example@email.com\",\n  \"userIdentificationNumber\": \"1234567890\",\n  \"dueDate\": \"2027/12/30\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -217,7 +217,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"reference\": \"50001001\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payin\",\n        \"userName\": \"jhon doe\",\n        \"userPhone\": \"3001234567\",\n        \"userEmail\": \"example@email.com\",\n        \"userBank\": \"default\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"savings\",\n        \"userNumAccount\": \"default\",\n        \"userIdentificationNumber\": \"1234567890\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 1,\n        \"providerId\": null,\n        \"customId\": \"1\",\n        \"countryId\": 3,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"50000.00\",\n        \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n        \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n        \"provider_id\": null,\n        \"user_id\": 1,\n        \"country_id\": 3\n    }\n}"
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"reference\": \"50001001\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payin\",\n        \"userName\": \"John Doe\",\n        \"userPhone\": \"3001234567\",\n        \"userEmail\": \"example@email.com\",\n        \"userBank\": \"default\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"savings\",\n        \"userNumAccount\": \"default\",\n        \"userIdentificationNumber\": \"1234567890\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 1,\n        \"providerId\": null,\n        \"customId\": \"1\",\n        \"countryId\": 3,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"50000.00\",\n        \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n        \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n        \"provider_id\": null,\n        \"user_id\": 1,\n        \"country_id\": 3\n    }\n}"
 						},
 						{
 							"name": "Not Found",
@@ -292,7 +292,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"reference\": \"50001001\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payin\",\n        \"userName\": \"jhon doe\",\n        \"userPhone\": \"3001234567\",\n        \"userEmail\": \"example@email.com\",\n        \"userBank\": \"default\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"savings\",\n        \"userNumAccount\": \"default\",\n        \"userIdentificationNumber\": \"1234567890\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 1,\n        \"providerId\": null,\n        \"customId\": \"1\",\n        \"countryId\": 3,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"50000.00\",\n        \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n        \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n        \"provider_id\": null,\n        \"user_id\": 1,\n        \"country_id\": 3\n    }\n}"
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n        \"reference\": \"50001001\",\n        \"currency\": \"COP\",\n        \"amount\": \"50000.00\",\n        \"amount_received\": null,\n        \"transactionType\": \"payin\",\n        \"userName\": \"John Doe\",\n        \"userPhone\": \"3001234567\",\n        \"userEmail\": \"example@email.com\",\n        \"userBank\": \"default\",\n        \"bankName\": null,\n        \"accountType\": null,\n        \"accountNumber\": null,\n        \"userTypeAccount\": \"savings\",\n        \"userNumAccount\": \"default\",\n        \"userIdentificationNumber\": \"1234567890\",\n        \"status\": \"pending\",\n        \"observation\": null,\n        \"userId\": 1,\n        \"providerId\": null,\n        \"customId\": \"1\",\n        \"countryId\": 3,\n        \"commission\": \"0.00\",\n        \"fixed_fee\": \"0.00\",\n        \"total_commission_fee\": \"0.00\",\n        \"total_operation\": \"50000.00\",\n        \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n        \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n        \"provider_id\": null,\n        \"user_id\": 1,\n        \"country_id\": 3\n    }\n}"
 						},
 						{
 							"name": "Not Found",
@@ -339,7 +339,7 @@
 							"host": ["{{baseUrl}}"],
 							"path": ["api", "payin", "user-payin"]
 						},
-						"description": "Enpoint para obtener todos los payin"
+						"description": "Endpoint para obtener todos los payin"
 					},
 					"response": [
 						{
@@ -367,12 +367,164 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"uuid\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n            \"reference\": \"50001001\",\n            \"currency\": \"COP\",\n            \"amount\": \"50000.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"jhon doe\",\n            \"userPhone\": \"3001234567\",\n            \"userEmail\": \"example@email.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"1234567890\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 1,\n            \"providerId\": null,\n            \"customId\": \"1\",\n            \"countryId\": 3,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"50000.00\",\n            \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n            \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n            \"provider_id\": null,\n            \"user_id\": 1,\n            \"country_id\": 3\n        }\n    ]\n}"
+							"body": "{\n    \"success\": true,\n    \"message\": \"Payin found.\",\n    \"code\": 200,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"uuid\": \"a1b2c3d4-5678-90ab-cdef-1234567890ab\",\n            \"reference\": \"50001001\",\n            \"currency\": \"COP\",\n            \"amount\": \"50000.00\",\n            \"amount_received\": null,\n            \"transactionType\": \"payin\",\n            \"userName\": \"John Doe\",\n            \"userPhone\": \"3001234567\",\n            \"userEmail\": \"example@email.com\",\n            \"userBank\": \"default\",\n            \"bankName\": null,\n            \"accountType\": null,\n            \"accountNumber\": null,\n            \"userTypeAccount\": \"savings\",\n            \"userNumAccount\": \"default\",\n            \"userIdentificationNumber\": \"1234567890\",\n            \"status\": \"pending\",\n            \"observation\": null,\n            \"userId\": 1,\n            \"providerId\": null,\n            \"customId\": \"1\",\n            \"countryId\": 3,\n            \"commission\": \"0.00\",\n            \"fixed_fee\": \"0.00\",\n            \"total_commission_fee\": \"0.00\",\n            \"total_operation\": \"50000.00\",\n            \"createdAt\": \"2026-01-15T10:30:00.000Z\",\n            \"updatedAt\": \"2026-01-15T10:30:00.000Z\",\n            \"provider_id\": null,\n            \"user_id\": 1,\n            \"country_id\": 3\n        }\n    ]\n}"
 						}
 					]
+				},
+				{
+					"name": "Subir comprobante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 150,\n  \"currency\": \"COP\",\n  \"payment_method\": \"transferencia_bancaria\",\n  \"recipient_name\": \"Juan Pérez\",\n  \"recipient_email\": \"juan.perez@email.com\",\n  \"recipient_document\": \"12345678\",\n  \"payment_proof\": \"comprobante.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/manual-payments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"manual-payments"
+							]
+						},
+						"description": "Sube el comprobante (imagen) del pago al servicio de pagos manuales, que lo lee con OCR, crea el pago manual y deja la transacción en `processing`.\n\n## Autenticación\n\nEnvía **x-api-key** en los **headers** con la **API Key de un comercio** (usuario o proveedor) registrada en `api_keys`. La clave pública del checkout no sirve.\n\n**Respuestas de autorización**\n\n- Sin token ni API Key, o API Key inválida o desactivada: **401**.\n- API Key válida pero sin el permiso `manual_payments:create`: **403**.\n\n## Formato del request\n\nEl endpoint recibe **multipart/form-data** con el archivo en el campo `payment_proof` (JPG o PNG real, máximo 5 MB). El ejemplo se muestra como JSON por comodidad, pero el envío real es `multipart/form-data`.\n\n| Params | Type | Example | Description | Requerido |\n| --- | --- | --- | --- | --- |\n| `payment_proof` | **File** | comprobante.jpg | Imagen del comprobante de pago (JPG o PNG, máximo 5 MB) | Sí |\n| `amount` | **number** | 150 | Monto del pago | Sí |\n| `currency` | **String** | COP | Moneda del pago | Sí |\n| `recipient_name` | **String** | Juan Pérez | Nombre del destinatario | Sí |\n| `recipient_email` | **String** | juan.perez@email.com | Email del destinatario | Sí |\n| `payment_method` | **String** | transferencia_bancaria | Método de pago utilizado | no |\n| `recipient_document` | **String** | 12345678 | Documento del destinatario | no |"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Pago manual creado exitosamente\",\n    \"code\": 201\n}"
+						},
+						{
+							"name": "Bad Request",
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Se requiere una imagen como comprobante de pago\",\n    \"code\": 400\n}"
+						},
+						{
+							"name": "Unauthorized",
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Proveedor no autenticado\",\n    \"code\": 401\n}"
+						},
+						{
+							"name": "Forbidden",
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Acceso denegado. Se requiere permiso: manual_payments:create\",\n    \"code\": 403\n}"
+						},
+						{
+							"name": "Internal Server Error",
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Error interno del servidor\",\n    \"code\": 500\n}"
+						}
+					]
+				},
+				{
+					"name": "Detalle por id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payin/detail/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"payin",
+								"detail",
+								"1"
+							]
+						},
+						"description": "Endpoint para obtener un payin por su id."
+					},
+					"response": []
 				}
 			],
-			"description": "El `/payin` endpoints registra tus pagos PayIn"
+			"description": "El `/payin` endpoint registra tus pagos PayIn"
 		}
 	],
 	"auth": {

@@ -1,8 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ThemeService } from '@core/services/theme.service';
 import { EndpointService } from '@core/services/endpoint.service';
-import { Country, COUNTRIES, CountryCode } from '@core/models/api.models';
+import { TranslationService } from '@core/services/translation.service';
+import { Country, COUNTRIES, COUNTRY_LIST, CountryCode, Language, LANGUAGES, LanguageOption } from '@core/models/api.models';
 
 @Component({
   selector: 'app-navbar',
@@ -15,14 +17,21 @@ export class NavbarComponent implements OnInit {
   @Output() searchFocus = new EventEmitter<void>();
 
   isDarkMode$: Observable<boolean>;
-  currentCountry: Country = COUNTRIES.GTM;
-  countries = Object.values(COUNTRIES);
+  currentCountry: Country = COUNTRIES.COL;
+  countries = COUNTRY_LIST.filter(c => c.available);
   showCountryDropdown = false;
+  showLanguageDropdown = false;
   showMobileMenu = false;
+
+  languages: LanguageOption[] = LANGUAGES;
+  currentLanguage: Language = 'es';
+  currentLanguageOption: LanguageOption = LANGUAGES[0];
 
   constructor(
     private themeService: ThemeService,
-    private endpointService: EndpointService
+    private endpointService: EndpointService,
+    private translationService: TranslationService,
+    private router: Router
   ) {
     this.isDarkMode$ = this.themeService.isDarkMode$;
   }
@@ -30,6 +39,13 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.endpointService.currentCountry$.subscribe(code => {
       this.currentCountry = COUNTRIES[code];
+      // El país activo siempre aparece en la lista, aunque aún no esté disponible.
+      this.countries = COUNTRY_LIST.filter(c => c.available || c.code === code);
+    });
+
+    this.translationService.currentLanguage$.subscribe(language => {
+      this.currentLanguage = language;
+      this.currentLanguageOption = LANGUAGES.find(l => l.code === language) ?? LANGUAGES[0];
     });
   }
 
@@ -41,10 +57,31 @@ export class NavbarComponent implements OnInit {
     this.currentCountry = country;
     this.endpointService.setCurrentCountry(country.code);
     this.showCountryDropdown = false;
+
+    // Si estamos dentro de la referencia de la API, la URL tiene que seguir al
+    // país elegido; de lo contrario quedaria /dom/api mostrando otro país.
+    const segments = this.router.url.split('#')[0].split('?')[0]
+      .split('/').filter(Boolean);
+
+    if (segments[1] === 'api') {
+      segments[0] = country.code.toLowerCase();
+      this.router.navigate(['/', ...segments]);
+    }
   }
 
   toggleCountryDropdown(): void {
     this.showCountryDropdown = !this.showCountryDropdown;
+    this.showLanguageDropdown = false;
+  }
+
+  toggleLanguageDropdown(): void {
+    this.showLanguageDropdown = !this.showLanguageDropdown;
+    this.showCountryDropdown = false;
+  }
+
+  selectLanguage(language: Language): void {
+    this.translationService.setLanguage(language);
+    this.showLanguageDropdown = false;
   }
 
   toggleMobileMenu(): void {

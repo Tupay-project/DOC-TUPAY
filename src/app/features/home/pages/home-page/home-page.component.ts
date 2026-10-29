@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { EndpointService } from '@core/services/endpoint.service';
-import { COUNTRIES, CountryCode } from '@core/models/api.models';
+import { COUNTRY_LIST, Country, CountryCode } from '@core/models/api.models';
 
 @Component({
   selector: 'app-home-page',
@@ -10,7 +10,9 @@ import { COUNTRIES, CountryCode } from '@core/models/api.models';
   encapsulation: ViewEncapsulation.None
 })
 export class HomePageComponent implements OnInit {
-  
+
+  countries: Country[] = COUNTRY_LIST;
+
   exampleCode = `const response = await fetch("https://api-gt-v2.tupay.finance/api/payin/register", {
   method: "POST",
   headers: {
@@ -34,41 +36,41 @@ console.log(data);`;
   features = [
     {
       icon: 'zap',
-      title: 'Rápido y Seguro',
-      description: 'Procesa pagos de manera ágil con la máxima seguridad en cada transacción.'
+      title: 'home.features.fastTitle',
+      description: 'home.features.fastDesc'
     },
     {
       icon: 'globe',
-      title: 'Multi-País',
-      description: 'Soporta operaciones en Guatemala, República Dominicana y Colombia con moneda local.'
+      title: 'home.features.coverageTitle',
+      description: 'home.features.coverageDesc'
     },
     {
       icon: 'code',
-      title: 'Fácil Integración',
-      description: 'API REST simple y bien documentada con ejemplos en múltiples lenguajes.'
+      title: 'home.features.integrationTitle',
+      description: 'home.features.integrationDesc'
     },
     {
       icon: 'shield',
-      title: 'API Key Segura',
-      description: 'Autenticación mediante API Key con control total de permisos.'
+      title: 'home.features.secureTitle',
+      description: 'home.features.secureDesc'
     }
   ];
 
   quickStartSteps = [
     {
       step: 1,
-      title: 'Obtén tu API Key',
-      description: 'Accede al Dashboard y encuentra tu API Key en tu perfil de usuario.'
+      title: 'home.steps.keyTitle',
+      description: 'home.steps.keyDesc'
     },
     {
       step: 2,
-      title: 'Elige tu país',
-      description: 'Selecciona Guatemala, República Dominicana o Colombia según tu operación.'
+      title: 'home.steps.configTitle',
+      description: 'home.steps.configDesc'
     },
     {
       step: 3,
-      title: 'Haz tu primera llamada',
-      description: 'Usa PayIn para recibir pagos o PayOut para enviar fondos.'
+      title: 'home.steps.callTitle',
+      description: 'home.steps.callDesc'
     }
   ];
 
@@ -82,6 +84,12 @@ console.log(data);`;
   navigateToCountryDocs(countryCode: CountryCode): void {
     this.endpointService.setCurrentCountry(countryCode);
     this.router.navigate([countryCode.toLowerCase(), 'api']);
+  }
+
+  /** Las tarjetas de país llevan a la introducción, fijando el país para que los ejemplos correspondan. */
+  navigateToIntroduction(countryCode: CountryCode): void {
+    this.endpointService.setCurrentCountry(countryCode);
+    this.router.navigate(['/gateway', 'introduction']);
   }
 
   navigateToDocs(): void {

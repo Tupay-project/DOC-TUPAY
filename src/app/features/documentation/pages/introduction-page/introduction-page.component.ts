@@ -28,7 +28,7 @@ export class IntroductionPageComponent implements OnInit, OnDestroy {
   };
 
   /** País seleccionado en el selector (los ejemplos de esta página cambian con él). */
-  selectedCountry: Country = COUNTRIES.GTM;
+  selectedCountry: Country = COUNTRIES.COL;
 
   private destroy$ = new Subject<void>();
 
@@ -36,7 +36,7 @@ export class IntroductionPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.endpointService.currentCountry$.pipe(takeUntil(this.destroy$)).subscribe(code => {
-      this.selectedCountry = COUNTRIES[code] ?? COUNTRIES.GTM;
+      this.selectedCountry = COUNTRIES[code] ?? COUNTRIES.COL;
     });
   }
 
@@ -84,94 +84,4 @@ export class IntroductionPageComponent implements OnInit, OnDestroy {
     };
     return JSON.stringify(sample, null, 2);
   }
-
-  get nodeExample(): string {
-    const c = this.selectedCountry;
-    return `const TuPay = require('@tupay/sdk');
-
-const tupay = new TuPay({
-  apiKey: process.env.TUPAY_API_KEY,
-  country: '${c.code}'
-});
-
-// Crear un PayIn
-const payin = await tupay.payin.create({
-  amount: 100,
-  currency: '${c.currency}',
-  userName: 'John Doe',
-  userEmail: 'john@example.com',
-  userPhone: '${c.examplePhone}',
-  userIdentificationNumber: '${c.identification.example}',
-  dueDate: '2027/12/31'
-});
-
-console.log(payin.checkoutUrl);`;
-  }
-
-  get pythonExample(): string {
-    const c = this.selectedCountry;
-    return `from tupay import TuPay
-
-tupay = TuPay(
-    api_key=os.environ.get('TUPAY_API_KEY'),
-    country='${c.code}'
-)
-
-# Crear un PayIn
-payin = tupay.payin.create(
-    amount=100,
-    currency='${c.currency}',
-    user_name='John Doe',
-    user_email='john@example.com',
-    user_phone='${c.examplePhone}',
-    user_identification_number='${c.identification.example}',
-    due_date='2027/12/31'
-)
-
-print(payin.checkout_url)`;
-  }
-
-  get phpExample(): string {
-    const c = this.selectedCountry;
-    return `<?php
-use TuPay\\TuPayClient;
-
-$tupay = new TuPayClient([
-    'api_key' => getenv('TUPAY_API_KEY'),
-    'country' => '${c.code}'
-]);
-
-// Crear un PayIn
-$payin = $tupay->payin->create([
-    'amount' => 100,
-    'currency' => '${c.currency}',
-    'userName' => 'John Doe',
-    'userEmail' => 'john@example.com',
-    'userPhone' => '${c.examplePhone}',
-    'userIdentificationNumber' => '${c.identification.example}',
-    'dueDate' => '2027/12/31'
-]);
-
-echo $payin->checkoutUrl;`;
-  }
-
-  webhookExample = `// Configurar webhook para recibir notificaciones
-app.post('/webhook/tupay', (req, res) => {
-  const event = req.body;
-
-  switch(event.type) {
-    case 'payin.completed':
-      console.log('Pago completado:', event.data.id);
-      // Actualizar estado en tu base de datos
-      break;
-    case 'payin.failed':
-      console.log('Pago fallido:', event.data.id);
-      break;
-    case 'payout.completed':
-      console.log('Transferencia completada:', event.data.id);
-      break;
-  }
-
-  res.status(200).send('OK');
-});`;
 }

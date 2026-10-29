@@ -19,11 +19,16 @@ import { BadgeComponent } from './shared/components/badge/badge.component';
 import { CodeBlockComponent } from './shared/components/code-block/code-block.component';
 import { SearchModalComponent } from './shared/components/search-modal/search-modal.component';
 import { TryItOutComponent } from './shared/components/try-it-out/try-it-out.component';
+import { ToastComponent } from './shared/components/toast/toast.component';
+import { FlagComponent } from './shared/components/flag/flag.component';
+import { TranslatePipe, TranslateHtmlPipe } from './shared/pipes/translate.pipe';
+import { MarkdownPipe } from './shared/pipes/markdown.pipe';
 
 // Pages - Home
 import { HomePageComponent } from './features/home/pages/home-page/home-page.component';
 
 // Pages - API Reference
+import { ApiReferencePageComponent } from './features/api-reference/pages/api-reference-page/api-reference-page.component';
 import { EndpointDetailPageComponent } from './features/api-reference/pages/endpoint-detail-page/endpoint-detail-page.component';
 
 // Pages - Documentation
@@ -44,8 +49,14 @@ import { ErrorsPageComponent } from './features/documentation/pages/errors-page/
     CodeBlockComponent,
     SearchModalComponent,
     TryItOutComponent,
+    ToastComponent,
+    FlagComponent,
+    TranslatePipe,
+    TranslateHtmlPipe,
+    MarkdownPipe,
     // Pages
     HomePageComponent,
+    ApiReferencePageComponent,
     EndpointDetailPageComponent,
     IntroductionPageComponent,
     AuthenticationPageComponent,

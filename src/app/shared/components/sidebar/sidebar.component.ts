@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { EndpointGroup, Endpoint } from '@core/models/api.models';
 import { EndpointService } from '@core/services/endpoint.service';
+import { TranslationService } from '@core/services/translation.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,6 +14,7 @@ import { EndpointService } from '@core/services/endpoint.service';
 })
 export class SidebarComponent implements OnInit {
   @Input() isOpen = true;
+  @Input() hideOnDesktop = false;
   @Output() close = new EventEmitter<void>();
 
   endpointGroups$: Observable<EndpointGroup[]>;
@@ -20,13 +22,14 @@ export class SidebarComponent implements OnInit {
   expandedGroups: Set<string> = new Set(['PayIn', 'PayOut']); // Por defecto expandidos
 
   navigationItems = [
-    { label: 'Introducción', icon: 'book', path: '/gateway/introduction' },
-    { label: 'Autenticación', icon: 'key', path: '/gateway/authentication' },
-    { label: 'Errores', icon: 'alert-circle', path: '/gateway/errors' }
+    { labelKey: 'sidebar.introduction', icon: 'book', path: '/gateway/introduction' },
+    { labelKey: 'sidebar.authentication', icon: 'key', path: '/gateway/authentication' },
+    { labelKey: 'sidebar.errors', icon: 'alert-circle', path: '/gateway/errors' }
   ];
 
   constructor(
     private endpointService: EndpointService,
+    private translationService: TranslationService,
     private router: Router
   ) {
     this.endpointGroups$ = this.endpointService.getEndpointGroups();

@@ -1,4 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { TRANSLATIONS } from '@core/i18n';
+import { COUNTRIES } from '@core/models/api.models';
+import { TranslationService } from '@core/services/translation.service';
 
 interface ErrorCode {
   code: number;
@@ -16,19 +19,14 @@ interface ErrorCode {
   encapsulation: ViewEncapsulation.None
 })
 export class ErrorsPageComponent {
-  errorCodes: ErrorCode[] = [
-    {
-      code: 400,
-      name: 'Bad Request',
-      description: 'La petición incumple una regla de negocio o incluye un campo no permitido.',
-      causes: [
-        'Transacción duplicada aún en revisión',
-        'Campo no permitido en el body (la API solo acepta los campos documentados)',
-        'JSON mal formado en el body',
-        'Monto menor o igual a cero'
-      ],
-      solution: 'Envía únicamente los campos documentados del endpoint y revisa el mensaje devuelto.',
-      example: `{
+  /** País por defecto de los enlaces a la referencia de la API. */
+  readonly defaultCountry = COUNTRIES.COL;
+
+  constructor(private translationService: TranslationService) {}
+
+  /** Ejemplos de respuesta de la API (datos de ejemplo, no se traducen). */
+  private static readonly ERROR_EXAMPLES: Record<number, string> = {
+    400: `{
   "success": false,
   "message": "Ya tienes una transacción similar en revisión. Espera un momento mientras se valida, por favor.",
   "code": 400
@@ -42,20 +40,8 @@ export class ErrorsPageComponent {
       "param": "userBank"
     }
   ]
-}`
-    },
-    {
-      code: 401,
-      name: 'Unauthorized',
-      description: 'La API Key es inválida, está ausente o ha sido revocada.',
-      causes: [
-        'API Key incorrecta',
-        'Header x-api-key faltante',
-        'API Key deshabilitada',
-        'API Key expirada'
-      ],
-      solution: 'Verifica que estés usando la API Key correcta del país al que apuntas, en el header x-api-key.',
-      example: `{
+}`,
+    401: `{
   "success": false,
   "message": "API Key inválida o desactivada",
   "code": 401
@@ -66,20 +52,8 @@ export class ErrorsPageComponent {
   "success": false,
   "message": "Authentication required. Please provide a valid token or API key",
   "code": 401
-}`
-    },
-    {
-      code: 403,
-      name: 'Forbidden',
-      description: 'Uno o más campos del body no pasaron la validación, o no tienes permisos sobre el recurso.',
-      causes: [
-        'Campo requerido faltante (userName, userPhone, userEmail, userIdentificationNumber, dueDate...)',
-        'Formato inválido (por ejemplo, userEmail no es un correo válido)',
-        'amount no numérico o menor o igual a cero',
-        'API Key sin permisos sobre el recurso solicitado'
-      ],
-      solution: 'Revisa el arreglo errors: cada entrada indica el campo (path) y el motivo (msg).',
-      example: `{
+}`,
+    403: `{
   "errors": [
     {
       "type": "field",
@@ -94,78 +68,67 @@ export class ErrorsPageComponent {
       "location": "body"
     }
   ]
-}`
-    },
-    {
-      code: 404,
-      name: 'Not Found',
-      description: 'El recurso solicitado no existe.',
-      causes: [
-        'ID de transacción inexistente',
-        'Endpoint incorrecto',
-        'Recurso eliminado'
-      ],
-      solution: 'Verifica que el ID del recurso sea correcto y que el endpoint exista.',
-      example: `{
+}`,
+    404: `{
   "success": false,
   "message": "Transaction not found",
   "code": 404,
   "error": "Not Found"
-}`
-    },
-    {
-      code: 429,
-      name: 'Too Many Requests',
-      description: 'Has excedido el límite de 10.000 peticiones por IP cada 15 minutos.',
-      causes: [
-        'Demasiadas peticiones en corto tiempo desde la misma IP',
-        'Reintentos sin backoff tras un error',
-        'Varios procesos compartiendo la misma IP de salida'
-      ],
-      solution: 'Implementa backoff exponencial y usa las cabeceras RateLimit-Remaining y RateLimit-Reset para regular tu consumo.',
-      example: `HTTP/1.1 429 Too Many Requests
+}`,
+    429: `HTTP/1.1 429 Too Many Requests
 RateLimit-Limit: 10000
 RateLimit-Remaining: 0
 RateLimit-Reset: 842
 
-Too many requests, please try again later.`
-    },
-    {
-      code: 500,
-      name: 'Internal Server Error',
-      description: 'Error interno del servidor. El equipo de TuPay ha sido notificado.',
-      causes: [
-        'Error inesperado en el servidor',
-        'Problema de base de datos',
-        'Servicio temporal no disponible'
-      ],
-      solution: 'Reintenta la petición. Si persiste, contacta a soporte.',
-      example: `{
+Too many requests, please try again later.`,
+    500: `{
   "success": false,
   "message": "Internal server error. Please try again later",
   "code": 500,
   "error": "Internal Server Error",
   "requestId": "req_abc123xyz"
-}`
-    },
-    {
-      code: 503,
-      name: 'Service Unavailable',
-      description: 'El servicio está temporalmente no disponible, generalmente por mantenimiento.',
-      causes: [
-        'Mantenimiento programado',
-        'Sobrecarga del sistema',
-        'Actualización en progreso'
-      ],
-      solution: 'Espera unos minutos y reintenta. Verifica el status en status.tupay.finance',
-      example: `{
+}`,
+    503: `{
   "success": false,
   "message": "Service temporarily unavailable",
   "code": 503,
   "error": "Service Unavailable"
 }`
-    }
-  ];
+  };
+
+  /** Lista de códigos resuelta desde el diccionario del idioma activo. */
+  get errorCodes(): ErrorCode[] {
+    const codes = TRANSLATIONS[this.translationService.getCurrentLanguage()].errors.codes;
+    const order = [400, 401, 403, 404, 422, 429, 500, 503];
+    return order.map(code => {
+      const entry = (codes as Record<string, {
+        name: string;
+        description: string;
+        causes: string[];
+        solution: string;
+      }>)[String(code)];
+      return {
+        code,
+        name: entry.name,
+        description: entry.description,
+        causes: [...entry.causes],
+        solution: entry.solution,
+        example: ErrorsPageComponent.ERROR_EXAMPLES[code]
+      };
+    });
+  }
+
+  /** Ejemplo de estructura de error, traducido en cada ciclo de detección de cambios. */
+  get errorFormatExample(): string {
+    const t = (key: string) => this.translationService.translate(key);
+    return `{
+  "success": false,
+  "message": "${t('errors.formatExampleMessage')}",
+  "code": 400,
+  "error": "${t('errors.formatExampleError')}",
+  "errors": [...] // ${t('errors.fErrors')}
+}`;
+  }
 
   retryExample = `const maxRetries = 3;
 let retries = 0;

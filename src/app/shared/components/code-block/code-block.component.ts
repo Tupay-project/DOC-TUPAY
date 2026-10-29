@@ -4,6 +4,8 @@
 
 import { Component, Input, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { CodeLanguage } from '@core/models/api.models';
+import { ToastService } from '@core/services/toast.service';
+import { TranslationService } from '@core/services/translation.service';
 
 @Component({
   selector: 'app-code-block',
@@ -25,6 +27,11 @@ export class CodeBlockComponent implements AfterViewInit {
 
   isCopied: boolean = false;
   lines: string[] = [];
+
+  constructor(
+    private toastService: ToastService,
+    private translationService: TranslationService
+  ) {}
 
   ngAfterViewInit(): void {
     this.processCode();
@@ -55,12 +62,17 @@ export class CodeBlockComponent implements AfterViewInit {
       await navigator.clipboard.writeText(this.code);
       this.isCopied = true;
       this.copied.emit();
+      this.toastService.success(this.translationService.translate('common.copiedClipboard'));
 
       setTimeout(() => {
         this.isCopied = false;
       }, 2000);
     } catch (error) {
       console.error('Failed to copy code:', error);
+      this.toastService.error(
+        this.translationService.translate('common.copyErrorTitle'),
+        this.translationService.translate('common.copyErrorMessage')
+      );
     }
   }
 
