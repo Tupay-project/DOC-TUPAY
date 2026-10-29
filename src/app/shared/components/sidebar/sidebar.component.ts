@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } fro
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { EndpointGroup, Endpoint } from '@core/models/api.models';
+import { EndpointGroup, Endpoint, Country, COUNTRIES, COUNTRY_LIST } from '@core/models/api.models';
 import { EndpointService } from '@core/services/endpoint.service';
 import { TranslationService } from '@core/services/translation.service';
 
@@ -21,6 +21,9 @@ export class SidebarComponent implements OnInit {
   activeEndpointId: string = '';
   expandedGroups: Set<string> = new Set(['PayIn', 'PayOut']); // Por defecto expandidos
 
+  currentCountry: Country = COUNTRIES.COL;
+  countries: Country[] = COUNTRY_LIST.filter(c => c.available);
+
   navigationItems = [
     { labelKey: 'sidebar.introduction', icon: 'book', path: '/gateway/introduction' },
     { labelKey: 'sidebar.authentication', icon: 'key', path: '/gateway/authentication' },
@@ -36,6 +39,11 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.endpointService.currentCountry$.subscribe(code => {
+      this.currentCountry = COUNTRIES[code];
+      this.countries = COUNTRY_LIST.filter(c => c.available || c.code === code);
+    });
+
     // Detectar endpoint activo en la ruta
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -72,6 +80,23 @@ export class SidebarComponent implements OnInit {
     this.router.navigate([country, 'api', endpoint.category, endpoint.id]);
     
     // Cerrar sidebar en mobile
+    if (window.innerWidth < 768) {
+      this.close.emit();
+    }
+  }
+
+  selectCountry(country: Country): void {
+    this.currentCountry = country;
+    this.endpointService.setCurrentCountry(country.code);
+
+    const segments = this.router.url.split('#')[0].split('?')[0]
+      .split('/').filter(Boolean);
+
+    if (segments[1] === 'api') {
+      segments[0] = country.code.toLowerCase();
+      this.router.navigate(['/', ...segments]);
+    }
+
     if (window.innerWidth < 768) {
       this.close.emit();
     }

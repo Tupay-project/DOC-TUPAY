@@ -52,7 +52,7 @@ export const en = {
       },
       qr: {
         description: 'The customer scans the QR code or chooses a payment method within the QR.',
-        name: 'QR CobroDigital',
+        name: 'QR',
       },
       rapipago: {
         description: 'The customer pays in cash by generating their slip on the Rapipago network.',
@@ -90,6 +90,7 @@ export const en = {
     introduction: 'Introduction',
     authentication: 'Authentication',
     errors: 'Errors',
+    country: 'Country',
     endpoints: {
       register: 'Register',
       uploadReceipt: 'Upload receipt',
